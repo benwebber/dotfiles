@@ -6,6 +6,7 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 
+" GitHub
 Bundle 'Townk/vim-autoclose'
 Bundle 'mattn/gist-vim'
 Bundle 'rodjek/vim-puppet'
@@ -13,5 +14,6 @@ Bundle 'tomasr/molokai'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-markdown'
 Bundle 'veloce/vim-aldmeris'
+Bundle 'vim-scripts/wikipedia.vim'
 
 filetype plugin indent on
