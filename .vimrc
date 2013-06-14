@@ -45,4 +45,6 @@ set statusline+=\ %c,                       " column number
 set statusline+=%l/%L                       " line number / total lines
 set statusline+=\ %P                        " percentage of file
 
+au BufRead,BufNewFile Puppetfile set filetype=puppet
+
 syntax on                                   " at the bottom for bundle compatibility 
