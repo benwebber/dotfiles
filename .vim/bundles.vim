@@ -8,8 +8,13 @@ Bundle 'gmarik/vundle'
 
 " GitHub
 Bundle 'Townk/vim-autoclose'
+Bundle 'jmcantrell/vim-virtualenv'
+Bundle 'kien/ctrlp.vim'
 Bundle 'mattn/gist-vim'
 Bundle 'rodjek/vim-puppet'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/syntastic'
 Bundle 'tomasr/molokai'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-markdown'

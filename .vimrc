@@ -13,6 +13,7 @@ set tabstop=2
 set shortmess=I                             " ignore intro
 set wrap                                    " wrap lines
 set linebreak                               " ...unless manually broken
+set mouse=a
 set nolist                                  " list disables linebreak
 set textwidth=0
 set wrapmargin=0                            " don't force text wrapping
