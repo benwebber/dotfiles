@@ -1,0 +1,28 @@
+# vim: filetype=sh
+
+APP_DIR='/Applications'
+
+# Used for mvim script
+export VIM_APP_DIR=$APP_DIR
+
+# Run Byobu from the Homebrew path
+export BYOBU_PREFIX=$(brew --prefix)
+
+# Install Casks to /Applications instead of ~/Applications
+export HOMEBREW_CASK_OPTS="--appdir=${APP_DIR}"
+
+# pip --user installs
+export PATH=~/Library/Python/2.7/bin:$PATH
+
+# Function to remove a Homebrew package and all its dependencies
+brew_clean() {
+  for formula in "$@"; do
+    echo "Removing ${formula} and dependencies..."
+    brew uninstall $formula
+    if [ "$(brew deps ${formula})" ]; then
+      # orphaned packages && formula dependencies
+      brew uninstall $(join <(brew leaves) <(brew deps "${formula}"))
+    fi
+  done
+}
+alias 'brew-clean'=brew_clean
