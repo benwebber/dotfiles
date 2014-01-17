@@ -56,7 +56,7 @@ set statusline+=\ %m                        " modified flag as [+]
 set statusline+=\ %c,                       " column number
 set statusline+=%l/%L                       " line number / total lines
 
-" airline:
+" airline
 set noshowmode
 let g:airline#extensions#whitspace#enabled = 0
 let g:airline#extensions#virtualenv#enabled = 1
@@ -64,8 +64,9 @@ let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#branch#empty_message = ''
 let g:airline#extensions#virtualenv#enabled = 1
 
-" use 4 spaces in Python
+" use 4 spaces in Python and PowerShell
 autocmd FileType python setlocal ts=4 sts=4 sts=4
+autocmd FileType ps1 setlocal ts=4 sts=4 sts=4
 
 " use Puppet syntax highlighting for Puppetfiles
 autocmd BufRead,BufNewFile Puppetfile set filetype=puppet
