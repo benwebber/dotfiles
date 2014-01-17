@@ -50,11 +50,19 @@ set laststatus=2                            " always show statusline
 set statusline=%{GetGitBranch()}\           " current git branch as [branch]
 set statusline+=%f                          " path to file from pwd
 set statusline+=%=                          " separate LHS and RHS
+set statusline+=%y                          " filetype
 set statusline+=%r                          " read-only flag as [RO]
 set statusline+=\ %m                        " modified flag as [+]
 set statusline+=\ %c,                       " column number
 set statusline+=%l/%L                       " line number / total lines
-set statusline+=\ %P                        " percentage of file
+
+" airline:
+set noshowmode
+let g:airline#extensions#whitspace#enabled = 0
+let g:airline#extensions#virtualenv#enabled = 1
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#branch#empty_message = ''
+let g:airline#extensions#virtualenv#enabled = 1
 
 " use 4 spaces in Python
 autocmd FileType python setlocal ts=4 sts=4 sts=4
@@ -69,3 +77,4 @@ autocmd FileType make setlocal noexpandtab tabstop=8
 autocmd FileType tex nnoremap <leader>c :w<CR>:!rubber --pdf "%" && rubber --clean "%"<CR>
 
 syntax on                                   " at the bottom for bundle compatibility 
+
