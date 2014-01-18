@@ -14,6 +14,20 @@ export HOMEBREW_CASK_OPTS="--appdir=${APP_DIR}"
 # pip --user installs
 export PATH=~/Library/Python/2.7/bin:$PATH
 
+# Use GNU tools without the g prefix
+packages=(
+  'coreutils'
+  'getopt'
+  'gnu-sed'
+)
+for package in "${packages[@]}"; do
+  path="/usr/local/opt/${package}/libexec"
+  if [ -d $path ]; then
+    export PATH="${path}/gnubin:${PATH}"
+    export MANPATH="${path}/gnuman:${PATH}"
+  fi
+done
+
 # Function to remove a Homebrew package and all its dependencies
 brew_clean() {
   for formula in "$@"; do
