@@ -84,8 +84,10 @@ autocmd FileType make setlocal noexpandtab tabstop=8
 autocmd FileType tex nnoremap <leader>c :w<CR>:!rubber --pdf "%" && rubber --clean "%"<CR>
 
 " Markdown (Pandoc) macros:
-autocmd FileType markdown nnoremap <leader>h :w<CR>:!pandoc "%" --standalone --smart --output "%".html<CR>
-autocmd FileType markdown nnoremap <leader>p :w<CR>:!pandoc "%" --standalone --smart --output "%".pdf<CR>
+autocmd FileType markdown nnoremap <leader>ph :w<CR>:!pandoc "%" -s -S -o "%".html<CR>
+autocmd FileType markdown nnoremap <leader>pp :w<CR>:!pandoc "%" -s -S -o "%".pdf<CR>
+autocmd FileType markdown nnoremap <leader>pr :w<CR>:!pandoc "%" -o "%".rst<CR>
+autocmd FileType markdown nnoremap <leader>pw :w<CR>:!pandoc "%" -t mediawiki -o "%".wiki<CR>
 
 syntax on                                   " at the bottom for bundle compatibility 
 
