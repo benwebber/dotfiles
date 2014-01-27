@@ -13,6 +13,7 @@ set tabstop=2
 set shortmess=I                             " ignore intro
 set wrap                                    " wrap lines
 set linebreak                               " ...unless manually broken
+set modeline
 set modelines=1                             " default on OS X is modelines=0
 set mouse=a                                 " enable mouse
 set nolist                                  " list disables linebreak
@@ -22,6 +23,8 @@ set wildmode=longest,list,full              " tab completion
 set wildmenu                                " tab through filenames
 
 " keymaps
+imap ;; <Esc>
+
 " play nicely with soft-wrapping
 map k gk
 map <Up> gk
@@ -71,11 +74,18 @@ autocmd FileType ps1 setlocal ts=4 sts=4 sts=4
 " use Puppet syntax highlighting for Puppetfiles
 autocmd BufRead,BufNewFile Puppetfile set filetype=puppet
 
+" use Ruby syntax highlighting for Vagrantfiles
+autocmd BufRead,BufNewFile Vagrantfile set filetype=ruby
+
 " use tabs in Makefiles
 autocmd FileType make setlocal noexpandtab tabstop=8
 
 " LaTeX (rubber) macro
 autocmd FileType tex nnoremap <leader>c :w<CR>:!rubber --pdf "%" && rubber --clean "%"<CR>
+
+" Markdown (Pandoc) macros:
+autocmd FileType markdown nnoremap <leader>h :w<CR>:!pandoc "%" --standalone --smart --output "%".html<CR>
+autocmd FileType markdown nnoremap <leader>p :w<CR>:!pandoc "%" --standalone --smart --output "%".pdf<CR>
 
 syntax on                                   " at the bottom for bundle compatibility 
 
