@@ -17,12 +17,12 @@ export PATH=~/Library/Python/2.7/bin:$PATH
 # Use GNU tools without the g prefix
 packages=(
   'coreutils'
-  'getopt'
   'gnu-sed'
+  'gnu-tar'
 )
 for package in "${packages[@]}"; do
   path="/usr/local/opt/${package}/libexec"
-  if [ -d $path ]; then
+  if [[ -d $path ]]; then
     export PATH="${path}/gnubin:${PATH}"
     export MANPATH="${path}/gnuman:${PATH}"
   fi
