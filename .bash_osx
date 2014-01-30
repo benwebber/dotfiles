@@ -24,7 +24,7 @@ for package in "${packages[@]}"; do
   path="/usr/local/opt/${package}/libexec"
   if [[ -d $path ]]; then
     export PATH="${path}/gnubin:${PATH}"
-    export MANPATH="${path}/gnuman:${PATH}"
+    export MANPATH="${path}/gnuman:${MANPATH}"
   fi
 done
 
