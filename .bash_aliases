@@ -8,5 +8,6 @@ alias rm='rm -iv'
 alias cp='cp -ivr'
 alias mv='mv -iv'
 alias ls='ls -lah --color=auto'
+alias mkdir='mkdir -p'
 
 alias mount='mount | column -t'
