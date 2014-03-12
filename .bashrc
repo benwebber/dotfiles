@@ -19,7 +19,7 @@ export EDITOR=vim
 export HISTSIZE=10000
 export HISTCONTROL=ignorespace
 export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
-export PATH=~/bin:~/.local/bin:~/.gem/ruby/1.8/bin:/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=~/bin:~/.local/bin:~/.gem/ruby/2.0.0/bin:~/.gem/ruby/1.8/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 # FUNCTIONS AND ALIASES 
 ########################
