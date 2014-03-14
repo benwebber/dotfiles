@@ -4,7 +4,9 @@ source ~/.vim/bundles.vim
 
 " Appearance {{{
 colorscheme molokai
-let &colorcolumn=join(range(81,255), ',')   " change background past column 80
+if v:version > 703
+  let &colorcolumn=join(range(81,255), ',')   " change background past column 80
+endif
 set cursorline                              " highlight current line
 set number                                  " line numbers
 set t_Co=256                                " double rainbow
