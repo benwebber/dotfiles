@@ -21,58 +21,8 @@ export HISTCONTROL=ignorespace
 export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
 export PATH=~/bin:~/.local/bin:~/.gem/ruby/2.0.0/bin:~/.gem/ruby/1.8/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
-# FUNCTIONS AND ALIASES 
+# FUNCTIONS AND ALIASES
 ########################
-
-extract() {
-  if [ -z "$1" ]; then
-      echo "Usage: extract ARCHIVE"
-    return 1
-  else  
-    if [ -f $1 ]; then
-      case $1 in
-        *.tar.bz2|*.tbz2)
-          tar -xjvf $1
-          ;;
-        *.tar.gz|*.tgz)
-          tar -xzvf $1
-          ;;
-        *.bz2)
-          bunzip2 $1
-          ;;
-        *.gz)
-          gunzip $1
-          ;;
-        *.tar)
-          tar -xvf $1
-          ;;
-        *.rar)
-          unrar x $1
-          ;;
-        *.zip)
-          unzip $1
-          ;;
-        *)
-          echo "cannot extract $1 using \`extract\`"
-          ;;
-      esac
-    else
-      echo "extract: cannot extract '$1': No such file"
-    fi
-  fi
-}
-
-# `cat` with ANSI syntax highlighting
-# requires pygments
-scat() {
-  for arg in "$@"; do
-    if [ $colours -ge 256 ]; then
-      pygmentize -f terminal256 -O style=monokai -g "${arg}" 2> /dev/null || cat "${arg}"
-    else
-      pygmentize -g "${arg}" 2> /dev/null || cat "${arg}"
-    fi   
-  done
-}
 
 if [ -f ~/.bash_aliases ]; then
   source ~/.bash_aliases
