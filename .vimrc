@@ -5,7 +5,7 @@ source ~/.vim/bundles.vim
 " Appearance {{{
 colorscheme molokai
 if v:version > 703
-  let &colorcolumn=join(range(81,255), ',')   " change background past column 80
+  let &colorcolumn=join(range(80,255), ',')   " change background past column 79
 endif
 set cursorline                              " highlight current line
 set number                                  " line numbers
@@ -68,10 +68,13 @@ augroup config
     " use 4 spaces in Python and PowerShell
     autocmd FileType python setlocal ts=4 sts=4 sw=4
     autocmd FileType ps1 setlocal ts=4 sts=4 sw=4
+    " use hard tabs for Go and Makefiles
+    autocmd FileType go setlocal noexpandtab
+    autocmd FileType make setlocal noexpandtab tabstop=8
     " use Puppet syntax highlighting for Puppetfiles
     autocmd BufRead,BufNewFile Puppetfile set filetype=puppet
-    " use tabs in Makefiles
-    autocmd FileType make setlocal noexpandtab tabstop=8
+    " use YAML syntax highlighting for RAML files
+    autocmd BufRead,BufNewFile *.raml set filetype=yaml
     " LaTeX (rubber) macro
     autocmd FileType tex nnoremap <leader>c :w<CR>:!rubber --pdf "%" && rubber --clean "%"<CR>
     " Markdown (Pandoc) macros
