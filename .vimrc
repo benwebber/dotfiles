@@ -43,6 +43,7 @@ map j gj
 map <Down> gj
 " }}}
 " Airline {{{
+set laststatus=2
 set noshowmode
 let g:airline#extensions#whitspace#enabled = 0
 let g:airline#extensions#virtualenv#enabled = 1
