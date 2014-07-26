@@ -36,23 +36,11 @@ set splitright
 " }}}
 " Keymaps {{{
 let mapleader=","
-imap ;; <Esc>
 " play nicely with soft-wrapping
 map k gk
 map <Up> gk
 map j gj
 map <Down> gj
-" }}}
-" Statusline {{{
-set laststatus=2                            " always show statusline
-set statusline=%{GetGitBranch()}\           " current git branch as [branch]
-set statusline+=%f                          " path to file from pwd
-set statusline+=%=                          " separate LHS and RHS
-set statusline+=%y                          " filetype
-set statusline+=%r                          " read-only flag as [RO]
-set statusline+=\ %m                        " modified flag as [+]
-set statusline+=\ %c,                       " column number
-set statusline+=%l/%L                       " line number / total lines
 " }}}
 " Airline {{{
 set noshowmode
@@ -83,16 +71,6 @@ augroup config
     autocmd FileType markdown nnoremap <leader>pr :w<CR>:!pandoc "%" -o "%".rst<CR>
     autocmd FileType markdown nnoremap <leader>pw :w<CR>:!pandoc "%" -t mediawiki -o "%".wiki<CR>
 augroup END
-" }}}
-" Functions {{{
-" returns current git branch as [branch]
-function! GetGitBranch(...)
-  let branch = fugitive#head()
-  if branch ==# ''
-    return ''
-  endif
-  return '['.branch.']'
-endfunction
 " }}}
 
 syntax on                                   " at the bottom for bundle compatibility
