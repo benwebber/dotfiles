@@ -30,7 +30,7 @@ export PATH=~/bin:~/.local/bin:~/.gem/ruby/2.0.0/bin:~/.gem/ruby/1.8/bin:/usr/lo
 #   $1  filename to extract
 # Returns:
 #   None
-function extract() {
+extract() {
   if [[ -z "$1" ]]; then
     echo "Usage: extract ARCHIVE"
     return 1
@@ -73,7 +73,7 @@ function extract() {
 #   None
 # Returns:
 #   The current machine's public IP address.
-function myip() {
+myip() {
   curl http://ifconfig.me/ip
 }
 
@@ -83,7 +83,7 @@ function myip() {
 #   $@  list of IP addresses
 # Returns:
 #   JSON-formatted DNS and GeoIP information.
-function ipinfo() {
+ipinfo() {
   if [[ -z $1 ]]; then
     curl http://ipinfo.io/ && echo
   else
@@ -98,7 +98,7 @@ function ipinfo() {
 #   $1  IP address
 # Returns:
 #   None
-function ipanalyzer() {
+ipanalyzer() {
   local cmd=
   if [[ $(uname) == 'Darwin' ]]; then
     cmd='open'
@@ -106,6 +106,11 @@ function ipanalyzer() {
     cmd='xdg-open'
   fi
   $cmd http://ipa.dolansoft.org/analyze?ip=$1
+}
+
+# Reap all zombie processes. Use with caution.
+reap() {
+  kill -TERM $(ps -exo stat,ppid | grep '[Zz]' | awk '{ print $2 }')
 }
 
 #------------------------------------------------------------------------------
