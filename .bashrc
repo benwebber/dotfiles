@@ -1,16 +1,29 @@
 # This is generally written from a GNU perspective. Mac-specific functionality
 # and/or overrides are at the bottom.
 
-colours=$(tput colors)
-col_r='\[\e[1;31m\]'
-col_reset='\[\e[0m\]'
+#------------------------------------------------------------------------------
+# Completions and $PS1
+#------------------------------------------------------------------------------
 
-PS1="\u@\h:\w\$ "
+completion_dirs=(
+  '~/.bash_completion.d'
+  '/etc/bash_completion.d'
+  '/usr/local/etc/bash_completion.d'
+)
+completion_files=(
+  'git-prompt.sh'
+  'git-completion.bash'
+  'tig-completion.bash'
+)
+for cdir in "${completion_dirs[@]}"; do
+  for cfile in "${completion_files[@]}"; do
+    if [[ -f "${cdir}/${cfile}" ]]; then
+      . "${cdir}/${cfile}"
+    fi
+  done
+done
 
-# red prompt for root
-if [[ $EUID -eq 0 ]]; then
-  PS1=${col_r}${PS1}${col_reset}
-fi
+PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
 
 # ENVIRONMENT VARIABLES 
 ########################
@@ -143,23 +156,6 @@ if [ -f $virtualenvwrapper ]; then
   source $virtualenvwrapper
 fi
 
-# Bash completion files. Search multiple directories.
-completion_dirs=(
-  '~/.bash_completion.d'
-  '/etc/bash_completion.d'
-  '/usr/local/etc/bash_completion.d'
-)
-completion_files=(
-  'git-completion.bash'
-  'tig-completion.bash'
-)
-for cdir in "${completion_dirs[@]}"; do
-  for cfile in "${completion_files[@]}"; do
-    if [ -f "${cdir}/${cfile}" ]; then
-      source "${cdir}/${cfile}"
-    fi
-  done
-done
 
 # MAC-SPECIFIC STUFF
 ######################
