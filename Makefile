@@ -5,6 +5,7 @@ pwd = $(shell pwd)
 clean:
 	rm -f ~/.bashrc
 	rm -f ~/.bashrc.d
+	rm -f ~/.gitconfig
 	rm -f ~/.profile
 	rm -f ~/.vimrc
 	rm -f ~/.vim
@@ -14,6 +15,7 @@ clean:
 install: clean
 	ln -s $(pwd)/.bashrc ~/.bashrc
 	ln -s $(pwd)/.bashrc.d ~/.bashrc.d
+	ln -s $(pwd)/.gitconfig ~/.gitconfig
 	ln -s $(pwd)/.profile ~/.profile
 	ln -s $(pwd)/.vimrc ~/.vimrc
 	ln -s $(pwd)/.vim ~/.vim

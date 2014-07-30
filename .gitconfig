@@ -1,0 +1,11 @@
+[user]
+        name = Ben Webber
+        email = benjamin.webber@gmail.com
+[push]
+        default = simple
+[core]
+        excludesfile = ~/.gitignore_global
+[alias]
+        permission-reset = !git diff -p -R | grep -E \"^(diff|(old|new) mode)\" | git apply
+[credential]
+        helper = osxkeychain
