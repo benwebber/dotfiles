@@ -41,6 +41,7 @@ map k gk
 map <Up> gk
 map j gj
 map <Down> gj
+nmap <leader>t :TagbarToggle<CR>
 " }}}
 " Airline {{{
 set laststatus=2
