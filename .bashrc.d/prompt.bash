@@ -22,5 +22,10 @@ for cdir in "${completion_dirs[@]}"; do
   done
 done
 
-PROMPT_COMMAND='__git_ps1 "\u@\h:\w" "\\\$ "'
+__prompt() {
+  local venv=
+  [[ $VIRTUAL_ENV ]] && venv="[${VIRTUAL_ENV##*/}] "
+  PS1="${venv}\u@\h:\w$(__git_ps1)$ "
+}
 
+PROMPT_COMMAND=__prompt
