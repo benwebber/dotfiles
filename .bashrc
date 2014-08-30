@@ -4,7 +4,7 @@ export EDITOR=vim
 export HISTSIZE=10000
 export HISTCONTROL=ignorespace
 export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
-export PATH=~/bin:$PATH
+export PATH=~/bin:/usr/local/bin:$PATH
 
 __load() {
   local dir="${1}"
