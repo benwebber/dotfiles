@@ -5,44 +5,57 @@
 #------------------------------------------------------------------------------
 
 # Extract an arbitrary archive.
+#
 # Arguments:
 #   $1  filename to extract
 # Returns:
 #   None
 extract() {
-  if [[ -z "$1" ]]; then
+  local filename=$1
+  local archive
+  if [[ -z $filename ]]; then
     echo "Usage: extract ARCHIVE"
     return 1
   else
-    if [[ -f $1 ]]; then
-      case $1 in
+    if [[ -f $filename ]]; then
+      case $filename in
         *.tar.bz2|*.tbz2)
-          tar -xjvf $1
+          archive="${filename/%.t*bz2}"
+          mkdir "${archive}"
+          tar -xjvf "${filename}" -C "${archive}"
           ;;
         *.tar.gz|*.tgz)
-          tar -xzvf $1
+          archive="${filename/%.t*gz}"
+          mkdir "${archive}"
+          tar -xzvf "${filename}" -C "${archive}"
           ;;
         *.bz2)
-          bunzip2 $1
+          bunzip2 "${filename}"
           ;;
         *.gz)
-          gunzip $1
+          gunzip "${filename}"
           ;;
         *.tar)
-          tar -xvf $1
+          archive="${filename/%.tar}"
+          mkdir "${archive}"
+          tar -xvf "${filename}" -C "${archive}"
           ;;
         *.rar)
-          unrar x $1
+          archive="${filename/%.rar}"
+          mkdir "${archive}"
+          unrar e "${filename}" "${archive}"
           ;;
         *.zip)
-          unzip $1
+          archive="${filename/%.zip}"
+          mkdir "${archive}"
+          unzip "${filename}" -d "${archive}"
           ;;
         *)
-          echo "cannot extract $1 using \`extract\`"
+          echo "cannot extract '${filename}' using \`extract\`"
           ;;
       esac
     else
-      echo "extract: cannot extract '$1': No such file"
+      echo "extract: cannot extract '${filename}': No such file"
     fi
   fi
 }
