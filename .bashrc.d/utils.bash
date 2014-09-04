@@ -4,62 +4,6 @@
 # Utilities
 #------------------------------------------------------------------------------
 
-# Extract an arbitrary archive.
-#
-# Arguments:
-#   $1  filename to extract
-# Returns:
-#   None
-extract() {
-  local filename=$1
-  local archive
-  if [[ -z $filename ]]; then
-    echo "Usage: extract ARCHIVE"
-    return 1
-  else
-    if [[ -f $filename ]]; then
-      case $filename in
-        *.tar.bz2|*.tbz2)
-          archive="${filename/%.t*bz2}"
-          mkdir "${archive}"
-          tar -xjvf "${filename}" -C "${archive}"
-          ;;
-        *.tar.gz|*.tgz)
-          archive="${filename/%.t*gz}"
-          mkdir "${archive}"
-          tar -xzvf "${filename}" -C "${archive}"
-          ;;
-        *.bz2)
-          bunzip2 "${filename}"
-          ;;
-        *.gz)
-          gunzip "${filename}"
-          ;;
-        *.tar)
-          archive="${filename/%.tar}"
-          mkdir "${archive}"
-          tar -xvf "${filename}" -C "${archive}"
-          ;;
-        *.rar)
-          archive="${filename/%.rar}"
-          mkdir "${archive}"
-          unrar e "${filename}" "${archive}"
-          ;;
-        *.zip)
-          archive="${filename/%.zip}"
-          mkdir "${archive}"
-          unzip "${filename}" -d "${archive}"
-          ;;
-        *)
-          echo "cannot extract '${filename}' using \`extract\`"
-          ;;
-      esac
-    else
-      echo "extract: cannot extract '${filename}': No such file"
-    fi
-  fi
-}
-
 # Determine the machine's public IP address.
 # Arguments:
 #   None

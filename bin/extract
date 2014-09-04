@@ -1,0 +1,103 @@
+#!/bin/bash
+#
+# Extract an archive.
+
+PROGRAM=$(basename $0)
+ERROR_MESSAGE="${PROGRAM}: cannot extract '%s'\n"
+
+usage() {
+cat<<EOF
+Extract an archive.
+
+Usage:
+  ${PROGRAM} FILE...
+
+Options:
+  -h  show this screen and exit
+EOF
+}
+
+__unrar() {
+  local filename="${1}"
+  local dir="${filename/%.rar}"
+  echo "${dir}"
+  mkdir "${dir}"
+  unrar e "${filename}" "${dir}"
+}
+
+__untar() {
+  local filename="${1}"
+  local dir
+  case $filename in
+    *.tar.bz2|*.tbz2)
+      dir="${filename/%.t*bz2}"
+      opts='-xjvf'
+      ;;
+    *.tar.gz|*.tgz)
+      dir="${filename/%.t*gz}"
+      opts='-xzvf'
+      ;;
+    *.tar)
+      dir="${filename/%.tar}"
+      opts='-xvf'
+      ;;
+  esac
+  mkdir "${dir}"
+  tar "${opts}" "${filename}" -C "${dir}"
+}
+
+__unzip() {
+  local filename="${1}"
+  local dir="${filename/%.zip}"
+  mkdir "${dir}"
+  unzip "${filename}" -d "${dir}"
+}
+
+
+main() {
+  while getopts 'h' opt; do
+    case $opt in
+      h)
+        usage
+        exit
+        ;;
+      *)
+        usage
+        exit 1
+        ;;
+    esac
+  done
+
+  [[ "$#" -eq 0 ]] && usage && exit 1
+
+  for filename in "${@}"; do
+    if [[ ! -r $filename ]]; then
+      echo "${PROGRAM}: cannot read '${filename}' or '${filename}' does not exist" >&2
+      continue
+    fi
+    case $filename in
+      *.tar*)
+        __untar "${filename}"
+        ;;
+      *.bz2)
+        bunzip2 "${filename}"
+        ;;
+      *.gz)
+        gunzip "${filename}"
+        ;;
+      *.rar)
+        echo 'o'
+        __unrar "${filename}"
+        ;;
+      *.zip)
+        __unzip "${filename}"
+        ;;
+      *)
+        printf "${ERROR_MESSAGE}" "${filename}" >&2
+        exit 1
+        ;;
+    esac
+  done
+}
+
+main "${@}"
