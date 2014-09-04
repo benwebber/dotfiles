@@ -1,0 +1,61 @@
+#!/bin/bash
+#
+# Indent all lines in a file.
+
+PROGRAM=$(basename $0)
+DEFAULT_CHARACTER=' '
+DEFAULT_NUMBER=2
+
+usage() {
+cat<<EOF
+Indent all lines in a file.
+
+Usage:
+  ${PROGRAM} [-n NUMBER] [-t] FILE...
+
+Options:
+  -h  show this screen and exit
+  -n  number of characters to indent by [default: 2]
+  -t  indent with tabs instead of spaces
+
+If FILE is not specified, or if FILE is -, read from standard input.
+EOF
+}
+
+main() {
+  local character
+  local number
+  local argv=()
+  while getopts 'htn:' opt; do
+    case $opt in
+      h)
+        usage
+        exit
+        ;;
+      t)
+        character='\t'
+        ;;
+      n)
+        number="${OPTARG}"
+        ;;
+      *)
+        usage
+        exit 1
+        ;;
+    esac
+  done
+
+  [[ -z $character ]] && character="${DEFAULT_CHARACTER}"
+  [[ -z $number ]] && number="${DEFAULT_NUMBER}"
+
+  [[ "$#" -eq 0 || "${1}" == '-' ]] && argv=('-') || argv=("${@}")
+
+  # Construct the replacement string.
+  sub=$(printf "${character}%0.s" $(seq 1 $number))
+
+  for input in "${argv[@]}"; do
+    sed "s/^/${sub}/" "${input}"
+  done
+}
+
+main "${@}"
