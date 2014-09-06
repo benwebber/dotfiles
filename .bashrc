@@ -1,5 +1,9 @@
 #!/bin/bash
 
+shopt -s autocd
+shopt -s dotglob
+shopt -s histappend
+
 dotfiles=$(dirname "$(readlink "${BASH_SOURCE[0]}")")
 dotfiles_bin="${dotfiles}/bin"
 
