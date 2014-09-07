@@ -59,8 +59,8 @@ augroup config
     autocmd FileType python setlocal ts=4 sts=4 sw=4
     autocmd FileType ps1 setlocal ts=4 sts=4 sw=4
     " use hard tabs for Go and Makefiles
-    autocmd FileType go setlocal noet ts=4
-    autocmd FileType make setlocal noet ts=4
+    autocmd FileType go setlocal noet ts=4 sw=4 sts=4
+    autocmd FileType make setlocal noet ts=4 sw=4 sts=4
     " use Puppet syntax highlighting for Puppetfiles
     autocmd BufRead,BufNewFile Puppetfile set filetype=puppet
     " use YAML syntax highlighting for RAML files
