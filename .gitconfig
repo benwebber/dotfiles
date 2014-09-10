@@ -7,5 +7,6 @@
         excludesfile = ~/.gitignore_global
 [alias]
         permission-reset = !git diff -p -R | grep -E \"^(diff|(old|new) mode)\" | git apply
+        fork = !git-fork
 [credential]
         helper = osxkeychain
