@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+#
+# Open man pages in the default browser.
+
+PROGRAM=$(basename $0)
+TEMP_FILES=()
+
+usage() {
+  cat<<EOF
+Open man pages in the default browser.
+
+Usage:
+  ${PROGRAM} NAME...
+
+Options:
+  -h  show this screen and exit
+EOF
+}
+
+get_browser() {
+  local uname
+  uname=$(uname)
+  case $uname in
+    Darwin)
+      printf 'open'
+      ;;
+    Linux)
+      printf 'sensible-browser'
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+open_man_in_browser() {
+  local manpath
+  local temp
+  local browser
+  # Get the path to the man page.
+  manpath=$(man -w $arg) || continue
+  # Get the default browser.
+  browser=$(get_browser)
+  # Store the HTML in a temporary file.
+  temp=$(mktemp)
+  mv $temp "${temp}.html"
+  temp="${temp}.html"
+  # Convert the man page to HTML.
+  groff -m mandoc -T html "${manpath}" > $temp 2>/dev/null
+  $browser "file://${temp}"
+  # Keep track of temporary files.
+  TEMP_FILES+=("${temp}")
+}
+
+# Remove temporary files.
+cleanup() {
+  for f in "${TEMP_FILES[@]}"; do
+    rm "${f}"
+  done
+}
+
+main() {
+  while getopts 'h' opt; do
+    case $opt in
+      h)
+        usage
+        exit
+        ;;
+      *)
+        usage
+        exit 1
+        ;;
+    esac
+  done
+
+  [[ $# -eq 0 ]] && usage && exit 1
+
+  for arg in "${@}"; do
+    open_man_in_browser "${arg}"
+  done
+
+  # Sleep to give the browser time to render all files, then clean up temporary
+  # files.
+  sleep 1
+  cleanup
+}
+
+main "${@}"
