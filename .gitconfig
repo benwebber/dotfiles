@@ -1,12 +1,31 @@
-[user]
-        name = Ben Webber
-        email = benjamin.webber@gmail.com
-[push]
-        default = simple
-[core]
-        excludesfile = ~/.gitignore_global
+[advice]
+	statusHints = false
+
 [alias]
-        permission-reset = !git diff -p -R | grep -E \"^(diff|(old|new) mode)\" | git apply
-        fork = !git-fork
+	permission-reset = !git diff -p -R | grep -E \"^(diff|(old|new) mode)\" | git apply
+	fork = !git-fork
+
+[core]
+	excludesfile = ~/.gitignore_global
+
 [credential]
-        helper = osxkeychain
+	helper = osxkeychain
+
+[credential "https://github.com"]
+	username = benwebber
+
+[credential "https://bitbucket.com"]
+	username = benwebber
+
+[pull]
+	rebase = true
+
+[push]
+	default = simple
+
+[user]
+	name = Ben Webber
+	email = benjamin.webber@gmail.com
+
+[include]
+	path = .gitconfig_local

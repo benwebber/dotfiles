@@ -2,8 +2,6 @@
 #
 # Fork a Git repository.
 
-ORIGIN='https://github.com/benwebber/'
-
 usage() {
   cat<<EOF
 usage: git fork <repo>
@@ -13,12 +11,31 @@ EOF
 }
 
 fork() {
-  local repo=$1
-  local repo_name="${1##*/}"
-  repo_name="${repo_name/%.git/}"
-  git clone -o upstream $repo
-  cd $repo_name
-  git remote add origin "${ORIGIN}${repo_name}"
+  local upstream=$1
+  local repo="${upstream##*/}"
+  repo="${repo/%.git/}"
+  local origin
+  local username
+  local host
+
+  case $repo in
+    *github*)
+      host='https://github.com'
+      ;;
+    *bitbucket*)
+      host='https://bitbucket.com'
+      ;;
+    *)
+      host='https://github.com'
+      ;;
+  esac
+
+  username=$(git config --get credential.${host}.username)
+  origin="${host}/${username}/${repo}"
+
+  git clone -o upstream $upstream
+  cd $repo
+  git remote add origin $origin
 }
 
 main() {
