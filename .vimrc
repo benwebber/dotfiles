@@ -42,6 +42,7 @@ map <Up> gk
 map j gj
 map <Down> gj
 nmap <leader>t :TagbarToggle<CR>
+nmap <leader>s :Scriptify<CR>
 " }}}
 " Airline {{{
 set laststatus=2
@@ -51,6 +52,21 @@ let g:airline#extensions#virtualenv#enabled = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#branch#empty_message = ''
 let g:airline#extensions#virtualenv#enabled = 1
+" }}}
+" Functions {{{
+
+" Insert boilerplate for new files.
+function! Boilerplate()
+  execute '0r ~/.vim/templates/boilerplate.'.expand('%:e')
+endfunction
+
+" Insert boilerplate to make a file into a standalone script.
+function! Scriptify()
+  execute '$r ~/.vim/templates/script.'.expand('%:e')
+endfunction
+
+command! -nargs=0 Scriptify call Scriptify()
+
 " }}}
 " Autocommands {{{
 augroup config
@@ -72,6 +88,12 @@ augroup config
     autocmd FileType markdown nnoremap <leader>pr :w<CR>:!pandoc "%" -o "%".rst<CR>
     autocmd FileType markdown nnoremap <leader>pw :w<CR>:!pandoc "%" -t mediawiki -o "%".wiki<CR>
 augroup END
+
+augroup templates
+  autocmd!
+  autocmd BufNewFile *.* silent! call Boilerplate()
+augroup END
+
 " }}}
 
 syntax on                                   " at the bottom for bundle compatibility
