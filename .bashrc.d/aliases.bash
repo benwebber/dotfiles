@@ -6,8 +6,10 @@
 
 alias :e='vim'
 alias :q='exit'
+alias +x='chmod +x'
 alias histstat='history | awk "{print $4}" | sort | uniq -c | sort -rn | head'
 alias mount='mount | column -t'
+alias c=clear
 
 # Simple (s*) commands
 alias sdig='dig +noall +answer'
