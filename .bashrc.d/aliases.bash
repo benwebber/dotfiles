@@ -18,6 +18,7 @@ alias ssmtpd='python -m smtpd -n -c DebuggingServer localhost:1025'
 
 # coreutils
 alias cp='cp -ivr'
+alias grep='grep -rE'
 alias ls='ls -lah --color=auto'
 alias mkdir='mkdir -p'
 alias mv='mv -iv'

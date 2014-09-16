@@ -17,6 +17,10 @@
 [credential "https://bitbucket.com"]
 	username = benwebber
 
+[grep]
+	lineNumber = true
+	extendedRegexp = true
+
 [pull]
 	rebase = true
 
