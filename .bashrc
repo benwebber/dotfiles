@@ -13,12 +13,13 @@ export EDITOR=vim
 export HISTSIZE=10000
 export HISTCONTROL=ignorespace
 export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
-export PATH=~/bin:"${dotfiles_bin}":/usr/local/bin:$PATH
+export PATH=$HOME/bin:"${dotfiles_bin}":/usr/local/bin:$PATH
+export CDPATH=:$HOME/projects
 
 __load() {
   local dir="${1}"
   if [[ -d "${dir}" ]]; then
-    for f in "${dir}"/*; do
+    for f in "${dir}"/*.bash; do
       [[ -r "${f}" ]] && . "${f}"
     done
   fi

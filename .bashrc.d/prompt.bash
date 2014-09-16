@@ -22,6 +22,8 @@ for cdir in "${completion_dirs[@]}"; do
   done
 done
 
+. $(brew --prefix)/etc/bash_completion 2>&1 >/dev/null
+
 __prompt() {
   local venv=
   [[ $VIRTUAL_ENV ]] && venv="[${VIRTUAL_ENV##*/}] "
