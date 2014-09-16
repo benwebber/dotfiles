@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -o vi
+
 shopt -s autocd
 shopt -s dotglob
 shopt -s histappend
