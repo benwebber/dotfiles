@@ -26,3 +26,5 @@ __load() {
 }
 
 __load ~/.bashrc.d
+
+[[ -r ~/.bashrc_local ]] && . ~/.bashrc_local

@@ -96,5 +96,9 @@ augroup END
 
 " }}}
 
+if filereadable(glob('~/.vimrc_local'))
+  source ~/.vimrc_local
+endif
+
 syntax on                                   " at the bottom for bundle compatibility
 

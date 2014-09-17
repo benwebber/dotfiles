@@ -32,4 +32,4 @@
 	email = benjamin.webber@gmail.com
 
 [include]
-	path = .gitconfig_local
+	path = ~/.gitconfig_local
