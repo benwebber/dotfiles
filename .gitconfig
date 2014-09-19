@@ -4,6 +4,7 @@
 [alias]
 	permission-reset = !git diff -p -R | grep -E \"^(diff|(old|new) mode)\" | git apply
 	fork = !git-fork
+	up = "!git remote update -p; git merge --ff-only @{u}"
 
 [core]
 	excludesfile = ~/.gitignore_global
@@ -20,9 +21,6 @@
 [grep]
 	lineNumber = true
 	extendedRegexp = true
-
-[pull]
-	rebase = true
 
 [push]
 	default = simple
