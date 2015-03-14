@@ -14,3 +14,5 @@ if [ -f $virtualenvwrapper ]; then
   source $virtualenvwrapper
 fi
 
+export PIPSI_HOME=${HOME}/.virtualenvs
+export PIPSI_BIN_DIR=${HOME}/bin
