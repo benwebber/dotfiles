@@ -34,14 +34,14 @@ ipinfo() {
 #   $1  IP address
 # Returns:
 #   None
-ipanalyzer() {
+ipalyzer() {
   local cmd=
   if [[ $(uname) == 'Darwin' ]]; then
     cmd='open'
   else
     cmd='xdg-open'
   fi
-  $cmd http://ipa.dolansoft.org/analyze?ip=$1
+  $cmd "https://www.ipalyzer.com/${1}"
 }
 
 # Reap all zombie processes. Use with caution.
