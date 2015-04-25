@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+PROGRAM=$(basename "${0}")
+
+usage() {
+  cat<<EOF
+Usage: ${PROGRAM} PROJECT...
+
+Start a new Go project.
+
+Options:
+  -h  show this help message and exit
+EOF
+}
+
+main() {
+  local path
+
+  [[ $# -eq 0 ]] && { usage; return 1; }
+
+  while getopts 'h' opt; do
+    case $opt in
+      h)
+        usage
+        return
+        ;;
+      *)
+        usage
+        return 1
+        ;;
+    esac
+  done
+
+  shift $(( OPTIND-1 ))
+
+  for arg in "${@}"; do
+    path="${GOPATH}/src/github.com/benwebber/${arg}"
+    project="${HOME}/projects/${arg}"
+    git init "${project}"
+    ln -svT "${project}" "${path}"
+  done
+}
+
+main "${@}"
