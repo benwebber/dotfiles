@@ -10,7 +10,7 @@ export EDITOR=vim
 export HISTSIZE=10000
 export HISTCONTROL=ignorespace
 export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
 export CDPATH=:$HOME/projects
 
 __load() {
