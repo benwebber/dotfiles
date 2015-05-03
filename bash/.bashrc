@@ -7,6 +7,18 @@ shopt -s dotglob
 shopt -s histappend
 
 export EDITOR=vim
+
+case $(uname) in
+  Darwin)
+    export BROWSER=open
+    ;;
+  Linux)
+    export BROWSER=sensible-browser
+    ;;
+  *)
+    ;;
+esac
+
 export HISTSIZE=10000
 export HISTCONTROL=ignorespace
 export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
