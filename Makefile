@@ -6,6 +6,8 @@ all: install
 
 clean:
 	stow -D $(packages)
+	vim +PluginClean! +qall
 
 install:
 	stow -R $(packages)
+	vim +PluginInstall +qall
