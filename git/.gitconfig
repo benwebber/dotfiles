@@ -18,6 +18,9 @@
 [credential "https://bitbucket.com"]
 	username = benwebber
 
+[help]
+	autocorrect = 10
+
 [grep]
 	lineNumber = true
 	extendedRegexp = true
