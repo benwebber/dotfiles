@@ -25,3 +25,14 @@ alias ls='ls -lah --color=auto'
 alias mkdir='mkdir -p'
 alias mv='mv -iv'
 alias rm='rm -iv'
+
+case $(uname) in
+  Darwin)
+    alias gvim=mvim
+    ;;
+  Linux)
+    alias mvim=gvim
+    ;;
+  *)
+    ;;
+esac
