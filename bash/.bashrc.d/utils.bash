@@ -33,13 +33,11 @@ ipinfo() {
 # Returns:
 #   None
 ipalyzer() {
-  local cmd=
-  if [[ $(uname) == 'Darwin' ]]; then
-    cmd='open'
-  else
-    cmd='xdg-open'
+  if [[ -z $1 ]]; then
+    printf "ipalyzer: enter IP address\n" >&2
+    return 1
   fi
-  $cmd "https://www.ipalyzer.com/${1}"
+  $BROWSER "https://www.ipalyzer.com/${1}"
 }
 
 # Reap all zombie processes. Use with caution.

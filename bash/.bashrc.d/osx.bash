@@ -2,7 +2,7 @@
 # Mac OS X
 #-------------------------------------------------------------------------------
 
-[[ $(uname) != 'Darwin' ]] && return
+[[ $PLATFORM != 'Darwin' ]] && return
 
 export HOMEBREW_CASK_OPTS='--appdir=/Applications'
 

@@ -6,9 +6,11 @@ shopt -s autocd
 shopt -s dotglob
 shopt -s histappend
 
+export PLATFORM=$(uname)
+
 export EDITOR=vim
 
-case $(uname) in
+case $PLATFORM in
   Darwin)
     export BROWSER=open
     # Avoid invoking Ruby for `brew --prefix`.

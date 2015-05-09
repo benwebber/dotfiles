@@ -23,7 +23,7 @@ alias mkdir='mkdir -p'
 alias mv='mv -iv'
 alias rm='rm -iv'
 
-case $(uname) in
+case $PLATFORM in
   Darwin)
     alias gvim=mvim
     ;;
