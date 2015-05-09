@@ -1,5 +1,3 @@
-#!/bin/bash
-
 #-------------------------------------------------------------------------------
 # Mac OS X
 #-------------------------------------------------------------------------------
@@ -29,10 +27,10 @@ done
 brew_clean() {
   for formula in "$@"; do
     echo "Removing ${formula} and dependencies..."
-    brew uninstall $formula
-    if [ "$(brew deps ${formula})" ]; then
+    brew uninstall "${formula}"
+    if [ "$(brew deps "${formula}")" ]; then
       # orphaned packages && formula dependencies
-      brew uninstall $(join <(brew leaves) <(brew deps "${formula}"))
+      brew uninstall "$(join <(brew leaves) <(brew deps "${formula}"))"
     fi
   done
 }

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 #------------------------------------------------------------------------------
 # Utilities
 #------------------------------------------------------------------------------
@@ -24,7 +22,7 @@ ipinfo() {
     curl http://ipinfo.io/ && echo
   else
     for ip in "${@}"; do
-      curl http://ipinfo.io/$ip && echo
+      curl "http://ipinfo.io/${ip}" && echo
     done
   fi
 }
@@ -46,5 +44,6 @@ ipalyzer() {
 
 # Reap all zombie processes. Use with caution.
 reap() {
-  kill -TERM $(ps -exo stat,ppid | grep '[Zz]' | awk '{ print $2 }')
+  # shellcheck disable=SC2009
+  kill -TERM "$(ps -exo stat,ppid | grep '[Zz]' | awk '{ print $2 }')"
 }
