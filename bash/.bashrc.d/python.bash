@@ -5,12 +5,8 @@
 # Configure virtualenv
 export PROJECT_HOME=$HOME/projects
 export WORKON_HOME=$HOME/.virtualenvs
-
-virtualenvwrapper="/usr/local/bin/virtualenvwrapper.sh"
-
-if [ -f $virtualenvwrapper ]; then
-  source $virtualenvwrapper
-fi
-
-export PIPSI_HOME=${HOME}/.virtualenvs
+export VIRTUALENVWRAPPER_SCRIPT="$(brew --prefix)/bin/virtualenvwrapper.sh"
+export PIPSI_HOME=${WORKON_HOME}
 export PIPSI_BIN_DIR=${HOME}/bin
+
+[[ -f $VIRTUALENVWRAPPER_SCRIPT ]] && . "${VIRTUALENVWRAPPER_SCRIPT/%.sh/_lazy.sh}"
