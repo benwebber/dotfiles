@@ -26,10 +26,11 @@ export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
 export CDPATH=:$HOME/projects
 
 __load() {
+  local fname
   local dir="${1}"
   if [[ -d "${dir}" ]]; then
-    for f in "${dir}"/*.bash; do
-      [[ -r "${f}" ]] && . "${f}"
+    for fname in "${dir}"/*.bash; do
+      [[ -r "${fname}" ]] && . "${fname}"
     done
   fi
 }
