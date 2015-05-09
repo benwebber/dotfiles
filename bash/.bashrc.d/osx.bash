@@ -4,6 +4,7 @@
 
 [[ $(uname) != 'Darwin' ]] && return
 
+export HOMEBREW_CASK_OPTS='--appdir=/Applications'
 
 # Use GNU tools without the g prefix
 __load_gnu_utils() {
