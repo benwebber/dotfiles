@@ -11,9 +11,12 @@ export EDITOR=vim
 case $(uname) in
   Darwin)
     export BROWSER=open
+    # Avoid invoking Ruby for `brew --prefix`.
+    export USR_PATH=/usr/local
     ;;
   Linux)
     export BROWSER=sensible-browser
+    export USR_PATH=/usr
     ;;
   *)
     ;;

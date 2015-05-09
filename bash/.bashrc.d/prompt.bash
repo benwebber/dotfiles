@@ -2,7 +2,7 @@
 # Completions and $PS1
 #------------------------------------------------------------------------------
 
-. "$(brew --prefix)/etc/bash_completion" >/dev/null 2>&1
+. "${USR_PATH}/share/bash-completion/bash_completion" >/dev/null 2>&1
 
 # Sets a typical PS1 including virtualenv and Git branch. Aligns PS2 (line
 # continuation prompt) with $ of preceding PS1.
