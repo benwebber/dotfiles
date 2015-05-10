@@ -11,7 +11,7 @@ __prompt() {
   # so we cannot use them to calculate the PS2 width.
   local u=${USER}
   local h=${HOSTNAME%%.*}
-  local w=${PWD/$HOME/\~/}; w=${w/\~\/\//\~/}
+  local w=${PWD/$HOME/\~}
   local venv=
   [[ $VIRTUAL_ENV ]] && venv="[${VIRTUAL_ENV##*/}] "
   PS1="${venv}${u}@${h}:${w}$(__git_ps1)$ "
