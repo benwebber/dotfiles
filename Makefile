@@ -2,7 +2,7 @@
 
 SOURCES = $(shell find bash/src/ -maxdepth 1 -type f -iname '*.bash' ! -name env.bash)
 PLATFORM = bash/src/platform/$(shell uname).bash
-PACKAGES = bash gem git ssh tools vim
+PACKAGES = bash gem git ipython ssh tools vim
 
 all: .bashrc
 
