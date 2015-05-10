@@ -3,8 +3,12 @@
 set -o vi
 
 shopt -s autocd
+shopt -s cdspell
+shopt -s checkhash
 shopt -s dotglob
+shopt -s extglob
 shopt -s histappend
+shopt -u sourcepath
 
 HISTDIR=$HOME/.history
 
