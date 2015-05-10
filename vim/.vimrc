@@ -53,6 +53,11 @@ let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#branch#empty_message = ''
 let g:airline#extensions#virtualenv#enabled = 1
 
+let g:go_fmt_command = 'goimports'
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+
 let g:syntastic_sh_shellcheck_args = '-s bash'
 " }}}
 " Functions {{{
