@@ -45,3 +45,30 @@ reap() {
   # shellcheck disable=SC2009
   kill -TERM "$(ps -exo stat,ppid | grep '[Zz]' | awk '{ print $2 }')"
 }
+
+# Look for help in multiple places.
+halp() {
+  if [[ -z "${@}" ]] || [[ $1 == '-h' ]] || [[ $1 == '--help' ]]; then
+    printf "Usage: halp <args>...\n" >&2
+    return
+  fi
+
+  case "$(type -t "${@}")" in
+    alias)
+      alias "${@}"
+      ;;
+    builtin|keyword)
+      help "${@}"
+      ;;
+    file)
+      { "${@}" help || "${@}" -h || "${@}" --help || man "${@}"; }
+      ;;
+    function)
+      declare -f "${@}"
+      ;;
+    *)
+      man "${@}"
+      ;;
+  esac
+  [[ $? -ne 0 ]] && $BROWSER "https://www.google.com/search?q=${*}"
+}
