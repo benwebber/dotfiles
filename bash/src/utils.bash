@@ -72,3 +72,20 @@ halp() {
   esac
   [[ $? -ne 0 ]] && $BROWSER "https://www.google.com/search?q=${*}"
 }
+
+# Make a directory then change to it.
+function mkcd() {
+  mkdir -p -- "$@" && builtin cd -- "$@"
+}
+
+# Make a directory and copy files into it.
+function mkcp() {
+  mkdir -p -- "${@: -1}" && cp -- "$@"
+}
+
+# Make a directory and move files into it.
+function mkmv() {
+  mkdir -p -- "${@: -1}" && mv -- "$@"
+}
+
+complete -A directory mkcd mkcp mkmv
