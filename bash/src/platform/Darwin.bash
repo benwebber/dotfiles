@@ -2,9 +2,10 @@
 # Mac OS X
 #-------------------------------------------------------------------------------
 
-[[ $PLATFORM != 'Darwin' ]] && return
-
+export BROWSER=open
 export HOMEBREW_CASK_OPTS='--appdir=/Applications'
+# Avoid invoking Ruby for `brew --prefix`.
+export USR_PATH=/usr/local
 
 # Use GNU tools without the g prefix
 __load_gnu_utils() {
@@ -37,5 +38,6 @@ brew_clean() {
 }
 
 alias 'brew-clean'=brew_clean
+alias gvim=mvim
 
 __load_gnu_utils
