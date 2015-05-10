@@ -33,9 +33,9 @@ fork() {
   username=$(git config --get credential.${host}.username)
   origin="${host}/${username}/${repo}"
 
-  git clone -o upstream $upstream
-  cd $repo
-  git remote add origin $origin
+  git clone -o upstream "${upstream}"
+  cd "${repo}"
+  git remote add origin "${origin}"
 }
 
 main() {
@@ -43,15 +43,16 @@ main() {
     case $opt in
       h)
         usage
-        exit
+        return
         ;;
       *)
         usage
-        exit 1
+        return 1
         ;;
     esac
   done
-  [[ -z $1 ]] && usage || fork "${1}"
+  [[ -z $1 ]] && { usage; return 1; }
+  fork "${1}"
 }
 
 main "${@}"

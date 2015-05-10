@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Indent all lines in a file.
 
-PROGRAM=$(basename $0)
+PROGRAM=$(basename "${0}")
 DEFAULT_CHARACTER=' '
 DEFAULT_NUMBER=2
 
@@ -51,6 +51,7 @@ main() {
   [[ "$#" -eq 0 || "${1}" == '-' ]] && argv=('-') || argv=("${@}")
 
   # Construct the replacement string.
+  # shellcheck disable=SC2046
   sub=$(printf "${character}%0.s" $(seq 1 $number))
 
   for input in "${argv[@]}"; do

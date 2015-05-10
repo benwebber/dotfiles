@@ -1,9 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Extract an archive.
 
-PROGRAM=$(basename $0)
-ERROR_MESSAGE="${PROGRAM}: cannot extract '%s'\n"
+PROGRAM=$(basename "${0}")
 
 usage() {
 cat<<EOF
@@ -15,6 +14,10 @@ Usage:
 Options:
   -h  show this screen and exit
 EOF
+}
+
+err() {
+  printf "%s: cannot extract '%s'\n" "${PROGRAM}" "${@}" >&2
 }
 
 __unrar() {
@@ -91,7 +94,7 @@ main() {
         __unzip "${filename}"
         ;;
       *)
-        printf "${ERROR_MESSAGE}" "${filename}" >&2
+        err "${filename}"
         exit 1
         ;;
     esac
