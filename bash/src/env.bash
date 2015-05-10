@@ -6,10 +6,16 @@ shopt -s autocd
 shopt -s dotglob
 shopt -s histappend
 
-export EDITOR=vim
+HISTDIR=$HOME/.history
 
-export HISTSIZE=10000
-export HISTCONTROL=ignorespace
-export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
-export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
+[[ -d $HISTDIR ]] || mkdir "${HISTDIR}"
+
 export CDPATH=:$HOME/projects
+export EDITOR=vim
+export HISTCONTROL=ignorespace
+export HISTFILE=$HISTDIR/.bash_history
+export HISTSIZE=
+export HISTFILESIZE=
+export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
+export LESSHISTFILE=$HISTDIR/.lesshst
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
