@@ -6,7 +6,6 @@ c.InteractiveShellApp.extensions = [
 
 c.TerminalIPythonApp.exec_lines = [
     'from __future__ import print_function',
-    'import requests',
 ]
 
 c.TerminalIPythonApp.display_banner = False
