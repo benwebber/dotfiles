@@ -4,6 +4,10 @@ SOURCES = $(shell find bash/src/ -maxdepth 1 -type f -iname '*.bash' ! -name env
 PLATFORM = bash/src/platform/$(shell uname).bash
 PACKAGES = bash gem git ipython ssh tools vim
 
+VUNDLE_PATH = ~/.vim/bundle/Vundle.vim
+VUNDLE_REPO = https://github.com/VundleVim/Vundle.vim.git
+VUNDLE_REF	= v0.10.2
+
 all: .bashrc
 
 dist:
@@ -19,7 +23,11 @@ clean:
 	rm -rf dist
 	vim +PluginClean! +qall
 
-install: .bashrc
+install-vundle:
+	git -C $(VUNDLE_PATH) fetch || git clone $(VUNDLE_REPO) $(VUNDLE_PATH)
+	git -C $(VUNDLE_PATH) checkout $(VUNDLE_REF)
+
+install: .bashrc install-vundle
 	install -m 644 dist/.bashrc bash/.bashrc
 	stow -R --ignore=src $(PACKAGES)
 	vim +PluginInstall +qall
