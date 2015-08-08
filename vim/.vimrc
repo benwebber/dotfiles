@@ -35,6 +35,16 @@ set splitbelow                              " more natural splits
 set splitright
 set backspace=indent,eol,start              " make backspace work as in other applications
 let g:netrw_liststyle=3
+" Keymaps {{{
+let mapleader=","
+" play nicely with soft-wrapping
+map k gk
+map <Up> gk
+map j gj
+map <Down> gj
+nmap <leader>t :TagbarToggle<CR>
+nmap <leader>s :Scriptify<CR>
+" }}}
 " }}}
 " Keymaps {{{
 let mapleader=","
