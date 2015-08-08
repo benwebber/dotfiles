@@ -1,6 +1,6 @@
 .PHONY: all clean install uninstall
 
-SOURCES = $(shell find bash/src/ -maxdepth 1 -type f -iname '*.bash' ! -name env.bash)
+SOURCES = $(shell find bash/src/ -maxdepth 1 -type f -iname '*.bash' ! -name env.bash ! -name local.bash)
 PLATFORM = bash/src/platform/$(shell uname).bash
 PACKAGES = bash gem git ipython ssh tools vim
 
@@ -13,6 +13,7 @@ dist:
 	cat bash/src/env.bash > dist/.bashrc
 	if [ -f $(PLATFORM) ]; then cat $(PLATFORM) >> dist/.bashrc; fi
 	cat $(SOURCES) >> dist/.bashrc
+	cat bash/src/local.bash >> dist/.bashrc
 
 clean:
 	rm -rf dist
