@@ -1,12 +1,11 @@
 .PHONY: all clean install uninstall
 
-SOURCES = $(shell find bash/src/ -maxdepth 1 -type f -iname '*.bash' ! -name env.bash ! -name local.bash)
-PLATFORM = bash/src/platform/$(shell uname).bash
-PACKAGES = bash gem git ipython ssh tools vim
-
+SOURCES     = $(shell find bash/src/ -maxdepth 1 -type f -iname '*.bash' ! -name env.bash ! -name local.bash)
+PLATFORM    = bash/src/platform/$(shell uname).bash
+PACKAGES    = bash gem git ipython ssh tools vim
 VUNDLE_PATH = ~/.vim/bundle/Vundle.vim
 VUNDLE_REPO = https://github.com/VundleVim/Vundle.vim.git
-VUNDLE_REF	= v0.10.2
+VUNDLE_REF  = v0.10.2
 
 all: .bashrc
 
