@@ -33,6 +33,7 @@ set wildmenu                                " tab through filenames
 set wildmode=longest,list,full              " tab completion
 set splitbelow                              " more natural splits
 set splitright
+set backspace=indent,eol,start              " make backspace work as in other applications
 " }}}
 " Keymaps {{{
 let mapleader=","
