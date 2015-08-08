@@ -102,9 +102,10 @@ augroup config
     " LaTeX (rubber) macro
     autocmd FileType tex nnoremap <leader>c :w<CR>:!rubber --pdf "%" && rubber --clean "%"<CR>
     " Markdown (Pandoc) macros
-    autocmd FileType markdown nnoremap <leader>ph :w<CR>:!pandoc "%" -s -S -o "%".html<CR>
-    autocmd FileType markdown nnoremap <leader>pp :w<CR>:!pandoc "%" -s -S -o "%".pdf<CR>
+    autocmd FileType markdown,rst nnoremap <leader>ph :w<CR>:!pandoc "%" -s -S -o "%".html<CR>
+    autocmd FileType markdown,rst nnoremap <leader>pp :w<CR>:!pandoc "%" -s -S -o "%".pdf<CR>
     autocmd FileType markdown nnoremap <leader>pr :w<CR>:!pandoc "%" -o "%".rst<CR>
+    autocmd FileType rst nnoremap <leader>pm :w<CR>:!pandoc "%" -o "%".md<CR>
     autocmd FileType markdown nnoremap <leader>pw :w<CR>:!pandoc "%" -t mediawiki -o "%".wiki<CR>
 augroup END
 
