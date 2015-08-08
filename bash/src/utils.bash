@@ -2,15 +2,6 @@
 # Utilities
 #------------------------------------------------------------------------------
 
-# Determine the machine's public IP address.
-# Arguments:
-#   None
-# Returns:
-#   The current machine's public IP address.
-myip() {
-  curl http://ifconfig.me/ip
-}
-
 # Retrieve information about IP addresses from <http://ipinfo.io/>.
 # If no arguments are received, use the current machine's public IP address.
 # Arguments:
