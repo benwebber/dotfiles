@@ -5,6 +5,7 @@
 	permission-reset = !git diff -p -R | grep -E \"^(diff|(old|new) mode)\" | git apply
 	fork = !git-fork
 	up = "!git remote update -p; git merge --ff-only @{u}"
+	staged = !git diff --staged
 
 [core]
 	excludesfile = ~/.gitignore_global
