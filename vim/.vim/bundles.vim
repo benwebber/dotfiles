@@ -9,6 +9,7 @@ Plugin 'gmarik/Vundle.vim'
 " GitHub
 Plugin 'Townk/vim-autoclose'
 Plugin 'bling/vim-airline'
+Plugin 'chase/vim-ansible-yaml'
 Plugin 'fatih/vim-go'
 Plugin 'godlygeek/tabular'
 Plugin 'jmcantrell/vim-virtualenv'
