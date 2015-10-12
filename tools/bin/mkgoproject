@@ -37,7 +37,7 @@ main() {
 
   for arg in "${@}"; do
     path="${GOPATH}/src/github.com/benwebber/${arg}"
-    project="${HOME}/projects/${arg}"
+    project="${HOME}/src/${arg}"
     git init "${path}"
     ln -svT "${path}" "${project}"
   done

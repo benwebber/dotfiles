@@ -14,7 +14,7 @@ HISTDIR=$HOME/.history
 
 [[ -d $HISTDIR ]] || mkdir "${HISTDIR}"
 
-export CDPATH=:$HOME/projects
+export CDPATH=:$HOME/src
 export EDITOR=vim
 export HISTCONTROL=ignorespace
 export HISTFILE=$HISTDIR/.bash_history

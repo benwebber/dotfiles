@@ -3,7 +3,7 @@
 #-------------------------------------------------------------------------------
 
 # Configure virtualenv
-export PROJECT_HOME=$HOME/projects
+export PROJECT_HOME=$HOME/src
 export WORKON_HOME=$HOME/.virtualenvs
 export VIRTUALENVWRAPPER_SCRIPT="$(command -v virtualenvwrapper.sh)"
 export PIPSI_HOME=${WORKON_HOME}
