@@ -80,3 +80,13 @@ function mkmv() {
 }
 
 complete -A directory mkcd mkcp mkmv
+
+DATETIME_FORMAT='%Y%m%dT%H%M%S'
+
+function now() {
+  date +"${DATETIME_FORMAT}"
+}
+
+function utc() {
+  date -u +"${DATETIME_FORMAT}"
+}
