@@ -8,6 +8,8 @@ shopt -s checkhash
 shopt -s dotglob
 shopt -s extglob
 shopt -s histappend
+shopt -s histreedit
+shopt -s histverify
 shopt -u sourcepath
 
 HISTDIR=$HOME/.history
