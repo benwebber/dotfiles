@@ -22,6 +22,7 @@ Plugin 'tomasr/molokai'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-markdown'
 Plugin 'vim-scripts/wikipedia.vim'
+Plugin 'vimwiki/vimwiki'
 
 call vundle#end()
 
