@@ -90,6 +90,8 @@ command! -nargs=0 Scriptify call Scriptify()
 " Autocommands {{{
 augroup config
     autocmd!
+    " write crontabs in place
+    autocmd filetype crontab setlocal nobackup nowritebackup
     " use 4 spaces in Python and PowerShell
     autocmd FileType python setlocal ts=4 sts=4 sw=4
     autocmd FileType ps1 setlocal ts=4 sts=4 sw=4
