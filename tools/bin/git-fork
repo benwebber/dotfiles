@@ -51,7 +51,7 @@ main() {
         ;;
     esac
   done
-  [[ -z $1 ]] && { usage; return 1; }
+  [[ -n $1 ]] || { usage; return 1; }
   fork "${1}"
 }
 

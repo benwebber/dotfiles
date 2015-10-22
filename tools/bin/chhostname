@@ -35,14 +35,9 @@ function main() {
 
   shift $(( OPTIND-1 ))
 
-  if [[ -z "${hostname}" ]]; then
-    usage
-    exit 1
-  fi
+  [[ -n "${hostname}" ]] || { usage; return 1; }
 
-  if [[ $EUID -ne 0 ]]; then
-    die 'must be root'
-  fi
+  [[ $EUID -eq 0 ]] || die 'must be root'
 
   scutil --set ComputerName "$1"
   scutil --set LocalHostName "$1"

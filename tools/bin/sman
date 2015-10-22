@@ -5,6 +5,11 @@ IFS=$'\n\t'
 PROGRAM=$(basename "${0}")
 TEMP_FILES=()
 
+function die() {
+  printf "%s: %s\n" "${PROGRAM}" "${@}" >&2
+  exit 1
+}
+
 # Remove temporary files.
 function cleanup() {
   if [[ ${#TEMP_FILES[@]} -gt 0 ]]; then
@@ -47,10 +52,7 @@ case $PROGRAM in
     sleep 1
     ;;
   manp)
-    if [[ $(uname) != "Darwin" ]]; then
-      printf "manp: only supported on OS X\n" 1>&2
-      exit 1
-    fi
+    [[ $(uname) == "Darwin" ]] || die 'only supported on OS X'
     manp "${@}"
     ;;
   *)

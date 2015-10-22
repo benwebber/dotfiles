@@ -18,7 +18,7 @@ EOF
 main() {
   local path
 
-  [[ $# -eq 0 ]] && { usage; return 1; }
+  [[ $# -gt 0 ]] || { usage; return 1; }
 
   while getopts 'h' opt; do
     case $opt in
