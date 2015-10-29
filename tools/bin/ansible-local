@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+exec ansible-playbook -i localhost, -c local "${@}"
