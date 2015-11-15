@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+PROGRAM=$(basename "${0}")
+
+usage() {
+  cat<<EOF
+usage: ${PROGRAM} [-h] <args>...
+
+Strip ANSI escape codes from text.
+
+Passes all arguments except \`-h\` to sed(1).
+EOF
+}
+
+main() {
+  if [[ ${1:-} == '-h' ]]; then
+    usage
+    return
+  fi
+  sed -r "s/\x1B\[[0-9;]*[mK]//g" "${@}"
+}
+
+main "${@}"
