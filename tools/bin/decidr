@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+
+"""
+Separate networks in CIDR notation into discrete IP addresses.
+
+If FILE is not specified, or if FILE is -, read from standard input.
+"""
+
+import argparse
+import ipaddress
+import os
+import sys
+
+
+def parse_args(argv):
+    """
+    Parse command-line arguments.
+
+    Returns: argparse.Namespace
+    """
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument(
+        '--batch', '-b',
+        nargs='+', metavar='NETWORK',
+        help='run in batch mode (specify networks on command line)',
+    )
+    group.add_argument(
+        'file',
+        nargs='?', metavar='FILE', type=argparse.FileType('r'),
+        default=sys.stdin,
+        help='file containing list of networks, one per line',
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv=None):
+    argv = argv if argv else sys.argv[1:]
+    args = parse_args(argv)
+
+    # In batch mode, use the networks provided on the command line. Default
+    # to reading networks from a file.
+    if args.batch:
+        ip_blocks = args.batch
+    else:
+        ip_blocks = args.file
+
+    for ip_block in ip_blocks:
+        try:
+            network = ipaddress.ip_network(ip_block.strip())
+            for ip_address in network:
+                print(ip_address)
+        except ValueError as e:
+            print(e, file=sys.stderr)
+            return os.EX_DATAERR
+
+
+if __name__ == '__main__':
+    sys.exit(main())
