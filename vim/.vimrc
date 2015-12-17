@@ -78,8 +78,8 @@ endfunction
 command! -nargs=0 Scriptify call Scriptify()
 
 function! Header(comment, marker, ...)
-  let line = a:comment . repeat(a:marker, &textwidth - 1) . "\n"
-  let message = a:comment . " " . join(a:000, " ") . "\n"
+  let line = substitute(&commentstring, '%s', repeat(a:marker, &textwidth - 1) . "\n", "")
+  let message = substitute(&commentstring, '%s', " " . join(a:000, " ") . "\n", "")
   execute "normal! a" . line
   execute "normal! a" . message
   execute "normal! a" . line
