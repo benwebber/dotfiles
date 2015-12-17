@@ -107,6 +107,10 @@ augroup templates
   autocmd BufNewFile *.* silent! call Boilerplate()
 augroup END
 
+augroup vimrc
+  autocmd!
+  autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END
 " }}}
 
 if filereadable(glob('~/.vimrc_local'))
