@@ -79,6 +79,10 @@ function mkmv() {
   mkdir -p -- "${@: -1}" && mv -- "$@"
 }
 
+function cdtemp() {
+  builtin cd -- "$(mktemp -d 2>/dev/null || mktemp -d -t tmp)"
+}
+
 complete -A directory mkcd mkcp mkmv
 
 DATETIME_FORMAT='%Y%m%dT%H%M%S'
