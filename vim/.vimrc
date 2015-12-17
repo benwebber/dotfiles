@@ -5,7 +5,7 @@ source ~/.vim/bundles.vim
 " Appearance {{{
 colorscheme molokai
 if v:version > 703
-  let &colorcolumn=join(range(80,255), ',')   " change background past column 79
+  let &colorcolumn=join(range(&textwidth,255), ',')   " change background past column 79
 endif
 set cursorline                              " highlight current line
 set number                                  " line numbers
@@ -19,9 +19,10 @@ set softtabstop=2                           " treat expanded tabs as real tabs
 set shiftwidth=2                            " indent using << and >>
 " Line handling
 set wrap                                    " wrap lines
+set linebreak                               " wrap lines at word boundaries
 set wrapmargin=0                            " don't force text wrapping
-set textwidth=0                             " don't automatically break lines
-set linebreak                               " ...unless manually broken
+set textwidth=80
+set formatoptions=cq                        " don't automatically break lines at textwidth
 set nolist                                  " list disables linebreak
 " }}}
 " Behaviour {{{
