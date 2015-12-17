@@ -43,7 +43,7 @@ map k gk
 map <Up> gk
 map j gj
 map <Down> gj
-nmap <leader>t :TagbarToggle<CR>
+nmap <leader>tt :TagbarToggle<CR>
 nmap <leader>s :Scriptify<CR>
 " }}}
 " Plugins {{{
