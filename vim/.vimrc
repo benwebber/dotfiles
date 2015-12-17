@@ -77,6 +77,16 @@ endfunction
 
 command! -nargs=0 Scriptify call Scriptify()
 
+function! Header(comment, marker, ...)
+  let line = a:comment . repeat(a:marker, &textwidth - 1) . "\n"
+  let message = a:comment . " " . join(a:000, " ") . "\n"
+  execute "normal! a" . line
+  execute "normal! a" . message
+  execute "normal! a" . line
+endfunction
+
+command! -nargs=* Section call Header("#", "=", <f-args>)
+command! -nargs=* Subsection call Header("#", "-", <f-args>)
 " }}}
 " Autocommands {{{
 augroup config
