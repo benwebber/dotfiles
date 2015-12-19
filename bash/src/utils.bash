@@ -78,6 +78,8 @@ halp() {
   [[ $? -ne 0 ]] && $BROWSER "https://www.google.com/search?q=${*}"
 }
 
+complete -A command halp
+
 # Make a directory then change to it.
 function mkcd() {
   mkdir -p -- "$@" && builtin cd -- "$@"
