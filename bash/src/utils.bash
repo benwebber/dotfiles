@@ -18,6 +18,20 @@ ipinfo() {
   fi
 }
 
+# Retrieve information about hosts using <http://ipinfo.io/>.
+# Arguments:
+#   $@  list of hostnames
+# Returns:
+#   JSON-formatted DNS and GeoIP information.
+nameinfo() {
+  [[ -z "${1:-}" ]] && { printf "nameinfo: enter hostname\n" >&2; return 1; }
+  for host in "${@}"; do
+    # shellcheck disable=SC2046
+    ipinfo $(dig +noall +short "${host}")
+  done
+}
+
+
 # Analyze an IP address using DolanSoft IP Analyzer.
 # Arguments:
 #   $1  IP address
