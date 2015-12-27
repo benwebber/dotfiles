@@ -99,6 +99,26 @@ function cdtemp() {
   builtin cd -- "$(mktemp -d 2>/dev/null || mktemp -d -t tmp)"
 }
 
+function swap() {
+  local usage='usage: swap FILE1 FILE2
+
+Rename FILE1 to FILE2 and FILE2 to FILE1.'
+  if [[ $# -ne 2 ]]; then
+    local rc=1
+    if [[ ${1:-} == '-h' ]] || [[ ${1:-} == '--help' ]]; then
+      printf "%s\n" "${usage}"
+      rc=0
+    else
+      printf "%s\n" "${usage}" >&2
+    fi
+    return $rc
+  fi
+  local temp=$(mktemp -t tmp.XXXXX)
+  command mv "${1}" "${temp}"
+  command mv "${2}" "${1}"
+  command mv "${temp}" "${2}"
+}
+
 complete -A directory mkcd mkcp mkmv
 
 DATETIME_FORMAT='%Y%m%dT%H%M%S'
