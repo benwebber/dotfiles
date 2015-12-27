@@ -27,4 +27,4 @@ export HISTSIZE=
 export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
 export LESSHISTFILE=$HISTDIR/less/lesshst.log
 export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
-export REDISCLI_HISTFILE=$HISTDIR/rediscli/redis_history.log
+export REDISCLI_HISTFILE=$HISTDIR/rediscli/rediscli_history.log
