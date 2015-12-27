@@ -14,9 +14,9 @@ shopt -u sourcepath
 
 HISTDIR=$HOME/.history
 
-[[ -d "${HISTDIR}/bash" ]] || mkdir -p "${HISTDIR}/bash"
-[[ -d "${HISTDIR}/less" ]] || mkdir -p "${HISTDIR}/less"
-[[ -d "${HISTDIR}/rediscli" ]] || mkdir -p "${HISTDIR}/rediscli"
+for d in bash less mysql psql rediscli; do
+  [[ -d "${HISTDIR}/${d}" ]] || mkdir -p "${HISTDIR}/${d}"
+done
 
 export CDPATH=:$HOME/src
 export EDITOR=vim
@@ -28,3 +28,5 @@ export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
 export LESSHISTFILE=$HISTDIR/less/lesshst.log
 export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
 export REDISCLI_HISTFILE=$HISTDIR/rediscli/rediscli_history.log
+export PSQL_HISTORY=$HISTDIR/psql/psql_history.log
+export MYSQL_HISTFILE=$HISTDIR/mysql/mysql_history.log
