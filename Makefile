@@ -1,11 +1,12 @@
 .PHONY: all clean install uninstall
 
-SOURCES     = $(shell find bash/src/ -maxdepth 1 -type f -iname '*.bash' ! -name env.bash ! -name local.bash)
-PLATFORM    = bash/src/platform/$(shell uname).bash
-PACKAGES    = $(shell find * -maxdepth 0 -type d ! -name '.*' ! -name 'dist')
-VUNDLE_PATH = ~/.vim/bundle/Vundle.vim
-VUNDLE_REPO = https://github.com/VundleVim/Vundle.vim.git
-VUNDLE_REF  = v0.10.2
+SOURCES          = $(shell find bash/src/ -maxdepth 1 -type f -iname '*.bash' ! -name env.bash ! -name local.bash)
+PLATFORM         = bash/src/platform/$(shell uname).bash
+PACKAGES         = $(shell find * -maxdepth 0 -type d ! -name '.*' ! -name 'dist')
+VIM_PLUG_VERSION = 0.8.0
+VIM_PLUG_URL     = https://raw.githubusercontent.com/junegunn/vim-plug/$(VIM_PLUG_VERSION)/plug.vim
+VIM_AUTOLOAD_DIR = ~/.vim/autoload
+VIM_PLUG         = $(VIM_AUTOLOAD_DIR)/plug-$(VIM_PLUG_VERSION).vim
 
 all: .bashrc
 
@@ -20,16 +21,18 @@ dist:
 
 clean:
 	rm -rf dist
-	vim +PluginClean! +qall
+	vim +PlugClean! +qall
 
-install-vundle:
-	git -C $(VUNDLE_PATH) fetch || git clone $(VUNDLE_REPO) $(VUNDLE_PATH)
-	git -C $(VUNDLE_PATH) checkout $(VUNDLE_REF)
+$(VIM_PLUG):
+	curl -fo $(VIM_AUTOLOAD_DIR)/plug-$(VIM_PLUG_VERSION).vim --create-dirs $(VIM_PLUG_URL)
 
-install: .bashrc install-vundle
+install-vim-plug: $(VIM_PLUG)
+	ln -sf $(VIM_AUTOLOAD_DIR)/plug-$(VIM_PLUG_VERSION).vim $(VIM_AUTOLOAD_DIR)/plug.vim
+
+install: .bashrc install-vim-plug
 	install -m 644 dist/.bashrc bash/.bashrc
 	stow -R --ignore=src $(PACKAGES)
-	vim +PluginInstall +qall
+	vim +PlugInstall +qall
 	mkdir -p ~/.logrotate
 
 uninstall:

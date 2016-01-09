@@ -1,4 +1,5 @@
 dist/
 bash/.bashrc
 vim/.vim/bundle
+vim/.vim/autoload
 vim/.vim/.netrwhist

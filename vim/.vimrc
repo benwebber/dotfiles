@@ -1,4 +1,28 @@
-source ~/.vim/bundles.vim
+"===============================================================================
+" Plugins
+"===============================================================================
+
+call plug#begin('~/.vim/bundle')
+
+Plug 'Townk/vim-autoclose'
+Plug 'bling/vim-airline'
+Plug 'chase/vim-ansible-yaml'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'fatih/vim-go'
+Plug 'godlygeek/tabular'
+Plug 'jmcantrell/vim-virtualenv'
+Plug 'jplaut/vim-arduino-ino'
+Plug 'kien/ctrlp.vim'
+Plug 'majutsushi/tagbar'
+Plug 'rodjek/vim-puppet'
+Plug 'scrooloose/syntastic'
+Plug 'tomasr/molokai'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-markdown'
+Plug 'vim-scripts/wikipedia.vim'
+Plug 'vimwiki/vimwiki'
+
+call plug#end()
 
 "===============================================================================
 " Lines and whitespace
