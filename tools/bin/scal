@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+declare -r PROGRAM=$(basename "${0}")
+declare -r ISO8601_RE='([0-9]+)[/\-]([0-9]+)'
+
+
+usage() {
+  cat<<EOF
+usage: ${PROGRAM} [-h] [OPTIONS...] [YYYY] [mm]
+
+Like cal, but big-endian. Wraps gcal if available.
+
+${PROGRAM} passes all arguments except \`-h\` to the wrapped command.
+
+Options:
+  -h  show this screen and exit
+EOF
+}
+
+
+_cal() {
+  if [[ -x $(command -v gcal) ]]; then
+    gcal --starting-day=monday "${@}"
+  else
+    cal "${@}"
+  fi
+}
+
+
+main() {
+  local year=${1:-}
+  local month=${2:-}
+
+  if [[ $year == '-h' ]]; then
+    usage
+    return
+  fi
+
+  if [[ $year =~ $ISO8601_RE ]]; then
+    year="${BASH_REMATCH[1]}"
+    month="${BASH_REMATCH[2]}"
+  fi
+
+  # shellcheck disable=SC2086
+  _cal $month $year
+}
+
+
+main "${@}"
