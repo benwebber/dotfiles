@@ -26,7 +26,8 @@ export HISTFILESIZE=
 export HISTSIZE=
 export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
 export LESSHISTFILE=$HISTDIR/less/lesshst.log
-export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
-export REDISCLI_HISTFILE=$HISTDIR/rediscli/rediscli_history.log
-export PSQL_HISTORY=$HISTDIR/psql/psql_history.log
+export MANPAGER='/bin/bash -c "vim -c \"set ft=man ts=8 cc= nomod nolist nonu noma\" </dev/tty <(col -b)"'
 export MYSQL_HISTFILE=$HISTDIR/mysql/mysql_history.log
+export PATH=$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH
+export PSQL_HISTORY=$HISTDIR/psql/psql_history.log
+export REDISCLI_HISTFILE=$HISTDIR/rediscli/rediscli_history.log
