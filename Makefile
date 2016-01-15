@@ -1,6 +1,6 @@
 .PHONY: all clean install uninstall
 
-SOURCES          = $(shell find bash/src/ -maxdepth 1 -type f -iname '*.bash' ! -name env.bash ! -name local.bash)
+SOURCES          = $(shell find bash/src/ -maxdepth 1 -type f -iname '*.bash' ! -name env.bash ! -name local.bash ! -name s.bash)
 PLATFORM         = bash/src/platform/$(shell uname).bash
 PACKAGES         = $(shell find * -maxdepth 0 -type d ! -name '.*' ! -name 'dist')
 VIM_PLUG_VERSION = 0.8.0
@@ -17,6 +17,7 @@ dist:
 	cat bash/src/env.bash > dist/.bashrc
 	if [ -f $(PLATFORM) ]; then cat $(PLATFORM) >> dist/.bashrc; fi
 	cat $(SOURCES) >> dist/.bashrc
+	cat bash/src/s.bash >> dist/.bashrc
 	cat bash/src/local.bash >> dist/.bashrc
 
 clean:

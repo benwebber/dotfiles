@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+exec python -m smtpd -n -c DebuggingServer localhost:1025
