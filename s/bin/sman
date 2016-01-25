@@ -38,9 +38,18 @@ function manp() {
 }
 
 
+function manv() {
+  local stdin=
+  if [[ -t 0 ]]; then
+    stdin="MANPAGER=cat man ${*} |"
+  fi
+  eval "$stdin col -b | view -c 'set ft=man ts=8 cc= nomod nolist nonu noma' -"
+}
+
+
 trap cleanup EXIT
 
-if [[ $# -lt 1 ]]; then
+if [[ $# -lt 1 ]] && [[ ! -t 0 ]] && [[ $PROGRAM != 'manv' ]]; then
   man
   exit
 fi
@@ -54,6 +63,9 @@ case $PROGRAM in
   manp)
     [[ $(uname) == "Darwin" ]] || die 'only supported on OS X'
     manp "${@}"
+    ;;
+  manv)
+    manv "${@}"
     ;;
   *)
     man "${@}"
