@@ -5,6 +5,7 @@
 call plug#begin('~/.vim/bundle')
 
 Plug 'Townk/vim-autoclose'
+Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'chase/vim-ansible-yaml'
 Plug 'dhruvasagar/vim-table-mode'
@@ -68,6 +69,7 @@ set wildmode=longest,list,full " tab completion
 set splitbelow                 " more natural splits
 set splitright
 set backspace=indent,eol,start " make backspace work as in other applications
+set updatetime=250
 
 "===============================================================================
 " Keymaps
@@ -94,6 +96,10 @@ let g:airline#extensions#virtualenv#enabled   = 1
 let g:airline#extensions#branch#enabled       = 1
 let g:airline#extensions#branch#empty_message = ''
 let g:airline#extensions#virtualenv#enabled   = 1
+
+" vim-gitgutter
+let g:gitgutter_realtime = 1
+let g:gitgutter_eager    = 1
 
 " vim-go
 let g:go_fmt_command         = 'goimports'
