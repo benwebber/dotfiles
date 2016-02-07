@@ -83,6 +83,7 @@ map j gj
 map <Down> gj
 nmap <leader>tt :TagbarToggle<CR>
 nmap <leader>s :Scriptify<CR>
+nmap <leader>i :Isort<CR>
 
 "===============================================================================
 " Plugins
@@ -134,8 +135,14 @@ function! Header(comment, marker, ...)
   execute "normal! a" . line
 endfunction
 
+function! Isort()
+  execute "silent !isort " . bufname("%")
+  execute "silent e! " . bufname("%")
+endfunction
+
 command! -nargs=* Section call Header("#", "=", <f-args>)
 command! -nargs=* Subsection call Header("#", "-", <f-args>)
+command! Isort call Isort()
 
 "===============================================================================
 " Autocommands
