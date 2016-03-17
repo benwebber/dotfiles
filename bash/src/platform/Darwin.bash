@@ -19,7 +19,7 @@ __load_gnu_utils() {
   for package in "${packages[@]}"; do
     path="/usr/local/opt/${package}/libexec"
     if [[ -d $path ]]; then
-      export PATH="${path}/gnubin:${PATH}"
+      path contains "${path}/gnubin" || path insert "${path}/gnubin"
       export MANPATH="${path}/gnuman:${MANPATH}"
     fi
   done
