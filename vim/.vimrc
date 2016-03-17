@@ -9,6 +9,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'chase/vim-ansible-yaml'
 Plug 'dhruvasagar/vim-table-mode'
+" includes fix for http://paulgorman.org/blog/1400942674
+Plug 'eiginn/netrw'
 Plug 'fatih/vim-go'
 Plug 'godlygeek/tabular'
 Plug 'jmcantrell/vim-virtualenv'
