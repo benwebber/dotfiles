@@ -36,6 +36,7 @@ install: .bashrc install-vim-plug
 	stow -R --ignore=src $(PACKAGES)
 	vim +PlugInstall +qall
 	mkdir -p ~/.logrotate
+	mkdir -p ~/.history/{bash,less,mysql,psql,rediscli,k}
 
 uninstall:
 	stow -D $(PACKAGES)

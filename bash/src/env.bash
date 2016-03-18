@@ -14,10 +14,6 @@ shopt -u sourcepath
 
 HISTDIR=$HOME/.history
 
-for d in bash less mysql psql rediscli; do
-  [[ -d "${HISTDIR}/${d}" ]] || mkdir -p "${HISTDIR}/${d}"
-done
-
 export CDPATH=:$HOME/src
 export EDITOR=vim
 export HISTCONTROL=ignorespace
