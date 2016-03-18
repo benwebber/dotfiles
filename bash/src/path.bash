@@ -22,7 +22,7 @@ commands:
   length            return the number of paths in $PATH
   push <path>       append <path> to the end of $PATH
 '
-  local path=$PATH
+  local pathvar=PATH
   local OPTIND
 
   while getopts 'hp:' opt; do
@@ -32,7 +32,7 @@ commands:
         return
         ;;
       p)
-        path=$OPTARG
+        pathvar=${OPTARG}
         ;;
       *)
         printf "%s" "${usage}"
@@ -45,9 +45,11 @@ commands:
 
   # large number of false positives due to positions of array operations
   # shellcheck disable=SC2128
+  # required to indirectly dereference variable
+  # shellcheck disable=SC1066
   case $1 in
     at)
-      path=(${path//:/ })
+      path=(${!pathvar//:/ })
       # Given array `arr` with length `n`, fail if user tries to access
       # `arr[m]`, where m >= n.
       local max_index=${#path[@]}
@@ -56,21 +58,22 @@ commands:
       printf "%s\n" "${path[$2]}"
       ;;
     contains)
-      [[ ":${path}:" == *:${2}:* ]]
+      [[ ":${!pathvar}:" == *:${2}:* ]]
       ;;
     delete)
-      path=":${path}"
+      echo "${2}"
+      path=":${!pathvar}"
       path="${path/:${2}/}"
-      export PATH="${path#:}"
+      export $pathvar="${path#:}"
       ;;
     first)
-      printf "%s\n" "${path%%:*}"
+      printf "%s\n" "${!pathvar%%:*}"
       ;;
     help)
       printf "%s\n" "${usage}"
       ;;
     index)
-      path=(${path//:/ })
+      path=(${!pathvar//:/ })
       for ((i=0; i < "${#path[@]}"; i++)); do
         if [[ ${path[$i]} == "${2}" ]]; then
           printf "%s\n" $i
@@ -80,20 +83,20 @@ commands:
       return 1
       ;;
     insert)
-      export PATH="${2}:${path}"
+      export $pathvar="${2}:${!pathvar}"
       ;;
     last)
-      printf "%s\n" "${path##*:}"
+      printf "%s\n" "${!pathvar##*:}"
       ;;
     length)
-      path=(${path//:/ })
+      path=(${!pathvar//:/ })
       printf "%s\n" "${#path[@]}"
       ;;
     push)
-      export PATH="${path}:${2}"
+      export $pathvar="${!pathvar}:${2}"
       ;;
     *)
-      printf "%s\n" "${path//:/$'\n'}"
+      printf "%s\n" "${!pathvar//:/$'\n'}"
       ;;
   esac
 }

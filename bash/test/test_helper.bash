@@ -1,6 +1,5 @@
 setup() {
   export PATH='/usr/local/bin:/usr/bin:/bin'
-  export NON_DEFAULT_PATH='/foo:/foo/bar:/foo/bar/baz'
   . "${BATS_TEST_DIRNAME}/../src/path.bash"
 }
 

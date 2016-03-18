@@ -17,7 +17,8 @@ load test_helper
 }
 
 @test '-p: can access variable other than $PATH' {
-  run path -p $NON_DEFAULT_PATH first
+  export NON_DEFAULT_PATH=/foo:/foo/bar:/foo/bar/baz
+  run path -p NON_DEFAULT_PATH first
   assert_output /foo
 }
 
@@ -51,6 +52,12 @@ load test_helper
   export PATH="${OLD_PATH}"
 }
 
+@test 'delete: removes paths from non-default path' {
+  export NON_DEFAULT_PATH=/foo:/foo/bar:/foo/bar/baz
+  path -p NON_DEFAULT_PATH delete /foo
+  assert_equal /foo/bar:/foo/bar/baz $NON_DEFAULT_PATH
+}
+
 @test 'first: prints first path in $PATH' {
   run path first
   assert_success
@@ -80,6 +87,12 @@ load test_helper
   export PATH="${OLD_PATH}"
 }
 
+@test 'insert: prepends paths to non-default path' {
+  export NON_DEFAULT_PATH=/foo:/foo/bar:/foo/bar/baz
+  path -p NON_DEFAULT_PATH insert /zap
+  assert_equal /zap:/foo:/foo/bar:/foo/bar/baz $NON_DEFAULT_PATH
+}
+
 @test 'last: prints first path in $PATH' {
   run path last
   assert_success
@@ -93,9 +106,13 @@ load test_helper
 }
 
 @test 'push: appends paths to $PATH' {
-  OLD_PATH="${PATH}"
   path push /sbin
   assert_equal /usr/local/bin:/usr/bin:/bin:/sbin $PATH
-  export PATH="${OLD_PATH}"
+}
+
+@test 'push: appends paths to non-default path' {
+  export NON_DEFAULT_PATH=/foo:/foo/bar:/foo/bar/baz
+  path -p NON_DEFAULT_PATH push /zap
+  assert_equal /foo:/foo/bar:/foo/bar/baz:/zap $NON_DEFAULT_PATH
 }
 
