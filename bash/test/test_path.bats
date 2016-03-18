@@ -6,9 +6,9 @@ load test_helper
 @test 'no arguments: print list of paths in $PATH' {
   run path
   assert_success
-  assert_equal "${lines[0]}" /usr/local/bin
-  assert_equal "${lines[1]}" /usr/bin
-  assert_equal "${lines[2]}" /bin
+  assert_equal /usr/local/bin "${lines[0]}"
+  assert_equal /usr/bin "${lines[1]}"
+  assert_equal /bin "${lines[2]}"
 }
 
 @test '-h: prints help' {
@@ -45,9 +45,9 @@ load test_helper
 @test 'delete: removes paths from $PATH' {
   OLD_PATH="${PATH}"
   path delete /bin
-  assert_equal $PATH /usr/local/bin:/usr/bin
+  assert_equal /usr/local/bin:/usr/bin $PATH
   path delete /usr/local/bin
-  assert_equal $PATH /usr/bin
+  assert_equal /usr/bin $PATH
   export PATH="${OLD_PATH}"
 }
 
@@ -76,7 +76,7 @@ load test_helper
 @test 'insert: prepends paths to $PATH' {
   OLD_PATH="${PATH}"
   path insert /sbin
-  assert_equal $PATH /sbin:/usr/local/bin:/usr/bin:/bin
+  assert_equal /sbin:/usr/local/bin:/usr/bin:/bin $PATH
   export PATH="${OLD_PATH}"
 }
 
@@ -95,7 +95,7 @@ load test_helper
 @test 'push: appends paths to $PATH' {
   OLD_PATH="${PATH}"
   path push /sbin
-  assert_equal $PATH /usr/local/bin:/usr/bin:/bin:/sbin
+  assert_equal /usr/local/bin:/usr/bin:/bin:/sbin $PATH
   export PATH="${OLD_PATH}"
 }
 
