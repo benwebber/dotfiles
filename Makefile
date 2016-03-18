@@ -33,7 +33,7 @@ install-vim-plug: $(VIM_PLUG)
 
 install: .bashrc install-vim-plug
 	install -m 644 dist/.bashrc bash/.bashrc
-	stow -R --ignore=src $(PACKAGES)
+	stow -R --ignore='^(src|test)' $(PACKAGES)
 	vim +PlugInstall +qall
 	mkdir -p ~/.logrotate
 	mkdir -p ~/.history/{bash,less,mysql,psql,rediscli,k}
