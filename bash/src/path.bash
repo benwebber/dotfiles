@@ -60,7 +60,7 @@ commands:
       ;;
     delete)
       path=":${path}"
-      path="${path//:${2}/}"
+      path="${path/:${2}/}"
       export PATH="${path#:}"
       ;;
     first)
