@@ -6,11 +6,9 @@ call plug#begin('~/.vim/bundle')
 
 Plug 'Townk/vim-autoclose'
 Plug 'airblade/vim-gitgutter'
-Plug 'bling/vim-airline'
 Plug 'chase/vim-ansible-yaml'
 Plug 'dhruvasagar/vim-table-mode'
-" includes fix for http://paulgorman.org/blog/1400942674
-Plug 'eiginn/netrw'
+Plug 'eiginn/netrw' " includes fix for http://paulgorman.org/blog/1400942674
 Plug 'fatih/vim-go'
 Plug 'godlygeek/tabular'
 Plug 'jmcantrell/vim-virtualenv'
@@ -22,6 +20,7 @@ Plug 'scrooloose/syntastic'
 Plug 'tomasr/molokai'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-markdown'
+Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/wikipedia.vim'
 Plug 'vimwiki/vimwiki'
 
