@@ -1,4 +1,4 @@
-.PHONY: all clean install uninstall
+.PHONY: all clean install uninstall update
 
 PACKAGES         = $(shell find * -maxdepth 0 -type d ! -name 'stow')
 
@@ -20,3 +20,8 @@ install: all
 uninstall:
 	stow -D $(PACKAGES)
 	stow -D stow
+
+update:
+	git pull
+	$(MAKE) -C vim update
+	stow -R $(PACKAGES)

@@ -10,3 +10,6 @@ $(VIM_PLUG):
 
 install-vim-plug: $(VIM_PLUG)
 	ln -sf $(VIM_AUTOLOAD_DIR)/plug-$(VIM_PLUG_VERSION).vim $(VIM_AUTOLOAD_DIR)/plug.vim
+
+update:
+	vim +PlugUpdate! +qall
