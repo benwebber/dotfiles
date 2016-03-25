@@ -7,16 +7,15 @@ STOW     = stow --target $(prefix)
 
 all:
 	$(MAKE) -C bash
-	$(MAKE) -C vim
 
 clean:
-	$(MAKE) -w -C bash clean
-	vim +PlugClean! +qall
+	$(MAKE) -C bash clean
+	$(MAKE) -C vim clean
 
 install: all
 	$(STOW) -R stow
 	$(STOW) -R $(PACKAGES)
-	vim +PlugInstall +qall
+	$(MAKE) -C vim install
 	mkdir -p $(prefix)/.logrotate
 	mkdir -p $(prefix)/.history/{bash,less,mysql,psql,rediscli}
 
