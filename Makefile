@@ -1,27 +1,30 @@
 .PHONY: all clean install uninstall update
 
-PACKAGES         = $(shell find * -maxdepth 0 -type d ! -name 'stow')
+prefix   = $(HOME)
+
+PACKAGES = $(shell find * -maxdepth 0 -type d ! -name 'stow')
+STOW     = stow --target $(prefix)
 
 all:
 	$(MAKE) -C bash
 	$(MAKE) -C vim
 
 clean:
-	$(MAKE) -C bash clean
+	$(MAKE) -w -C bash clean
 	vim +PlugClean! +qall
 
 install: all
-	stow -R stow
-	stow -R $(PACKAGES)
+	$(STOW) -R stow
+	$(STOW) -R $(PACKAGES)
 	vim +PlugInstall +qall
-	mkdir -p ~/.logrotate
-	mkdir -p ~/.history/{bash,less,mysql,psql,rediscli}
+	mkdir -p $(prefix)/.logrotate
+	mkdir -p $(prefix)/.history/{bash,less,mysql,psql,rediscli}
 
 uninstall:
-	stow -D $(PACKAGES)
-	stow -D stow
+	$(STOW) -D $(PACKAGES)
+	$(STOW) -D stow
 
 update:
 	git pull
 	$(MAKE) -C vim update
-	stow -R $(PACKAGES)
+	$(STOW) -R $(PACKAGES)
