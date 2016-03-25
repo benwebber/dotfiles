@@ -71,6 +71,7 @@ set splitbelow                 " more natural splits
 set splitright
 set backspace=indent,eol,start " make backspace work as in other applications
 set updatetime=250
+set viminfo='100,<50,s10,h,n~/.vim/viminfo
 
 "===============================================================================
 " Keymaps
