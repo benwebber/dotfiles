@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := .bashrc
-SOURCES        = $(shell find * -maxdepth 1 -type f -iname '*.bash' ! -name env.bash ! -name path.bash ! -name local.bash ! -name s.bash)
+SOURCES        = $(shell find src -maxdepth 1 -type f -iname '*.bash' ! -name env.bash ! -name path.bash ! -name local.bash ! -name s.bash)
 PLATFORM       = src/platform/$(shell uname).bash
 
 .bashrc:
