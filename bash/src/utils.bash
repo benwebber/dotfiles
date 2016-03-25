@@ -121,12 +121,11 @@ Rename FILE1 to FILE2 and FILE2 to FILE1.'
 
 complete -A directory mkcd mkcp mkmv
 
-DATETIME_FORMAT='%Y%m%dT%H%M%S'
-
 function now() {
-  date +"${DATETIME_FORMAT}"
+  # shellcheck disable=SC2048,SC2086
+  date +'%Y%m%dT%H%M%S' $*
 }
 
 function utc() {
-  date -u +"${DATETIME_FORMAT}"
+  now -u
 }
