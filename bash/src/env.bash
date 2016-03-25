@@ -25,9 +25,9 @@ export LESSHISTFILE=$HISTDIR/less/lesshst.log
 export MANPAGER=manv
 export MYSQL_HISTFILE=$HISTDIR/mysql/mysql_history.log
 
-path contains /usr/local/sbin || path insert /usr/local/sbin
-path contains /usr/local/bin || path insert /usr/local/bin
-path contains "${HOME}/bin" || path insert "${HOME}/bin"
+path put /usr/local/sbin
+path put /usr/local/bin
+path put "${HOME}/bin"
 
 export PSQL_HISTORY=$HISTDIR/psql/psql_history.log
 export REDISCLI_HISTFILE=$HISTDIR/rediscli/rediscli_history.log

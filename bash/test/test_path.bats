@@ -116,3 +116,17 @@ load test_helper
   assert_equal /foo:/foo/bar:/foo/bar/baz:/zap $NON_DEFAULT_PATH
 }
 
+
+@test 'put: prepends paths to $PATH idempotently' {
+  path put /sbin
+  path put /usr/local/bin
+  assert_equal /sbin:/usr/local/bin:/usr/bin:/bin $PATH
+}
+
+@test 'put: prepends paths to non-default path idempotently' {
+  export NON_DEFAULT_PATH=/foo:/foo/bar:/foo/bar/baz
+  path -p NON_DEFAULT_PATH put /zap
+  path -p NON_DEFAULT_PATH put /foo
+  assert_equal /zap:/foo:/foo/bar:/foo/bar/baz $NON_DEFAULT_PATH
+}
+

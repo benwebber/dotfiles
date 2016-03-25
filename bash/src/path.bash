@@ -21,6 +21,7 @@ commands:
   last              return the last path in $PATH
   length            return the number of paths in $PATH
   push <path>       append <path> to the end of $PATH
+  put <path>        insert <path> if it does not exist
 '
   local pathvar=PATH
   local OPTIND
@@ -94,6 +95,9 @@ commands:
       ;;
     push)
       export $pathvar="${!pathvar}:${2}"
+      ;;
+    put)
+      [[ ":${!pathvar}:" == *:${2}:* ]] || export $pathvar="${2}:${!pathvar}"
       ;;
     *)
       printf "%s\n" "${!pathvar//:/$'\n'}"
