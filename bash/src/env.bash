@@ -24,10 +24,6 @@ export HISTTIMEFORMAT="%Y-%m-%d %H:%M:%S "
 export LESSHISTFILE=$HISTDIR/less/lesshst.log
 export MANPAGER=manv
 export MYSQL_HISTFILE=$HISTDIR/mysql/mysql_history.log
-
-path put /usr/local/sbin
-path put /usr/local/bin
-path put "${HOME}/bin"
-
+export PATH="${HOME}/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
 export PSQL_HISTORY=$HISTDIR/psql/psql_history.log
 export REDISCLI_HISTFILE=$HISTDIR/rediscli/rediscli_history.log
