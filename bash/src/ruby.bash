@@ -4,4 +4,4 @@
 
 path put ~/.gem/ruby/2.2.0/bin
 
-. "${USR_PATH}"/opt/chruby/share/chruby/*
+for f in "${USR_PATH}"/share/chruby/*; do . "${f}"; done
