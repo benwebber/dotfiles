@@ -12,7 +12,7 @@ alias c=clear
 
 # coreutils
 alias cp='cp -ivr'
-alias ls='ls -lah --color=auto'
+alias ls='ls -lahN --color=auto'
 alias mkdir='mkdir -p'
 alias mv='mv -iv'
 alias rm='rm -iv'
