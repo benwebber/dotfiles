@@ -4,4 +4,8 @@
 
 path put ~/.gem/ruby/2.2.0/bin
 
-for f in "${USR_PATH}"/share/chruby/*; do . "${f}"; done
+[[ -d "${USR_PATH}/share/chruby" ]] && {
+  for f in "${USR_PATH}"/share/chruby/*; do
+    . "${f}"
+  done
+}
