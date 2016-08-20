@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+virtualenv --relocatable "${VIRTUAL_ENV}"
