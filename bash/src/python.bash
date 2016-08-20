@@ -10,3 +10,9 @@ export PIPSI_HOME=${WORKON_HOME}
 export PIPSI_BIN_DIR=${HOME}/bin
 
 [[ -f $VIRTUALENVWRAPPER_SCRIPT ]] && . "${VIRTUALENVWRAPPER_SCRIPT/%.sh/_lazy.sh}"
+
+revirtualenv() {
+  virtualenv --relocatable "${WORKON_HOME}/${1}"
+}
+
+complete -o default -o nospace -F _virtualenvs revirtualenv
