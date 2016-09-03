@@ -8,6 +8,7 @@ Plug 'Townk/vim-autoclose'
 Plug 'airblade/vim-gitgutter'
 Plug 'chase/vim-ansible-yaml'
 Plug 'dhruvasagar/vim-table-mode'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'eiginn/netrw' " includes fix for http://paulgorman.org/blog/1400942674
 Plug 'fatih/vim-go'
 Plug 'godlygeek/tabular'
