@@ -169,6 +169,7 @@ augroup END
 augroup writing
     autocmd!
     autocmd FileType markdown,rst,wiki,tex set spell spelllang=en_ca
+    autocmd FileType markdown,rst,wiki,text setlocal tw=0
     " Pandoc macros
     autocmd FileType markdown,rst nnoremap <leader>ph :w<CR>:!pandoc "%" -s -S -o "%".html<CR>
     autocmd FileType markdown,rst nnoremap <leader>pp :w<CR>:!pandoc "%" -s -S -o "%".pdf<CR>
