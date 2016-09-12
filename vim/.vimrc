@@ -17,6 +17,7 @@ Plug 'jplaut/vim-arduino-ino'
 Plug 'kien/ctrlp.vim'
 Plug 'majutsushi/tagbar'
 Plug 'rodjek/vim-puppet'
+Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/syntastic'
 Plug 'tomasr/molokai'
 Plug 'tpope/vim-fugitive'
@@ -24,6 +25,7 @@ Plug 'tpope/vim-markdown'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/wikipedia.vim'
 Plug 'vimwiki/vimwiki'
+Plug 'vim-scripts/applescript.vim'
 
 call plug#end()
 
