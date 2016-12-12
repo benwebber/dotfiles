@@ -129,3 +129,11 @@ function now() {
 function utc() {
   now -u
 }
+
+function lower() {
+  tr '[:upper:]' '[:lower:]'
+}
+
+function upper() {
+  tr '[:lower:]' '[:upper:]'
+}
