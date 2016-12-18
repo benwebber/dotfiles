@@ -5,13 +5,13 @@ IFS=$'\n\t'
 PROGRAM=$(basename "${0}")
 TEMP_FILES=()
 
-function die() {
+die() {
   printf "%s: %s\n" "${PROGRAM}" "${@}" >&2
   exit 1
 }
 
 # Remove temporary files.
-function cleanup() {
+cleanup() {
   if [[ ${#TEMP_FILES[@]} -gt 0 ]]; then
     for f in "${TEMP_FILES[@]}"; do
       rm "${f}"
@@ -20,7 +20,7 @@ function cleanup() {
 }
 
 # Render man pages as HTML and open in the default browser.
-function manh() {
+manh() {
   local temp
   for page in "${@}"; do
     temp=$(mktemp --suffix .html)
@@ -31,14 +31,14 @@ function manh() {
 }
 
 # Render man pages as PostScript and open in Preview.
-function manp() {
+manp() {
   for page in "${@}"; do
     man -t "${page}" | open -f -a Preview
   done
 }
 
 
-function manv() {
+manv() {
   local stdin=
   if [[ -t 0 ]]; then
     stdin="MANPAGER=cat man ${*} |"

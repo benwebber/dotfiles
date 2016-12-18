@@ -81,25 +81,25 @@ halp() {
 complete -A command halp
 
 # Make a directory then change to it.
-function mkcd() {
+mkcd() {
   mkdir -p -- "$@" && builtin cd -- "$@"
 }
 
 # Make a directory and copy files into it.
-function mkcp() {
+mkcp() {
   mkdir -p -- "${@: -1}" && cp -- "$@"
 }
 
 # Make a directory and move files into it.
-function mkmv() {
+mkmv() {
   mkdir -p -- "${@: -1}" && mv -- "$@"
 }
 
-function cdtemp() {
+cdtemp() {
   builtin cd -- "$(mktemp -d 2>/dev/null || mktemp -d -t tmp)"
 }
 
-function swap() {
+swap() {
   local usage='usage: swap FILE1 FILE2
 
 Rename FILE1 to FILE2 and FILE2 to FILE1.'
@@ -121,12 +121,12 @@ Rename FILE1 to FILE2 and FILE2 to FILE1.'
 
 complete -A directory mkcd mkcp mkmv
 
-function now() {
+now() {
   # shellcheck disable=SC2048,SC2086
   date +'%Y%m%dT%H%M%S' $*
 }
 
-function utc() {
+utc() {
   now -u
 }
 
@@ -148,7 +148,7 @@ join_by() {
   echo
 }
 
-function lower() {
+lower() {
   tr '[:upper:]' '[:lower:]'
 }
 
@@ -178,6 +178,6 @@ trim() {
   lstrip | rstrip
 }
 
-function upper() {
+upper() {
   tr '[:lower:]' '[:upper:]'
 }
