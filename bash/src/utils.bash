@@ -130,8 +130,52 @@ function utc() {
   now -u
 }
 
+default() {
+  [[ -n ${1:-} ]] || { echo 'default <default>' >&2; return 1; }
+  grep . || printf '%s\n' "${1}"
+}
+
+format() {
+  local fmt
+  IFS= read -r fmt
+  # shellcheck disable=SC2059
+  printf "${fmt}\n" "${@}"
+}
+
+join_by() {
+  local sep="${1:-}"
+  tr '\n' ' ' | trim | sed -e 's/[[:space:]]\+/'"${sep}"'/g'
+  echo
+}
+
 function lower() {
   tr '[:upper:]' '[:lower:]'
+}
+
+lstrip() {
+  sed -e 's/^[[:space:]]*//'
+}
+
+random() {
+  local idx len text words
+  read -r text
+  len="$(wc -w <<< "${text}")"
+  idx=$((RANDOM % len))
+  read -r -a words <<< "${text}"
+  echo "${words[$idx]}"
+}
+
+replace() {
+  [[ -n ${1:-} && -n ${2:-} ]] || { echo 'replace <old> <new>' >&2; return 1; }
+  sed -e 's/'"${1}"'/'"${2}"'/g'
+}
+
+rstrip() {
+  sed -e 's/[[:space:]]*$//'
+}
+
+trim() {
+  lstrip | rstrip
 }
 
 function upper() {
