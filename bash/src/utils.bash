@@ -45,12 +45,6 @@ ipalyzer() {
   $BROWSER "https://www.ipalyzer.com/${1}"
 }
 
-# Reap all zombie processes. Use with caution.
-reap() {
-  # shellcheck disable=SC2009
-  kill -TERM "$(ps -exo stat,ppid | grep '[Zz]' | awk '{ print $2 }')"
-}
-
 # Look for help in multiple places.
 halp() {
   if [[ -z "${@}" ]] || [[ $1 == '-h' ]] || [[ $1 == '--help' ]]; then
