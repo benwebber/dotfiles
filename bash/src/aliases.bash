@@ -9,6 +9,7 @@ alias +x='chmod +x'
 alias vim='vim -p'
 alias mount='mount | column -t'
 alias c=clear
+alias rc='echo "${PIPESTATUS[@]}"'
 
 # coreutils
 alias cp='cp -ivr'
