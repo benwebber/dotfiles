@@ -15,6 +15,7 @@ Plug 'godlygeek/tabular'
 Plug 'jmcantrell/vim-virtualenv'
 Plug 'jplaut/vim-arduino-ino'
 Plug 'kien/ctrlp.vim'
+Plug 'ledger/vim-ledger'
 Plug 'majutsushi/tagbar'
 Plug 'rodjek/vim-puppet'
 Plug 'rust-lang/rust.vim'
@@ -23,9 +24,9 @@ Plug 'tomasr/molokai'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-markdown'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-scripts/applescript.vim'
 Plug 'vim-scripts/wikipedia.vim'
 Plug 'vimwiki/vimwiki'
-Plug 'vim-scripts/applescript.vim'
 
 call plug#end()
 
@@ -112,6 +113,9 @@ let g:go_fmt_command         = 'goimports'
 let g:go_highlight_functions = 1
 let g:go_highlight_methods   = 1
 let g:go_highlight_structs   = 1
+
+" vim-ledger
+let g:ledger_bin = 'hledger'
 
 " syntastic
 let g:syntastic_sh_shellcheck_args = '-s bash'
