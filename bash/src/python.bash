@@ -17,3 +17,5 @@ revirtualenv() {
 }
 
 complete -o default -o nospace -F _virtualenvs revirtualenv
+
+eval "$(pyenv init -)"
