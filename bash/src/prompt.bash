@@ -13,6 +13,7 @@ __fossil_ps1() {
 
 # Sets a typical PS1 including virtualenv and Git branch.
 __prompt() {
+  AT_PROMPT=1
   history -a
   local venv=
   [[ $VIRTUAL_ENV ]] && venv="[${VIRTUAL_ENV##*/}] "
@@ -20,3 +21,15 @@ __prompt() {
 }
 
 PROMPT_COMMAND=__prompt
+
+# Call halp using a question mark.
+__help() {
+  [[ -n $COMP_LINE ]] && return
+  [[ -z $AT_PROMPT ]] && return
+  unset AT_PROMPT
+  if [[ $BASH_COMMAND == *\? ]] && [[ $BASH_COMMAND != *\$\? ]]; then
+    halp "${BASH_COMMAND%?}"
+  fi
+}
+
+trap __help DEBUG
