@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+BITS="${SSH_KEYGEN_BITS:-4096}"
+DATE="${SSH_KEYGEN_DATE:-"$(date -u +'%Y%m%dT%H%M%SZ')"}"
+TYPE="${SSH_KEYGEN_TYPE:-rsa}"
+
+usage() {
+  cat<<EOF
+usage: $(basename "${0}") [-b BITS] [-t TYPE] USERNAME
+
+Generate a new SSH key pair.
+
+Options:
+
+  -b  bits [${BITS}]
+  -t  type [${TYPE}]
+EOF
+}
+
+die() {
+  echo "error: ${*}" >&2
+  exit 1
+}
+
+while getopts ':b:ht:' opt; do
+  case $opt in
+    b)
+      BITS="${OPTARG}"
+      ;;
+    h)
+      usage
+      exit
+      ;;
+    t)
+      TYPE="${OPTARG}"
+      ;;
+    *)
+      usage
+      exit 1
+      ;;
+  esac
+done
+
+shift $((OPTIND - 1))
+
+[[ -n "${1:-}" ]] || die 'enter username'
+
+ssh-keygen -C "${1}-${DATE}" -t "${TYPE}" -b "${BITS}" -f "${HOME}/.ssh/${1}"
