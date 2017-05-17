@@ -18,7 +18,7 @@ die() {
   return 1
 }
 
-# Retrieve information about IP addresses from <http://ipinfo.io/>.
+# Retrieve information about IP addresses from <https://ipinfo.io/>.
 # If no arguments are received, use the current machine's public IP address.
 # Arguments:
 #   $@  list of IP addresses
@@ -26,10 +26,10 @@ die() {
 #   JSON-formatted DNS and GeoIP information.
 ipinfo() {
   if [[ -z $1 ]]; then
-    curl http://ipinfo.io/ && echo
+    curl https://ipinfo.io/ && echo
   else
     for ip in "${@}"; do
-      curl "http://ipinfo.io/${ip}" && echo
+      curl "https://ipinfo.io/${ip}" && echo
     done
   fi
 }
