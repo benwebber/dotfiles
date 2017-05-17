@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\t\n'
+
+
+die() {
+  printf '%s: %s\n' "$(basename "${0}")" "${@}" >&2
+  return 1
+}
+
+
+main() {
+  if [[ -z "${1:-}" ]]; then
+    die 'specify process ID'
+  fi
+
+  # Check process exists or capture kill output.
+  local kill_message
+  set +e
+  kill_message="$(command kill -0 "${1}" 2>&1)"
+  kill_status="$?"
+  set -e
+  if [[ $kill_status -ne 0 ]]; then
+    die "${kill_message}"
+  fi
+
+  # Linux: environment variables at launch.
+  if [[ -r "/proc/${1}/environ" ]]; then
+    tr '\0' '\n' < "/proc/${1}/environ"
+    return
+  fi
+
+  # BSD: environment variables at launch.
+  ps -E -o command -p "${1}" -w | sed 's/ /\n/g' | awk '/\w+=/ { print $1 }'
+}
+
+
+main "${@}"
