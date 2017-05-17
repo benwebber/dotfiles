@@ -93,6 +93,19 @@ cdtemp() {
   builtin cd -- "$(mktemp -d 2>/dev/null || mktemp -d -t tmp)"
 }
 
+isabsolute() {
+  [[ $1 == /* ]] || [[ $1 == \~/* ]]
+}
+
+pypackage() {
+  local path="${1}"
+  isabsolute "${path}" && { printf "pypackage: path must be relative\n" >&2; return 1; }
+  mkdir -p "${path}"
+  while IFS= read -r -d $'\0' dir; do
+    [[ -f "${dir}/__init__.py" ]] || touch "${dir}/__init__.py"
+  done < <(find "${path%%/*}" -type d -print0)
+}
+
 swap() {
   local usage='usage: swap FILE1 FILE2
 
