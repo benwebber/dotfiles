@@ -112,6 +112,7 @@ isabsolute() {
 
 pypackage() {
   local path="${1}"
+  [[ -n "${path}" ]] || { die 'pypackage: specify a relative path'; return $?; }
   isabsolute "${path}" && { die 'pypackage: path must be relative'; return $?; }
   mkdir -p "${path}"
   while IFS= read -r -d $'\0' dir; do
