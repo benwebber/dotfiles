@@ -2,6 +2,22 @@
 # Utilities
 #------------------------------------------------------------------------------
 
+error() {
+  printf "%s\n" "${*}" >&2
+}
+
+die() {
+  error "${*}"
+  if [[ -n $DEBUG ]]; then
+    error 'Traceback:'
+    local frame=0
+    while caller $frame 1>&2 ; do
+      (( frame++ ));
+    done
+  fi
+  return 1
+}
+
 # Retrieve information about IP addresses from <http://ipinfo.io/>.
 # If no arguments are received, use the current machine's public IP address.
 # Arguments:
@@ -24,7 +40,7 @@ ipinfo() {
 # Returns:
 #   JSON-formatted DNS and GeoIP information.
 nameinfo() {
-  [[ -z "${1:-}" ]] && { printf "nameinfo: enter hostname\n" >&2; return 1; }
+  [[ -z "${1:-}" ]] && { die 'nameinfo: enter hostname'; return $?; }
   for host in "${@}"; do
     # shellcheck disable=SC2046
     ipinfo $(dig +noall +short "${host}")
@@ -38,10 +54,7 @@ nameinfo() {
 # Returns:
 #   None
 ipalyzer() {
-  if [[ -z $1 ]]; then
-    printf "ipalyzer: enter IP address\n" >&2
-    return 1
-  fi
+  [[ -z $1 ]] && { die 'ipalyzer: enter IP address'; return $?; }
   $BROWSER "https://www.ipalyzer.com/${1}"
 }
 
@@ -99,7 +112,7 @@ isabsolute() {
 
 pypackage() {
   local path="${1}"
-  isabsolute "${path}" && { printf "pypackage: path must be relative\n" >&2; return 1; }
+  isabsolute "${path}" && { die 'pypackage: path must be relative'; return $?; }
   mkdir -p "${path}"
   while IFS= read -r -d $'\0' dir; do
     [[ -f "${dir}/__init__.py" ]] || touch "${dir}/__init__.py"
@@ -138,7 +151,7 @@ utc() {
 }
 
 default() {
-  [[ -n ${1:-} ]] || { echo 'default <default>' >&2; return 1; }
+  [[ -n ${1:-} ]] || { die 'default <default>'; return $?; }
   grep . || printf '%s\n' "${1}"
 }
 
@@ -173,7 +186,7 @@ random() {
 }
 
 replace() {
-  [[ -n ${1:-} && -n ${2:-} ]] || { echo 'replace <old> <new>' >&2; return 1; }
+  [[ -n ${1:-} && -n ${2:-} ]] || { die 'replace <old> <new>'; return $?; }
   sed -e 's/'"${1}"'/'"${2}"'/g'
 }
 
