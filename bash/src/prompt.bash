@@ -27,7 +27,7 @@ __help() {
   [[ -n $COMP_LINE ]] && return
   [[ -z $AT_PROMPT ]] && return
   unset AT_PROMPT
-  if [[ $BASH_COMMAND == *\? ]] && [[ $BASH_COMMAND != *\$\? ]]; then
+  if [[ $BASH_COMMAND == *\? ]] && [[ $BASH_COMMAND != *\$\? ]] && [[ $BASH_COMMAND != *-\? ]]; then
     halp "${BASH_COMMAND%?}"
   fi
 }
