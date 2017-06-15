@@ -11,10 +11,13 @@ __fossil_ps1() {
   printf ' (%s)' "$(awk -F':[ ]+' '/tags/ { print $2 }' - <<< "${info}")"
 }
 
+eval "$(duiker magic)"
+
 # Sets a typical PS1 including virtualenv and Git branch.
 __prompt() {
   AT_PROMPT=1
   history -a
+  __duiker_import
   local venv=
   [[ $VIRTUAL_ENV ]] && venv="[${VIRTUAL_ENV##*/}] "
   PS1="${venv}\u@\h:\w$(__git_ps1)$(__fossil_ps1)$ "
