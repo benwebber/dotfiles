@@ -16,9 +16,8 @@ __fossil_ps1() {
       return $exit
       ;;
   esac
-  info="$(fossil info 2>/dev/null)"
-  [[ $? -gt 0 ]] && return
-  printf -- "${fmt}" "$(awk -F':[ ]+' '/tags/ { print $2 }' - <<< "${info}")"
+  info="$(fossil json branch list 2>/dev/null)" || return
+  printf -- "${fmt}" "$(jq -j '.payload.current' - <<< "${info}")"
 }
 
 eval "$(duiker magic)"
