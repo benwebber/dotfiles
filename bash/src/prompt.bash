@@ -6,9 +6,19 @@
 
 __fossil_ps1() {
   local info
+  local fmt=' (%s)'
+  local exit=$?
+  case $# in
+    0|1)
+      fmt="${1:-$fmt}"
+      ;;
+    *)
+      return $exit
+      ;;
+  esac
   info="$(fossil info 2>/dev/null)"
   [[ $? -gt 0 ]] && return
-  printf ' (%s)' "$(awk -F':[ ]+' '/tags/ { print $2 }' - <<< "${info}")"
+  printf -- "${fmt}" "$(awk -F':[ ]+' '/tags/ { print $2 }' - <<< "${info}")"
 }
 
 eval "$(duiker magic)"
@@ -19,8 +29,11 @@ __prompt() {
   history -a
   __duiker_import
   local venv=
-  [[ $VIRTUAL_ENV ]] && venv="[${VIRTUAL_ENV##*/}] "
-  PS1="${venv}\u@\h:\w$(__git_ps1)$(__fossil_ps1)$ "
+  [[ $VIRTUAL_ENV ]] && venv="\[\e[42m ${VIRTUAL_ENV##*/} \e[m\]"
+  local git_status fsl_status
+  git_status="\[\e[100m$(__git_ps1 ' git ᚠ %s ')\e[m\]"
+  fsl_status="\[\e[100m$(__fossil_ps1 ' fsl ᚠ %s ')\e[m\]"
+  PS1="${git_status}${fsl_status}${venv} \u@\h:\w$ "
 }
 
 PROMPT_COMMAND=__prompt
