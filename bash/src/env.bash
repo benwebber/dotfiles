@@ -2,7 +2,9 @@
 
 set -o vi
 
-shopt -s autocd
+if [[ "${BASH_VERSINFO[0]}" -ge 4 ]]; then
+  shopt -s autocd
+fi
 shopt -s cdspell
 shopt -s checkhash
 shopt -s dotglob

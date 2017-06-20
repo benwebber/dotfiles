@@ -31,9 +31,17 @@ __prompt() {
   local venv=
   [[ $VIRTUAL_ENV ]] && venv="\[\e[42m ${VIRTUAL_ENV##*/} \e[m\]"
   local git_status fsl_status
-  git_status="\[\e[100m$(__git_ps1 ' git ᚠ %s ')\e[m\]"
-  fsl_status="\[\e[100m$(__fossil_ps1 ' fsl ᚠ %s ')\e[m\]"
-  PS1="${git_status}${fsl_status}${venv} \u@\h:\w$ "
+  git_status="$(__git_ps1 ' git ᚠ %s ')"
+  [[ -n $git_status ]] && git_status="\[\e[100m${git_status}\e[m\]"
+  fsl_status="$(__fossil_ps1 ' fsl ᚠ %s ')"
+  [[ -n $fsl_status ]] && fsl_status="\[\e[100m${fsl_status}\e[m\]"
+  local status="${git_status}${fsl_status}${venv}"
+  # Prefix user@host with space if there is status information to show, or if
+  # we are using Bash 4.4+ with vi mode indicators.
+  if [[ -n $status || (${BASH_VERSINFO[0]} -ge 4 && ${BASH_VERSINFO[1]} -ge 4) ]]; then
+    status="${status} "
+  fi
+  PS1="${status}\u@\h:\w$ "
 }
 
 PROMPT_COMMAND=__prompt
