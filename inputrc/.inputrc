@@ -1,4 +1,7 @@
 set editing-mode vi
 set show-mode-in-prompt on
-set vi-cmd-mode-string \1\e[30;43m\2 N \1\e[m\2
-set vi-ins-mode-string \1\e[30;46m\2 I \1\e[m\2
+# Multi-line prompt: save the cursor position, move cursor to the beginning of
+# the previous (status) line, display the mode string, then restore the cursor
+# position.
+set vi-cmd-mode-string \1\e[s\e[F\e[30;43m\2 NORMAL \1\e[m\e[u\2
+set vi-ins-mode-string \1\e[s\e[F\e[30;46m\2 INSERT \1\e[m\e[u\2

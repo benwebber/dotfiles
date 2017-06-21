@@ -53,12 +53,12 @@ __prompt() {
   [[ -n $fsl_status ]] && fsl_status="${COLOUR_BG_DARK_GREY} ${fsl_status} ${STYLE_RESET}"
   [[ -n $virtualenv_status ]] && virtualenv_status="${COLOUR_BG_DARK_GREEN} ${virtualenv_status} ${STYLE_RESET}"
   local status="${git_status}${fsl_status}${virtualenv_status}"
-  # Prefix user@host with space if there is status information to show, or if
-  # we are using Bash 4.4+ with vi mode indicators.
+  # Make space for vi mode indicator in Bash 4.4+ and prefix user@host with
+  # space if there is status information to show.
   if [[ -n $status || (${BASH_VERSINFO[0]} -ge 4 && ${BASH_VERSINFO[1]} -ge 4) ]]; then
-    status="${status} "
+    status="        ${status} "
   fi
-  PS1="\[${status}\]\u@\h:\w$ "
+  PS1="\[${status}\]\u@\h:\w\n\$ "
 }
 
 PROMPT_COMMAND=__prompt
