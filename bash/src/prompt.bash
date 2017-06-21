@@ -6,6 +6,8 @@
 
 COLOUR_BG_DARK_GREY="$(tput setab 8)"
 COLOUR_BG_DARK_GREEN="$(tput setab 2)"
+COLOUR_BG_DARK_RED="$(tput setab 1)"
+COLOUR_FG_BLACK="$(tput setaf 0)"
 STYLE_RESET="$(tput sgr0)"
 
 __fossil_ps1() {
@@ -50,17 +52,19 @@ function is_me() {
 
 # Sets a typical PS1 including virtualenv and Git branch.
 __prompt() {
+  rc=$?
   AT_PROMPT=1
   history -a
   __duiker_import
-  local git_status fsl_status virtualenv_status
+  local exit_status git_status fsl_status virtualenv_status
+  [[ $rc -ne 0 ]] && exit_status="${COLOUR_BG_DARK_RED}${COLOUR_FG_BLACK} ${rc} ${STYLE_RESET}"
   git_status="$(__git_ps1 'git ᚠ %s')"
   fsl_status="$(__fossil_ps1 'fsl ᚠ %s')"
   virtualenv_status="$(__virtualenv_ps1 '%s')"
   [[ -n $git_status ]] && git_status="${COLOUR_BG_DARK_GREY} ${git_status} ${STYLE_RESET}"
   [[ -n $fsl_status ]] && fsl_status="${COLOUR_BG_DARK_GREY} ${fsl_status} ${STYLE_RESET}"
   [[ -n $virtualenv_status ]] && virtualenv_status="${COLOUR_BG_DARK_GREEN} ${virtualenv_status} ${STYLE_RESET}"
-  local status="${git_status}${fsl_status}${virtualenv_status}"
+  local status="${exit_status}${git_status}${fsl_status}${virtualenv_status}"
   # Make space for vi mode indicator in Bash 4.4+ and prefix user@host with
   # space if there is status information to show.
   if [[ -n $status || (${BASH_VERSINFO[0]} -ge 4 && ${BASH_VERSINFO[1]} -ge 4) ]]; then
