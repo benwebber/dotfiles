@@ -20,8 +20,8 @@ __fossil_ps1() {
       return $exit
       ;;
   esac
-  info="$(fossil json branch list 2>/dev/null)" || return
-  printf -- "${fmt}" "$(jq -j '.payload.current' - <<< "${info}")"
+  info="$(fossil branch list 2>/dev/null)" || return $exit
+  printf -- "${fmt}" "$(awk '/*/ { print $2 }' - <<< "${info}")"
 }
 
 __virtualenv_ps1() {
