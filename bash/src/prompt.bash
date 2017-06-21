@@ -5,7 +5,7 @@
 . "${USR_PATH}/share/bash-completion/bash_completion" >/dev/null 2>&1
 
 COLOUR_BG_DARK_GREY="$(tput setab 8)"
-COLOUR_BG_LIGHT_GREEN="$(tput setab 10)"
+COLOUR_BG_DARK_GREEN="$(tput setab 2)"
 STYLE_RESET="$(tput sgr0)"
 
 __fossil_ps1() {
@@ -24,6 +24,20 @@ __fossil_ps1() {
   printf -- "${fmt}" "$(jq -j '.payload.current' - <<< "${info}")"
 }
 
+__virtualenv_ps1() {
+  local fmt=' (%s)'
+  local exit=$?
+  case $# in
+    0|1)
+      fmt="${1:-$fmt}"
+      ;;
+    *)
+      return $exit
+  esac
+  [[ -n $VIRTUAL_ENV ]] || return
+  printf -- "${fmt}" "${VIRTUAL_ENV##*/}"
+}
+
 eval "$(duiker magic)"
 
 # Sets a typical PS1 including virtualenv and Git branch.
@@ -31,20 +45,20 @@ __prompt() {
   AT_PROMPT=1
   history -a
   __duiker_import
-  local venv=
-  [[ $VIRTUAL_ENV ]] && venv="\[${COLOUR_BG_LIGHT_GREEN} ${VIRTUAL_ENV##*/} ${STYLE_RESET}\]"
-  local git_status fsl_status
-  git_status="$(__git_ps1 ' git ᚠ %s ')"
-  [[ -n $git_status ]] && git_status="\[${COLOUR_BG_DARK_GREY}${git_status}${STYLE_RESET}\]"
-  fsl_status="$(__fossil_ps1 ' fsl ᚠ %s ')"
-  [[ -n $fsl_status ]] && fsl_status="\[${COLOUR_BG_DARK_GREY}${fsl_status}${STYLE_RESET}\]"
-  local status="${git_status}${fsl_status}${venv}"
+  local git_status fsl_status virtualenv_status
+  git_status="$(__git_ps1 'git ᚠ %s')"
+  fsl_status="$(__fossil_ps1 'fsl ᚠ %s')"
+  virtualenv_status="$(__virtualenv_ps1 '%s')"
+  [[ -n $git_status ]] && git_status="${COLOUR_BG_DARK_GREY} ${git_status} ${STYLE_RESET}"
+  [[ -n $fsl_status ]] && fsl_status="${COLOUR_BG_DARK_GREY} ${fsl_status} ${STYLE_RESET}"
+  [[ -n $virtualenv_status ]] && virtualenv_status="${COLOUR_BG_DARK_GREEN} ${virtualenv_status} ${STYLE_RESET}"
+  local status="${git_status}${fsl_status}${virtualenv_status}"
   # Prefix user@host with space if there is status information to show, or if
   # we are using Bash 4.4+ with vi mode indicators.
   if [[ -n $status || (${BASH_VERSINFO[0]} -ge 4 && ${BASH_VERSINFO[1]} -ge 4) ]]; then
     status="${status} "
   fi
-  PS1="${status}\u@\h:\w$ "
+  PS1="\[${status}\]\u@\h:\w$ "
 }
 
 PROMPT_COMMAND=__prompt
