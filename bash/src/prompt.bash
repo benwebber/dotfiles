@@ -40,6 +40,14 @@ __virtualenv_ps1() {
 
 eval "$(duiker magic)"
 
+function is_ssh() {
+  [[ -n $SSH_CLIENT ]] || [[ -n $SSH_TTY ]]
+}
+
+function is_me() {
+  [[ $USER = $LOCAL_USER ]]
+}
+
 # Sets a typical PS1 including virtualenv and Git branch.
 __prompt() {
   AT_PROMPT=1
@@ -58,7 +66,11 @@ __prompt() {
   if [[ -n $status || (${BASH_VERSINFO[0]} -ge 4 && ${BASH_VERSINFO[1]} -ge 4) ]]; then
     status="        ${status} "
   fi
-  PS1="\[${status}\]\u@\h:\w\n\$ "
+  PS1="\[${status}\]"
+  ! is_me && PS1="${PS1}\u"
+  is_ssh && PS1="${PS1}@\h"
+  ! is_me && PS1="${PS1}:"
+  PS1="${PS1}\w\n\$ "
 }
 
 PROMPT_COMMAND=__prompt
