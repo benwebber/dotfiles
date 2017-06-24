@@ -4,11 +4,13 @@
 
 . "${USR_PATH}/share/bash-completion/bash_completion" >/dev/null 2>&1
 
-COLOUR_BG_DARK_GREY="$(tput setab 8)"
-COLOUR_BG_DARK_GREEN="$(tput setab 2)"
-COLOUR_BG_DARK_RED="$(tput setab 1)"
-COLOUR_FG_BLACK="$(tput setaf 0)"
-STYLE_RESET="$(tput sgr0)"
+_ansi_bg_black_bright="$(tput setab 8)"
+_ansi_bg_green_dim="$(tput setab 2)"
+_ansi_bg_red_dim="$(tput setab 1)"
+_ansi_fg_black_dim="$(tput setaf 0)"
+_ansi_reset="$(tput sgr0)"
+_ansi_restore_cursor="$(tput rc)"
+_ansi_save_cursor="$(tput sc)"
 
 __fossil_ps1() {
   local info
@@ -47,7 +49,27 @@ function is_ssh() {
 }
 
 function is_me() {
-  [[ $USER = $LOCAL_USER ]]
+  [[ $USER == "${LOCAL_USER}" ]]
+}
+
+
+pos() {
+  local pos
+  # shellcheck disable=SC2162
+  read -d R -p $'\E[6n' -s pos
+  printf '%s' "${pos#*[}"
+}
+
+row() {
+  local IFS row col
+  # shellcheck disable=SC2034,SC2162
+  IFS=';' read -d R -p $'\E[6n' -s row col
+  printf '%s' "${row#*[}"
+}
+
+
+__csr() {
+  tput csr 0 "$(($(tput lines) - 3))"
 }
 
 # Sets a typical PS1 including virtualenv and Git branch.
@@ -57,24 +79,24 @@ __prompt() {
   history -a
   __duiker_import
   local exit_status git_status fsl_status virtualenv_status
-  [[ $rc -ne 0 ]] && exit_status="${COLOUR_BG_DARK_RED}${COLOUR_FG_BLACK} ${rc} ${STYLE_RESET}"
-  git_status="$(__git_ps1 'git ᚠ %s')"
-  fsl_status="$(__fossil_ps1 'fsl ᚠ %s')"
-  virtualenv_status="$(__virtualenv_ps1 '%s')"
-  [[ -n $git_status ]] && git_status="${COLOUR_BG_DARK_GREY} ${git_status} ${STYLE_RESET}"
-  [[ -n $fsl_status ]] && fsl_status="${COLOUR_BG_DARK_GREY} ${fsl_status} ${STYLE_RESET}"
-  [[ -n $virtualenv_status ]] && virtualenv_status="${COLOUR_BG_DARK_GREEN} ${virtualenv_status} ${STYLE_RESET}"
-  local status="${exit_status}${git_status}${fsl_status}${virtualenv_status}"
-  # Make space for vi mode indicator in Bash 4.4+ and prefix user@host with
-  # space if there is status information to show.
-  if [[ -n $status || (${BASH_VERSINFO[0]} -ge 4 && ${BASH_VERSINFO[1]} -ge 4) ]]; then
-    status="        ${status} "
+  [[ $rc -ne 0 ]] && exit_status="${_ansi_bg_red_dim}${_ansi_fg_black_dim} ${rc} ${_ansi_reset}"
+  git_status="$(__git_ps1 "${_ansi_bg_black_bright} git ᚠ %s ${_ansi_reset}")"
+  fsl_status="$(__fossil_ps1 "${_ansi_bg_black_bright} fsl ᚠ %s ${_ansi_reset}")"
+  virtualenv_status="$(__virtualenv_ps1 "${_ansi_bg_green_dim} %s ${_ansi_reset}")"
+  local status="${exit_status}${git_status}${fsl_status}${virtualenv_status} "
+  ! is_me && status="${status}${USER}"
+  is_ssh && status="${status}@${HOSTNAME}"
+  ! is_me || is_ssh && status="${status}:"
+  local statusrow
+  status="${status}${PWD}"
+  statusrow="$(($(tput lines) - 2))"
+  if [[ ${BASH_VERSINFO[0]} -ge 4 ]] && [[ ${BASH_VERSINFO[1]} -ge 4 ]]; then
+    bind "set vi-cmd-mode-string \1${_ansi_save_cursor}$(tput cup "${statusrow}" 0)\e[30;43m NORMAL ${_ansi_reset}$(tput el)${status}${_ansi_restore_cursor}\2"
+    bind "set vi-ins-mode-string \1${_ansi_save_cursor}$(tput cup "${statusrow}" 0)\e[30;46m INSERT ${_ansi_reset}$(tput el)${status}${_ansi_restore_cursor}\2"
+    PS1="\$ "
+  else
+    PS1="${_ansi_save_cursor}$(tput cup $statusrow 0)$(tput el)${status}${_ansi_restore_cursor}\$ "
   fi
-  PS1="\[${status}\]"
-  ! is_me && PS1="${PS1}\u"
-  is_ssh && PS1="${PS1}@\h"
-  ! is_me && PS1="${PS1}:"
-  PS1="${PS1}\w\n\$ "
 }
 
 PROMPT_COMMAND=__prompt
@@ -90,3 +112,6 @@ __help() {
 }
 
 trap __help DEBUG
+trap __csr WINCH
+
+__csr
