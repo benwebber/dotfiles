@@ -4,14 +4,6 @@
 
 . "${USR_PATH}/share/bash-completion/bash_completion" >/dev/null 2>&1
 
-_ansi_bg_black_bright="$(tput setab 8)"
-_ansi_bg_green_dim="$(tput setab 2)"
-_ansi_bg_red_dim="$(tput setab 1)"
-_ansi_fg_black_dim="$(tput setaf 0)"
-_ansi_reset="$(tput sgr0)"
-_ansi_restore_cursor="$(tput rc)"
-_ansi_save_cursor="$(tput sc)"
-
 __fossil_ps1() {
   local info
   local fmt=' (%s)'
@@ -44,35 +36,14 @@ __virtualenv_ps1() {
 
 eval "$(duiker magic)"
 
-function is_ssh() {
+is_ssh() {
   [[ -n $SSH_CLIENT ]] || [[ -n $SSH_TTY ]]
 }
 
-function is_me() {
+is_me() {
   [[ $USER == "${LOCAL_USER}" ]]
 }
 
-
-pos() {
-  local pos
-  # shellcheck disable=SC2162
-  read -d R -p $'\E[6n' -s pos
-  printf '%s' "${pos#*[}"
-}
-
-row() {
-  local IFS row col
-  # shellcheck disable=SC2034,SC2162
-  IFS=';' read -d R -p $'\E[6n' -s row col
-  printf '%s' "${row#*[}"
-}
-
-
-__csr() {
-  tput csr 0 "$(($(tput lines) - 3))"
-}
-
-# Sets a typical PS1 including virtualenv and Git branch.
 __prompt() {
   rc=$?
   AT_PROMPT=1
@@ -87,15 +58,13 @@ __prompt() {
   ! is_me && status="${status}${USER}"
   is_ssh && status="${status}@${HOSTNAME}"
   ! is_me || is_ssh && status="${status}:"
-  local statusrow
   status="${status}${PWD}"
-  statusrow="$(($(tput lines) - 2))"
   if [[ ${BASH_VERSINFO[0]} -ge 4 ]] && [[ ${BASH_VERSINFO[1]} -ge 4 ]]; then
-    bind "set vi-cmd-mode-string \1${_ansi_save_cursor}$(tput cup "${statusrow}" 0)\e[30;43m NORMAL ${_ansi_reset}$(tput el)${status}${_ansi_restore_cursor}\2"
-    bind "set vi-ins-mode-string \1${_ansi_save_cursor}$(tput cup "${statusrow}" 0)\e[30;46m INSERT ${_ansi_reset}$(tput el)${status}${_ansi_restore_cursor}\2"
+    bind "set vi-cmd-mode-string \1$(statusline::draw "${status}" "\e[30;43m NORMAL ${_ansi_reset}")\2"
+    bind "set vi-ins-mode-string \1$(statusline::draw "${status}" "\e[30;46m INSERT ${_ansi_reset}")\2"
     PS1="\$ "
   else
-    PS1="${_ansi_save_cursor}$(tput cup $statusrow 0)$(tput el)${status}${_ansi_restore_cursor}\$ "
+    PS1="\[$(statusline::draw "${status}")\]\$ "
   fi
 }
 
@@ -112,6 +81,3 @@ __help() {
 }
 
 trap __help DEBUG
-trap __csr WINCH
-
-__csr
