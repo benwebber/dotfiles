@@ -4,6 +4,9 @@
 
 . "${USR_PATH}/share/bash-completion/bash_completion" >/dev/null 2>&1
 
+_monokai_error_tmux='#[bg=colour89,fg=colour219]'
+_monokai_magenta_ansi="$(tput setaf 161)"
+
 __fossil_ps1() {
   local info
   local fmt=' (%s)'
@@ -44,27 +47,40 @@ is_me() {
   [[ $USER == "${LOCAL_USER}" ]]
 }
 
+_ansi_reset="$(tput sgr0)"
+_tmux_fg_white='#[fg=colour15]'
+_tmux_bg_dark_grey='#[bg=colour238]'
+_tmux_bg_bright_green='#[bg=colour118]'
+_tmux_reset='#[default]'
+
+__update_tmux_status_line() {
+  [[ -z $TMUX ]] && return
+  local rc=$1
+  local status exit_status fsl_status git_status virtualenv_status
+  [[ $rc -eq 0 ]] && exit_status='' || exit_status="${_monokai_error_tmux} ${rc} ${_tmux_reset}"
+  git_status="$(__git_ps1 "${_tmux_bg_dark_grey}${_tmux_fg_white} git ᚠ %s ${_tmux_reset}")"
+  fsl_status="$(__fossil_ps1 "${_tmux_bg_dark_grey}${_tmux_fg_white} fsl ᚠ %s ${_tmux_reset}")"
+  virtualenv_status="$(__virtualenv_ps1 "${_tmux_bg_bright_green}${_tmux_fg_white} %s ${_tmux_reset}")"
+  status="${git_status}${fsl_status}${virtualenv_status}${exit_status}"
+  [[ -n $status ]] && status="$(dirs) ${status}" || status="$(dirs)"
+  tmux set -g status-right-length "${#status}"
+  tmux set -g status-right "${status}"
+}
+
 __prompt() {
   rc=$?
   AT_PROMPT=1
   history -a
   __duiker_import
-  local exit_status git_status fsl_status virtualenv_status
-  [[ $rc -ne 0 ]] && exit_status="${_ansi_bg_red_dim}${_ansi_fg_black_dim} ${rc} ${_ansi_reset}"
-  git_status="$(__git_ps1 "${_ansi_bg_black_bright} git ᚠ %s ${_ansi_reset}")"
-  fsl_status="$(__fossil_ps1 "${_ansi_bg_black_bright} fsl ᚠ %s ${_ansi_reset}")"
-  virtualenv_status="$(__virtualenv_ps1 "${_ansi_bg_green_dim} %s ${_ansi_reset}")"
-  local status="${exit_status}${git_status}${fsl_status}${virtualenv_status} "
-  ! is_me && status="${status}${USER}"
-  is_ssh && status="${status}@${HOSTNAME}"
-  ! is_me || is_ssh && status="${status}:"
-  status="${status}${PWD}"
+  __update_tmux_status_line $rc
   if [[ ${BASH_VERSINFO[0]} -ge 4 ]] && [[ ${BASH_VERSINFO[1]} -ge 4 ]]; then
-    bind "set vi-cmd-mode-string \1$(statusline::draw "${status}" "\e[30;43m NORMAL ${_ansi_reset}")\2"
-    bind "set vi-ins-mode-string \1$(statusline::draw "${status}" "\e[30;46m INSERT ${_ansi_reset}")\2"
-    PS1="\$ "
+    # If supported, readline will colour the prompt to indicate input mode (see
+    # .inputrc).
+    PS1="λ${_ansi_reset} "
+    PS2=".${_ansi_reset} "
   else
-    PS1="\[$(statusline::draw "${status}")\]\$ "
+    PS1="${_monokai_magenta_ansi}λ${_ansi_reset} "
+    PS2="${_monokai_magenta_ansi}.${_ansi_reset} "
   fi
 }
 

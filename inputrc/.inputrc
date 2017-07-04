@@ -1,2 +1,11 @@
 set editing-mode vi
+set keymap vi
+
+$if Bash
 set show-mode-in-prompt on
+# 1. Colour prompt to indicate input mode. PS1/PS2 reset the style.
+# 2. Set a pipe cursor for insert mode and a block cursor for command (normal)
+#    mode. Requires terminal supports DECSCUSR (iTerm2, tmux, xterm, etc.).
+set vi-cmd-mode-string \1\e[38;5;59m\e[1 q\2
+set vi-ins-mode-string \1\e[38;5;161m\e[5 q\2
+$endif
