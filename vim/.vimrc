@@ -79,6 +79,16 @@ set backspace=indent,eol,start " make backspace work as in other applications
 set updatetime=250
 set viminfo='100,<50,s10,h,n~/.vim/viminfo
 
+" Reset normal/insert mode cursors. DECSCUSR changes apply to the termainl, not
+" individual applications. Reset Vim's default cursors to override the ones
+" inherited by Bash/readline (~/.inputrc).
+" &t_SI: Enter insert mode (blinking pipe).
+let &t_SI = "\e[5 q"
+" &t_SR: Enter replace mode (blinking underline).
+let &t_SR = "\e[3 q"
+" &t_EI: Exit insert or replace mode (blinking block).
+let &t_EI = "\e[1 q"
+
 "===============================================================================
 " Keymaps
 "===============================================================================
