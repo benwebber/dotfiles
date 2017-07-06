@@ -5,7 +5,7 @@
 . "${USR_PATH}/share/bash-completion/bash_completion" >/dev/null 2>&1
 
 _monokai_error_tmux='#[bg=colour89,fg=colour219]'
-_monokai_magenta_ansi="$(tput setaf 161)"
+_monokai_magenta_ansi="\[$(tput setaf 161)\]"
 
 __fossil_ps1() {
   local info
@@ -47,7 +47,7 @@ is_me() {
   [[ $USER == "${LOCAL_USER}" ]]
 }
 
-_ansi_reset="$(tput sgr0)"
+_ansi_reset="\[$(tput sgr0)\]"
 _tmux_fg_white='#[fg=colour15]'
 _tmux_bg_dark_grey='#[bg=colour238]'
 _tmux_bg_bright_green='#[bg=colour118]'
