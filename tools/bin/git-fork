@@ -1,13 +1,66 @@
 #!/usr/bin/env bash
-#
-# Fork a Git repository.
+set -euo pipefail
+IFS=$'\n\t'
 
-usage() {
-  cat<<EOF
-usage: git fork <repo>
+set +e
+GIT_FORK_HOME="${GIT_FORK_HOME:-$(git config --get fork.home 2>/dev/null)}"
+[[ -z $GIT_FORK_HOME ]] && GIT_FORK_HOME=$(pwd)
+set -e
 
-Clone a repository and name the original remote 'upstream'.
+PROGRAM="$(basename "${0}")"
+
+# shellcheck disable=SC2034
+{
+USAGE=$(cat <<EOF
+[-h] [-C <path>] <repo>
+
+Given a repository like <https://git.example.org/user/repo.git>, clone the
+repository to \`git.example.org/user/repo\`.
+
+$PROGRAM will clone the repository to the first specified path from:
+
+    1. \`-C <path>\`
+    2. GIT_FORK_HOME environment variable
+    3. \`fork.home\` Git configuration value
+
+If none of these values have been specified, $PROGRAM will clone the repository
+to the current directory.
+
+Options
+    -h                    show this screen and exit
+    -C                    clone to <path>
 EOF
+)
+
+set +u
+SUBDIRECTORY_OK=true
+# shellcheck disable=SC1090
+. "$(git --exec-path)/git-sh-setup"
+set -u
+}
+
+clone() {
+  local url=$1
+  local dir=$2
+  local namespace host username repo
+  local IFS='/'
+  # Assume HTTPS.
+  if [[ $url != *://* && $url != *@:* ]]; then
+    url="https://${url}"
+  fi
+  # Isolate host/username/repo components from URL.
+  namespace=$url
+  if [[ $namespace == *@*:* ]]; then
+    namespace="${namespace#*@}"
+    namespace="${namespace//:/\/}"
+  else
+    namespace="${namespace#*//}"
+  fi
+  namespace="${namespace/%.git/}"
+  IFS='/' read host username repo <<< "${namespace}"
+  local dest="${dir}/${host}/${username}/${repo}"
+  mkdir -p "${dest}"
+  git clone "${url}" "${dest}"
 }
 
 fork() {
@@ -39,8 +92,12 @@ fork() {
 }
 
 main() {
-  while getopts 'h' opt; do
+  local repo
+  while getopts 'C:h' opt; do
     case $opt in
+      C)
+        GIT_FORK_HOME=$OPTARG
+        ;;
       h)
         usage
         return
@@ -51,8 +108,11 @@ main() {
         ;;
     esac
   done
-  [[ -n $1 ]] || { usage; return 1; }
-  fork "${1}"
+  shift $((OPTIND - 1))
+  repo="${1:-}"
+  [[ -d $GIT_FORK_HOME ]] || die 'error: destination must be directory'
+  [[ -n $repo ]] || { usage; return 1; }
+  clone "${repo}" "${GIT_FORK_HOME}"
 }
 
 main "${@}"
