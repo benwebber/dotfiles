@@ -69,7 +69,6 @@ __update_tmux_status_line() {
 
 __prompt() {
   rc=$?
-  AT_PROMPT=1
   history -a
   __duiker_import
   __update_tmux_status_line $rc
@@ -85,15 +84,3 @@ __prompt() {
 }
 
 PROMPT_COMMAND=__prompt
-
-# Call halp using a question mark.
-__help() {
-  [[ -n $COMP_LINE ]] && return
-  [[ -z $AT_PROMPT ]] && return
-  unset AT_PROMPT
-  if [[ $BASH_COMMAND == *\? ]] && [[ $BASH_COMMAND != *\$\? ]] && [[ $BASH_COMMAND != *-\? ]]; then
-    halp "${BASH_COMMAND%?}"
-  fi
-}
-
-trap __help DEBUG

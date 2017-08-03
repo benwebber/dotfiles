@@ -202,3 +202,14 @@ trim() {
 upper() {
   tr '[:lower:]' '[:upper:]'
 }
+
+command_not_found_handle() {
+  local cmd
+  cmd="${1}"
+  if [[ $cmd == *\? ]] && [[ -t 1 ]]; then
+    halp "${cmd%?}"
+  else
+    printf -- '-bash: %s: command not found\n' "${cmd}" >&2
+  fi
+  return 127
+}
