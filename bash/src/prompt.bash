@@ -65,8 +65,7 @@ __update_tmux_status_line() {
   git_status="$(__git_ps1 "${_tmux_bg_dark_grey}${_tmux_fg_white} git ᚠ %s ${_tmux_reset}")"
   fsl_status="$(__fossil_ps1 "${_tmux_bg_dark_grey}${_tmux_fg_white} fsl ᚠ %s ${_tmux_reset}")"
   virtualenv_status="$(__virtualenv_ps1 "${_tmux_bg_bright_green}${_tmux_fg_white} %s ${_tmux_reset}")"
-  status="${git_status}${fsl_status}${virtualenv_status}${exit_status}"
-  [[ -n $status ]] && status="$(dirs) ${status}" || status="$(dirs)"
+  status="$(dirs) ${git_status}${fsl_status}${virtualenv_status}${exit_status}"
   tmux set -g status-right-length "${#status}"
   tmux set -g status-right "${status}"
 }
