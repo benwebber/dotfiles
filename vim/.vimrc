@@ -97,9 +97,7 @@ let &t_EI = "\e[1 q"
 let mapleader=","
 " play nicely with soft-wrapping
 map k gk
-map <Up> gk
 map j gj
-map <Down> gj
 nmap <leader>tt :TagbarToggle<CR>
 nmap <leader>s :Scriptify<CR>
 nmap <leader>i :Isort<CR>
