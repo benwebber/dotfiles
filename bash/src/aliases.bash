@@ -5,6 +5,7 @@
 alias :e='vim'
 alias :q='exit'
 alias :cd='cd'
+complete -A directory :cd
 alias +x='chmod +x'
 alias vim='vim -p'
 alias mount='mount | column -t'
