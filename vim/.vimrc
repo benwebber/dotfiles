@@ -4,6 +4,7 @@
 
 call plug#begin('~/.vim/bundle')
 
+Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'Townk/vim-autoclose'
 Plug 'airblade/vim-gitgutter'
 Plug 'chase/vim-ansible-yaml'
