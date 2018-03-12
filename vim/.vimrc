@@ -14,6 +14,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'sevko/vim-nand2tetris-syntax'
 Plug 'tpope/vim-markdown'
 Plug 'vim-scripts/applescript.vim'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 
 Plug 'Townk/vim-autoclose'
 Plug 'dhruvasagar/vim-table-mode'
@@ -29,6 +30,7 @@ Plug 'scrooloose/syntastic'
 Plug 'tomasr/molokai'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-pandoc/vim-pandoc'
 Plug 'vimwiki/vimwiki'
 
 call plug#end()
@@ -186,15 +188,7 @@ augroup END
 augroup writing
     autocmd!
     autocmd FileType markdown,rst,wiki,tex set spell spelllang=en_ca
-    autocmd FileType markdown,rst,wiki,text setlocal tw=0
-    " Pandoc macros
-    autocmd FileType markdown,rst nnoremap <leader>ph :w<CR>:!pandoc "%" -s -S -o "%".html<CR>
-    autocmd FileType markdown,rst nnoremap <leader>pp :w<CR>:!pandoc "%" -s -S -o "%".pdf<CR>
-    autocmd FileType markdown nnoremap <leader>pr :w<CR>:!pandoc "%" -o "%".rst<CR>
-    autocmd FileType rst nnoremap <leader>pm :w<CR>:!pandoc "%" -o "%".md<CR>
-    autocmd FileType markdown nnoremap <leader>pw :w<CR>:!pandoc "%" -t mediawiki -o "%".wiki<CR>
-    " LaTeX (rubber) macro
-    autocmd FileType tex nnoremap <leader>c :w<CR>:!rubber --pdf "%" && rubber --clean "%"<CR>
+    autocmd FileType markdown,rst,wiki,tex setlocal tw=0
 augroup END
 
 augroup templates
