@@ -4,32 +4,34 @@
 
 call plug#begin('~/.vim/bundle')
 
+" Syntax/Language
 Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'chase/vim-ansible-yaml'
+Plug 'fatih/vim-go'
+Plug 'jplaut/vim-arduino-ino'
+Plug 'leafo/moonscript-vim'
+Plug 'ledger/vim-ledger'
+Plug 'rodjek/vim-puppet'
+Plug 'rust-lang/rust.vim'
+Plug 'tpope/vim-markdown'
+Plug 'vim-scripts/applescript.vim'
+Plug 'vim-scripts/wikipedia.vim'
+
 Plug 'Townk/vim-autoclose'
 Plug 'airblade/vim-gitgutter'
-Plug 'chase/vim-ansible-yaml'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'eiginn/netrw' " includes fix for http://paulgorman.org/blog/1400942674
-Plug 'fatih/vim-go'
 Plug 'godlygeek/tabular'
 Plug 'jmcantrell/vim-virtualenv'
-Plug 'jplaut/vim-arduino-ino'
 Plug 'kien/ctrlp.vim'
-Plug 'leafo/moonscript-vim'
-Plug 'ledger/vim-ledger'
 Plug 'majutsushi/tagbar'
 Plug 'mhinz/vim-signify'
-Plug 'rodjek/vim-puppet'
-Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/syntastic'
 Plug 'tomasr/molokai'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-markdown'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-scripts/applescript.vim'
-Plug 'vim-scripts/wikipedia.vim'
 Plug 'vimwiki/vimwiki'
 
 call plug#end()
