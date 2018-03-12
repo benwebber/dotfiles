@@ -20,7 +20,6 @@ Plug 'vim-scripts/applescript.vim'
 Plug 'vim-scripts/wikipedia.vim'
 
 Plug 'Townk/vim-autoclose'
-Plug 'airblade/vim-gitgutter'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'eiginn/netrw' " includes fix for http://paulgorman.org/blog/1400942674
@@ -120,10 +119,6 @@ let g:airline#extensions#branch#enabled       = 1
 let g:airline#extensions#branch#empty_message = ''
 let g:airline#extensions#virtualenv#enabled   = 1
 
-" vim-gitgutter
-let g:gitgutter_realtime = 1
-let g:gitgutter_eager    = 1
-
 " vim-go
 let g:go_fmt_command         = 'goimports'
 let g:go_highlight_functions = 1
@@ -132,6 +127,12 @@ let g:go_highlight_structs   = 1
 
 " vim-ledger
 let g:ledger_bin = 'hledger'
+
+" vim-signify
+let g:signify_realtime = 1
+let g:signify_vcs_list = ['fossil', 'git', 'hg']
+let g:signify_cursorhold_normal = 0
+let g:signify_cursorhold_insert = 0
 
 " syntastic
 let g:syntastic_sh_shellcheck_args = '-s bash'
