@@ -6,6 +6,7 @@ call plug#begin('~/.vim/bundle')
 
 " Syntax/Language
 Plug 'Glench/Vim-Jinja2-Syntax'
+Plug 'b4b4r07/vim-hcl'
 Plug 'chase/vim-ansible-yaml'
 Plug 'fatih/vim-go'
 Plug 'jplaut/vim-arduino-ino'
