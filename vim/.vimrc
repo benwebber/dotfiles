@@ -9,15 +9,11 @@ Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'b4b4r07/vim-hcl'
 Plug 'chase/vim-ansible-yaml'
 Plug 'fatih/vim-go'
-Plug 'jplaut/vim-arduino-ino'
-Plug 'leafo/moonscript-vim'
 Plug 'ledger/vim-ledger'
-Plug 'rodjek/vim-puppet'
 Plug 'rust-lang/rust.vim'
 Plug 'sevko/vim-nand2tetris-syntax'
 Plug 'tpope/vim-markdown'
 Plug 'vim-scripts/applescript.vim'
-Plug 'vim-scripts/wikipedia.vim'
 
 Plug 'Townk/vim-autoclose'
 Plug 'dhruvasagar/vim-table-mode'
@@ -183,8 +179,6 @@ augroup code
     autocmd FileType ps1 setlocal ts=4 sts=4 sw=4
     " use hard tabs for Go, Makefiles, and .gitconfig
     autocmd FileType go,make,gitconfig setlocal noet ts=4 sw=4 sts=4
-    " use Puppet syntax highlighting for Puppetfiles
-    autocmd BufRead,BufNewFile Puppetfile set filetype=puppet
     " use YAML syntax highlighting for RAML files
     autocmd BufRead,BufNewFile *.raml set filetype=yaml
 augroup END
