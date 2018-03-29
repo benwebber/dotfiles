@@ -9,7 +9,7 @@
 	ci = !TZ=utc git commit
 
 [core]
-	excludesfile = ~/.gitignore_global
+	excludesfile = ~/.config/git/gitignore_global
 
 [credential]
 	helper = osxkeychain
@@ -35,4 +35,4 @@
 	email = benjamin.webber@gmail.com
 
 [include]
-	path = ~/.gitconfig_local
+	path = ~/.config/git/gitconfig_local
