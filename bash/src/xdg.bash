@@ -4,3 +4,5 @@
 [[ -z $XDG_BIN_HOME ]] && export XDG_BIN_HOME="${HOME}/.local/bin"
 
 export LEDGER_FILE="${XDG_DATA_HOME}/hledger/hledger.journal"
+
+alias tmux="tmux -f ${XDG_CONFIG_HOME}/tmux/tmux.conf"
