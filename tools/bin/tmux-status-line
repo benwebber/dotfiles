@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+if buf="$(tmux show-buffer -b "$(tmux display -p 'tmux::status-right::#D')")"; then
+  tmux set-option -g status-right-length "${#buf}"
+  printf '%s' "${buf}"
+fi

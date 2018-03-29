@@ -66,8 +66,8 @@ __update_tmux_status_line() {
   fsl_status="$(__fossil_ps1 "${_tmux_bg_dark_grey}${_tmux_fg_white} fsl ᚠ %s ${_tmux_reset}")"
   virtualenv_status="$(__virtualenv_ps1 "${_tmux_bg_bright_green}${_tmux_fg_white} %s ${_tmux_reset}")"
   status="$(dirs) ${git_status}${fsl_status}${virtualenv_status}${exit_status}"
-  tmux set -g status-right-length "${#status}"
-  tmux set -g status-right "${status}"
+  tmux set-buffer -b "$(tmux display -p 'tmux::status-right::#D')" "${status}"
+  tmux refresh-client -S
 }
 
 __prompt() {
