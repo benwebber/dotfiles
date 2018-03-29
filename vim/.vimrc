@@ -183,6 +183,7 @@ augroup code
     autocmd FileType go,make,gitconfig setlocal noet ts=4 sw=4 sts=4
     " use YAML syntax highlighting for RAML files
     autocmd BufRead,BufNewFile *.raml set filetype=yaml
+    autocmd Filetype plaintex,tex setlocal makeprg=latexmk\ -pdf\ %
 augroup END
 
 augroup writing
