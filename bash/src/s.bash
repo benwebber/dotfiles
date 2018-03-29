@@ -23,7 +23,7 @@ _s() {
     script="${script##*/}"
     script="${script#s}"
     scripts+=($script)
-  done < <(find "${HOME}/bin" -lname '*/s/bin/s*' -print0)
+  done < <(find "${XDG_BIN_HOME}" -lname '*/s/.local/bin/s*' -print0)
 
   case $COMP_CWORD in
     1)
