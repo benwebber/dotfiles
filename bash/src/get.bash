@@ -1,9 +1,7 @@
 get() {
   local OPTIND
-  local options="$(help set | head -n1 | cut -d' ' -f3)"
-  options="${options#[-}"
-  options="${options%]}"
-  options="${options}o:"
+  local options
+  options="$(help set | awk 'NR==1 { options = $3; gsub(/[^a-zA-Z]/, "", options); print options "o:"}')"
 
   while getopts "$options" opt; do
     case $opt in
