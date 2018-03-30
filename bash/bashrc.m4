@@ -1,0 +1,17 @@
+m4_define(OS, m4_esyscmd(`bash -c "echo -n "$(uname -s)""'))m4_dnl
+m4_dnl
+m4_include(xdg.bash)
+m4_include(path.bash)
+m4_include(env.bash)
+m4_sinclude(platform/OS.bash)
+m4_include(aliases.bash)
+m4_include(get.bash)
+m4_include(go.bash)
+m4_include(npm.bash)
+m4_include(python.bash)
+m4_include(rust.bash)
+m4_include(tex.bash)
+m4_include(utils.bash)
+m4_include(prompt.bash)
+m4_include(s.bash)
+m4_include(local.bash)
