@@ -103,6 +103,7 @@ map j gj
 nmap <leader>tt :TagbarToggle<CR>
 nmap <leader>s :Scriptify<CR>
 nmap <leader>i :Isort<CR>
+cnoreabbrev mk make
 
 "===============================================================================
 " Plugins
