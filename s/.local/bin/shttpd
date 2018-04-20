@@ -2,4 +2,8 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-exec python -m SimpleHTTPServer
+if python --version 2>&1 | grep --fixed-strings 'Python 2' --quiet; then
+  exec python -m SimpleHTTPServer
+fi
+
+exec python -m http.server
