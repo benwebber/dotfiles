@@ -1,0 +1,12 @@
+# color <element> <foreground color> <background color> [<attribute> ...]
+
+color article             color252   color233
+color background          color252   color233
+color info                color59    color234
+color listfocus           color252   color235
+color listfocus_unread    color118   color235
+color listnormal          color252   color233
+color listnormal_unread   color118   color233
+
+highlight article "^(Feed|Title|Author|Link|Date):" color166 color233
+highlight article "https?://[^ ]+" color81 color233

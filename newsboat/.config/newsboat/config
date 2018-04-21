@@ -1,0 +1,8 @@
+bind-key k up
+bind-key j down
+bind-key O open-all-unread-in-browser-and-mark-read
+browser open
+
+include ~/.config/newsboat/skins/molokai
+
+show-read-feeds no
