@@ -2,4 +2,4 @@
 # LaTeX
 #-------------------------------------------------------------------------------
 
-path put /usr/texbin
+path put /Library/TeX/texbin
