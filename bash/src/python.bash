@@ -17,4 +17,6 @@ revirtualenv() {
 
 complete -o default -o nospace -F _virtualenvs revirtualenv
 
-eval "$(pyenv init - --no-rehash)"
+if command -v pyenv >/dev/null 2>&1; then
+  eval "$(pyenv init - --no-rehash)"
+fi
