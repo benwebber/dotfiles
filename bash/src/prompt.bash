@@ -37,7 +37,7 @@ __virtualenv_ps1() {
   printf -- "${fmt}" "${VIRTUAL_ENV##*/}"
 }
 
-if ! command -v duiker >/dev/null 2>&1; then
+if command -v duiker >/dev/null 2>&1; then
   eval "$(duiker magic)"
 fi
 
