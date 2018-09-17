@@ -37,7 +37,9 @@ __virtualenv_ps1() {
   printf -- "${fmt}" "${VIRTUAL_ENV##*/}"
 }
 
-eval "$(duiker magic)"
+if ! command -v duiker >/dev/null 2>&1; then
+  eval "$(duiker magic)"
+fi
 
 is_ssh() {
   [[ -n $SSH_CLIENT ]] || [[ -n $SSH_TTY ]]
@@ -75,7 +77,7 @@ __prompt() {
   local ps1="λ${_ansi_reset} "
   local ps2=".${_ansi_reset} "
   history -a
-  __duiker_import
+  command -v __duiker_import >/dev/null 2>&1 && __duiker_import
   __update_tmux_status_line $rc
   if [[ -z $TMUX ]]; then
     ps1="${ps1}\w ${_monokai_magenta_ansi}→${_ansi_reset} "
