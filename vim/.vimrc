@@ -58,7 +58,10 @@ set nolist           " list disables linebreak
 " Appearance
 "===============================================================================
 
-colorscheme molokai
+" Ignore error if colour scheme does not exist. Prevents Vim from blocking
+" `make install`.
+silent! colorscheme molokai
+
 if v:version > 703
   " change background past column 80
   let &colorcolumn = join(range(&textwidth + 1, 255), ',')
