@@ -62,9 +62,12 @@ _tmux_reset='#[default]'
 __update_tmux_status_line() {
   [[ -z $TMUX ]] && return
   local rc=$1
-  local status exit_status fsl_status git_status virtualenv_status
+  local status exit_status fsl_status virtualenv_status
+  local git_status=''
   [[ $rc -eq 0 ]] && exit_status='' || exit_status="${_monokai_error_tmux} ${rc} ${_tmux_reset}"
-  git_status="$(__git_ps1 "${_tmux_bg_dark_grey}${_tmux_fg_white} git ᚠ %s ${_tmux_reset}")"
+  if command -v __git_ps1 >/dev/null 2>&1; then
+    git_status="$(__git_ps1 "${_tmux_bg_dark_grey}${_tmux_fg_white} git ᚠ %s ${_tmux_reset}")"
+  fi
   fsl_status="$(__fossil_ps1 "${_tmux_bg_dark_grey}${_tmux_fg_white} fsl ᚠ %s ${_tmux_reset}")"
   virtualenv_status="$(__virtualenv_ps1 "${_tmux_bg_bright_green}${_tmux_fg_white} %s ${_tmux_reset}")"
   status="$(dirs) ${git_status}${fsl_status}${virtualenv_status}${exit_status}"
