@@ -23,7 +23,6 @@ Plug 'dhruvasagar/vim-table-mode'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'eiginn/netrw' " includes fix for http://paulgorman.org/blog/1400942674
 Plug 'godlygeek/tabular'
-Plug 'jmcantrell/vim-virtualenv'
 Plug 'kien/ctrlp.vim'
 Plug 'majutsushi/tagbar'
 Plug 'mhinz/vim-signify'
