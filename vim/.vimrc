@@ -204,6 +204,9 @@ augroup vimrc
   autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END
 
+" https://github.com/vim-pandoc/vim-pandoc/issues/272
+let g:pandoc#modules#disabled = ['chdir', 'folding']
+
 if filereadable(glob('~/.vimrc_local'))
   source ~/.vimrc_local
 endif
