@@ -5,5 +5,6 @@
 
 export INPUTRC="${XDG_CONFIG_HOME}/readline/inputrc"
 export LEDGER_FILE="${XDG_DATA_HOME}/hledger/hledger.journal"
+export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
 
 alias tmux="tmux -f ${XDG_CONFIG_HOME}/tmux/tmux.conf"

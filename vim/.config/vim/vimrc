@@ -1,8 +1,15 @@
+" XDG
+" https://tlvince.com/vim-respect-xdg
+set directory=$XDG_CACHE_HOME/vim,~/,/tmp
+set backupdir=$XDG_CACHE_HOME/vim,~/,/tmp
+set viminfo='100,<50,s10,h,n$XDG_CACHE_HOME/vim/viminfo
+set runtimepath=$XDG_DATA_HOME/vim,$XDG_DATA_HOME/vim/after,$VIM,$VIMRUNTIME
+
 "===============================================================================
 " Plugins
 "===============================================================================
 
-call plug#begin('~/.vim/bundle')
+call plug#begin('~/.local/share/vim/bundle')
 
 " Syntax/Language
 Plug 'Glench/Vim-Jinja2-Syntax'
@@ -84,7 +91,6 @@ set splitbelow                 " more natural splits
 set splitright
 set backspace=indent,eol,start " make backspace work as in other applications
 set updatetime=250
-set viminfo='100,<50,s10,h,n~/.vim/viminfo
 
 " Reset normal/insert mode cursors. DECSCUSR changes apply to the termainl, not
 " individual applications. Reset Vim's default cursors to override the ones
@@ -144,12 +150,12 @@ let g:syntastic_sh_shellcheck_args = '-s bash'
 
 " Insert boilerplate for new files.
 function! Boilerplate()
-  execute '0r ~/.vim/templates/boilerplate.'.expand('%:e')
+  execute '0r ~/.local/share/vim/templates/boilerplate.'.expand('%:e')
 endfunction
 
 " Insert boilerplate to make a file into a standalone script.
 function! Scriptify()
-  execute '$r ~/.vim/templates/script.'.expand('%:e')
+  execute '$r ~/.local/share/vim/templates/script.'.expand('%:e')
 endfunction
 
 command! -nargs=0 Scriptify call Scriptify()
