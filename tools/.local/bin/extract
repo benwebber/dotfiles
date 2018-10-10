@@ -20,41 +20,33 @@ err() {
   printf "%s: cannot extract '%s'\n" "${PROGRAM}" "${@}" >&2
 }
 
-__unrar() {
+_un7zip() {
+  local filename="${1}"
+  local dir="${filename/%.7z}"
+  mkdir -p "${dir}"
+  7z x -o"${dir}" "${filename}"
+}
+
+_unrar() {
   local filename="${1}"
   local dir="${filename/%.rar}"
-  mkdir "${dir}"
+  mkdir -p "${dir}"
   unrar e "${filename}" "${dir}"
 }
 
-__untar() {
+_untar() {
   local filename="${1}"
-  local dir
-  case $filename in
-    *.tar.bz2|*.tbz2)
-      dir="${filename/%.t*bz2}"
-      opts='-xjvf'
-      ;;
-    *.tar.gz|*.tgz)
-      dir="${filename/%.t*gz}"
-      opts='-xzvf'
-      ;;
-    *.tar)
-      dir="${filename/%.tar}"
-      opts='-xvf'
-      ;;
-  esac
-  mkdir "${dir}"
-  tar "${opts}" "${filename}" -C "${dir}"
+  dir="${filename%.tar*}"
+  mkdir -p "${dir}"
+  tar -xf "${filename}" -C "${dir}"
 }
 
-__unzip() {
+_unzip() {
   local filename="${1}"
   local dir="${filename/%.zip}"
-  mkdir "${dir}"
+  mkdir -p "${dir}"
   unzip "${filename}" -d "${dir}"
 }
-
 
 main() {
   while getopts 'h' opt; do
@@ -73,25 +65,24 @@ main() {
   [[ "$#" -eq 0 ]] && usage && exit 1
 
   for filename in "${@}"; do
-    if [[ ! -r $filename ]]; then
-      echo "${PROGRAM}: cannot read '${filename}' or '${filename}' does not exist" >&2
-      continue
-    fi
-    case $filename in
-      *.tar*)
-        __untar "${filename}"
+    local mime_type="$(file --brief --mime-type "${filename}")"
+    local subtype="${mimetype#*/}"
+
+    case $subtype in
+      x-7z-compressed)
+        _un7zip "${filename}"
         ;;
-      *.bz2)
-        bunzip2 "${filename}"
+      x-bzip2|x-compress|x-gzip|x-lzip|x-lzma|x-xz)
+        _untar "${filename}"
         ;;
-      *.gz)
-        gunzip "${filename}"
+      x-rar)
+        _unrar "${filename}"
         ;;
-      *.rar)
-        __unrar "${filename}"
+      x-tar)
+        _untar "${filename}"
         ;;
-      *.zip)
-        __unzip "${filename}"
+      zip)
+        _unzip "${filename}"
         ;;
       *)
         err "${filename}"
