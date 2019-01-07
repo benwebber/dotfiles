@@ -66,7 +66,7 @@ main() {
 
   for filename in "${@}"; do
     local mime_type="$(file --brief --mime-type "${filename}")"
-    local subtype="${mimetype#*/}"
+    local subtype="${mime_type#*/}"
 
     case $subtype in
       x-7z-compressed)
