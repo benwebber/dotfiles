@@ -2,4 +2,10 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-exec ansible-playbook -i localhost, -c local "${@}"
+PYTHON="$(head -n1 "$(which ansible-playbook)" | sed 's/^#!//')"
+
+exec ansible-playbook \
+  -c local \
+  -e ansible_python_interpreter="${PYTHON}" \
+  -i localhost, \
+  "${@}"
