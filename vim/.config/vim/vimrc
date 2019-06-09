@@ -109,7 +109,6 @@ let &t_EI = "\e[1 q"
 let mapleader=","
 " play nicely with soft-wrapping
 nmap <leader>tt :TagbarToggle<CR>
-nmap <leader>s :Scriptify<CR>
 nmap <leader>i :Isort<CR>
 cnoreabbrev mk make
 
@@ -153,12 +152,6 @@ function! Boilerplate()
   execute '0r ~/.local/share/vim/templates/boilerplate.'.expand('%:e')
 endfunction
 
-" Insert boilerplate to make a file into a standalone script.
-function! Scriptify()
-  execute '$r ~/.local/share/vim/templates/script.'.expand('%:e')
-endfunction
-
-command! -nargs=0 Scriptify call Scriptify()
 
 function! Header(comment, marker, ...)
   let line = substitute(&commentstring, '%s', repeat(a:marker, &textwidth - 1) . "\n", "")
