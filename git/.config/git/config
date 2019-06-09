@@ -36,3 +36,6 @@
 
 [include]
 	path = ~/.config/git/gitconfig_local
+
+[init]
+	templatedir = ~/.local/share/git/templates/default

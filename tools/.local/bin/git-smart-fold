@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+SUBJECT="$(mktemp)"
+BODY="$(mktemp)"
+TRAILERS="$(mktemp)"
+
+cleanup() {
+  rm "${SUBJECT}" "${BODY}" "${TRAILERS}"
+}
+
+trap cleanup EXIT
+
+# shellcheck disable=SC2002
+cat "${1:--}" | tee "${SUBJECT}" "${BODY}" "${TRAILERS}" >/dev/null
+cat \
+  <(head -n1 "${SUBJECT}") \
+  <(awk '/[[:alnum:]\-]+:/ { exit; } NR>1 { print; }' "${BODY}" | fmt --width 72) \
+  <(awk 'BEGIN { should_print = 0; } /[[:alnum:]\-]+:/ { should_print = 1 } should_print { print; }' "${TRAILERS}")

@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+OUTPUT="$(mktemp)"
+
+cleanup() {
+  rm "${OUTPUT}"
+}
+
+trap cleanup EXIT
+
+err() {
+  printf '==> %s\n' "${@}" >&2
+}
+
+if ! git-clean-commit-msg <"${1}" >"${OUTPUT}"; then
+  cat "${OUTPUT}" >"${1}"
+
+  err 'Commit message check failed'
+  err "$(cat <<EOF
+Run the following command to view and correct errors'
+
+    git ci --edit --file .git/COMMIT_EDITMSG
+
+EOF
+)"
+
+  exit 1
+fi

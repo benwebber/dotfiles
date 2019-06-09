@@ -1,0 +1,94 @@
+#!/usr/bin/env lua
+--- Normalize commit hashes in a commit message.
+-- @script git-normalize-commit-hashes
+
+NEEDLE_LENGTH = 6
+NEEDLE = '(' .. string.rep('%x', NEEDLE_LENGTH) .. '*)'
+
+local MessageType = {
+  LINE = 'line',
+  STATUS = 'status',
+}
+
+
+local function Message(type, value)
+  return {type = type, value = value}
+end
+
+
+local function abbrev_commit(rev)
+  local command = string.format('git rev-list --abbrev-commit --max-count=1 %s^{commit} 2>&1', rev)
+  local handle = io.popen(command)
+  local output = handle:read('*a')
+  local ok = handle:close()
+  output = output:gsub('%s+$', '')
+  return output, ok
+end
+
+
+local function clean(fh)
+  local seen_commits, trailer_commits, errors = {}, {}, {}
+  return coroutine.wrap(function()
+    for line in fh:lines() do
+      -- Expand and/or abbreviate commit hashes found in each line of the
+      -- message body.
+      for rev in line:gmatch(NEEDLE) do
+        local output, is_unique = abbrev_commit(rev)
+        if is_unique then
+          line = line:gsub(rev, output)
+          -- Track commits found in message body.
+          table.insert(seen_commits, output)
+        else
+          table.insert(errors, output)
+        end
+      end
+      -- Track commits found in trailers.
+      local trailer_commit = line:lower():match('^see[%w%-]*:%s+' .. NEEDLE)
+      if trailer_commit then
+        trailer_commits[trailer_commit] = true
+      end
+      coroutine.yield(Message(MessageType.LINE, line))
+    end
+    -- Append trailers.
+    local trailer = 'See: %s'
+    for i, commit in ipairs(seen_commits) do
+      if not trailer_commits[commit] then
+        coroutine.yield(Message(MessageType.LINE, trailer:format(commit)))
+      end
+    end
+    -- Append errors for unknown references.
+    local ok = true
+    for i, err in ipairs(errors) do
+      ok = false
+      for line in err:gmatch('([^\n]*)\n?') do
+        coroutine.yield(Message(MessageType.LINE, string.format('# %s', line)))
+      end
+    end
+    coroutine.yield(Message(MessageType.STATUS, ok))
+  end)
+end
+
+
+local function main(argv)
+  local file
+  if not argv[1] or argv[1] == '-' then
+    file = io.input()
+  else
+    file = io.input(argv[1])
+  end
+  local ok = true
+  for message in clean(file) do
+    if message.type == MessageType.LINE then
+      print(message.value)
+    elseif message.type == MessageType.STATUS then
+      ok = message.value
+    end
+  end
+  file:close()
+  if not ok then
+    return 1
+  end
+end
+
+
+os.exit(main(arg))
