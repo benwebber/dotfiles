@@ -31,7 +31,6 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'eiginn/netrw' " includes fix for http://paulgorman.org/blog/1400942674
 Plug 'godlygeek/tabular'
 Plug 'kien/ctrlp.vim'
-Plug 'majutsushi/tagbar'
 Plug 'mhinz/vim-signify'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/syntastic'
@@ -39,7 +38,6 @@ Plug 'tomasr/molokai'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-pandoc/vim-pandoc'
-Plug 'vimwiki/vimwiki'
 
 call plug#end()
 
@@ -108,7 +106,6 @@ let &t_EI = "\e[1 q"
 
 let mapleader=","
 " play nicely with soft-wrapping
-nmap <leader>tt :TagbarToggle<CR>
 nmap <leader>i :Isort<CR>
 cnoreabbrev mk make
 
