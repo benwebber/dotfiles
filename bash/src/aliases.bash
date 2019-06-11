@@ -8,7 +8,6 @@ alias :cd='cd'
 complete -F _cd :cd
 alias +x='chmod +x'
 alias vim='vim -p'
-alias mount='mount | column -t'
 alias c=clear
 alias rc='echo "${PIPESTATUS[@]}"'
 
@@ -21,5 +20,4 @@ alias rm='rm -iv'
 
 alias sortv4='sort -n -t . -k 1,1 -k 2,2 -k 3,3 -k 4,4'
 
-alias apg='apg -m16'
 alias newsboat='newsboat -q -r'

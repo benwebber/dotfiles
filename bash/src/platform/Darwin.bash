@@ -36,6 +36,5 @@ brew_clean() {
 }
 
 alias 'brew-clean'=brew_clean
-alias gvim=mvim
 
 __load_gnu_utils
