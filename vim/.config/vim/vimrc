@@ -106,7 +106,6 @@ let &t_EI = "\e[1 q"
 
 let mapleader=","
 " play nicely with soft-wrapping
-nmap <leader>i :Isort<CR>
 cnoreabbrev mk make
 
 "===============================================================================
@@ -158,14 +157,8 @@ function! Header(comment, marker, ...)
   execute "normal! a" . line
 endfunction
 
-function! Isort()
-  execute "silent !isort " . bufname("%")
-  execute "silent e! " . bufname("%")
-endfunction
-
 command! -nargs=* Section call Header("#", "=", <f-args>)
 command! -nargs=* Subsection call Header("#", "-", <f-args>)
-command! Isort call Isort()
 
 "===============================================================================
 " Autocommands
