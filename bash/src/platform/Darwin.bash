@@ -22,18 +22,4 @@ __load_gnu_utils() {
   done
 }
 
-# Function to remove a Homebrew package and all its dependencies
-brew_clean() {
-  for formula in "$@"; do
-    echo "Removing ${formula} and dependencies..."
-    brew uninstall "${formula}"
-    if [ "$(brew deps "${formula}")" ]; then
-      # orphaned packages && formula dependencies
-      brew uninstall "$(join <(brew leaves) <(brew deps "${formula}"))"
-    fi
-  done
-}
-
-alias 'brew-clean'=brew_clean
-
 __load_gnu_utils
