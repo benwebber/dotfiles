@@ -3,7 +3,6 @@
 #-------------------------------------------------------------------------------
 
 export BROWSER=open
-export HOMEBREW_CASK_OPTS='--appdir=/Applications'
 # Avoid invoking Ruby for `brew --prefix`.
 export USR_PATH=/usr/local
 
