@@ -1,0 +1,14 @@
+#!/usr/bin/awk -f
+
+/git/ {
+  match($0, /git([[:space:]]+|-)([-[:alnum:]_]+)/)
+  if (RLENGTH < 1) {
+    # Skip lines that don't contain a git command.
+    next
+  }
+  # Normalize command names.
+  command = substr($0, RSTART, RLENGTH)
+  gsub("git-", "git ", command)
+  gsub(/git[[:space:]]+/, "git ", command)
+  print command
+}
