@@ -68,3 +68,8 @@ if [[ $(type -t __git_complete) == 'function' ]]; then
   __git_complete ,gL _git_ls_files
   __git_complete ,gM _git merge
 fi
+
+alias ,m='man' && complete -F _man ,m
+alias ,mv='manv' && complete -F _man ,mv
+alias ,mp='manp' && complete -F _man ,mp
+alias ,mh='manh' && complete -F _man ,mh
