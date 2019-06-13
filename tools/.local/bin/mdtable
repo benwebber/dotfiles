@@ -1,0 +1,21 @@
+#!/usr/bin/awk -f
+
+BEGIN {
+  OFS = "|"
+}
+
+NR == 1 {
+  # Repeat "|---" NF times.
+  rule = sprintf("%" NF "s|", "")
+  gsub(/ /, "|---", rule)
+
+  $1 = $1
+  print "|" $0 "|"
+  print rule
+  next
+}
+
+{
+  $1 = $1
+  print "|" $0 "|"
+}
