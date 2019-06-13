@@ -4,6 +4,7 @@
 
 NEEDLE_LENGTH = 6
 NEEDLE = '(' .. string.rep('%x', NEEDLE_LENGTH) .. '*)'
+TRAILER = '^([%w%-]+):'
 
 local MessageType = {
   LINE = 'line',
@@ -30,22 +31,27 @@ local function clean(fh)
   local seen_commits, trailer_commits, errors = {}, {}, {}
   return coroutine.wrap(function()
     for line in fh:lines() do
-      -- Expand and/or abbreviate commit hashes found in each line of the
-      -- message body.
-      for rev in line:gmatch(NEEDLE) do
-        local output, is_unique = abbrev_commit(rev)
-        if is_unique then
-          line = line:gsub(rev, output)
-          -- Track commits found in message body.
-          table.insert(seen_commits, output)
-        else
-          table.insert(errors, output)
+      if not line:match(TRAILER) then
+        -- Expand and/or abbreviate commit hashes found in each line of the
+        -- message body.
+        for rev in line:gmatch(NEEDLE) do
+          if line:match(TRAILER) then
+          end
+          local output, is_unique = abbrev_commit(rev)
+          if is_unique then
+            line = line:gsub(rev, output)
+            -- Track commits found in message body.
+            table.insert(seen_commits, output)
+          else
+            table.insert(errors, output)
+          end
         end
-      end
-      -- Track commits found in trailers.
-      local trailer_commit = line:lower():match('^see[%w%-]*:%s+' .. NEEDLE)
-      if trailer_commit then
-        trailer_commits[trailer_commit] = true
+      else
+        -- Track commits found in trailers.
+        local trailer_commit = line:lower():match('^see[%w%-]*:%s+' .. NEEDLE)
+        if trailer_commit then
+          trailer_commits[trailer_commit] = true
+        end
       end
       coroutine.yield(Message(MessageType.LINE, line))
     end
