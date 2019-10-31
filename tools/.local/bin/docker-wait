@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+
+usage() {
+  cat <<EOF
+usage: $(basename "${0}") [-h] [-v] [--] COMMAND...
+EOF
+}
+
+
+main() {
+  local verbose=false
+  while getopts 'hv' opt; do
+    case $opt in
+      h)
+        usage
+        exit
+        ;;
+      v)
+        verbose=true
+        ;;
+      *)
+        usage
+        return 1
+        ;;
+    esac
+  done
+
+  shift $((OPTIND - 1))
+
+  if [[ "$#" -lt 1 ]]; then
+    usage
+    return 1
+  fi
+
+  if [[ $verbose == 'true' ]]; then
+    spinwait -m 'Waiting for Docker to start... ' -t 0.05 -- 'docker ps -q 2>/dev/null'
+  else
+    until docker ps -q 2>/dev/null; do
+      sleep 0.05
+    done
+  fi
+
+  exec "${@:1}"
+}
+
+
+main "${@}"

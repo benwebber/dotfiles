@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+declare -r CHA=$'\033[G'
+declare -r EL=$'\033[K'
+
+
+usage() {
+  cat <<EOF
+$(basename "${0}") [-h] [-m MESSAGE] [-t DELAY] -- COMMAND...
+
+Run COMMAND until it exits 0, printing a spinner to standard error.
+
+Options:
+
+  -m  optional message to print before spinner
+  -t  loop delay (0.05 s)
+EOF
+}
+
+
+main() {
+  local delay=0.05
+  local message=''
+  while getopts 'ht:m:' opt; do
+    case $opt in
+      h)
+        usage
+        return
+        ;;
+      t)
+        delay=$OPTARG
+        ;;
+      m)
+        message=$OPTARG
+        ;;
+      *)
+        usage
+        return 1
+        ;;
+    esac
+  done
+
+  shift $((OPTIND - 1))
+
+  local frames=('⢎⡰' '⢎⡡' '⢎⡑' '⢎⠱' '⠎⡱' '⢊⡱' '⢌⡱' '⢆⡱')
+  local i=0
+
+  until eval "${@:1}"; do
+    printf '%s%s%s' "${CHA}" "${message}" "${frames[i]}" >&2
+    sleep "${delay}"
+    i=$(((i + 1) % "${#frames[@]}"))
+  done
+
+  printf '%s%s' "${CHA}" "${EL}" >&2
+}
+
+
+main "${@}"
