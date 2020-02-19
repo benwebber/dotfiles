@@ -9,37 +9,7 @@ set runtimepath=$XDG_DATA_HOME/vim,$XDG_DATA_HOME/vim/after,$VIM,$VIMRUNTIME
 " Plugins
 "===============================================================================
 
-call plug#begin('~/.local/share/vim/bundle')
-
-" Syntax/Language
-Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'b4b4r07/vim-hcl'
-Plug 'chase/vim-ansible-yaml'
-Plug 'fatih/vim-go'
-Plug 'leafgarland/typescript-vim'
-Plug 'ledger/vim-ledger'
-Plug 'rust-lang/rust.vim'
-Plug 'sevko/vim-nand2tetris-syntax'
-Plug 'sukima/vim-tiddlywiki'
-Plug 'tpope/vim-markdown'
-Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'vim-scripts/applescript.vim'
-
-Plug 'Townk/vim-autoclose'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'dhruvasagar/vim-table-mode'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'eiginn/netrw' " includes fix for http://paulgorman.org/blog/1400942674
-Plug 'godlygeek/tabular'
-Plug 'mhinz/vim-signify'
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/syntastic'
-Plug 'tomasr/molokai'
-Plug 'tpope/vim-fugitive'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-pandoc/vim-pandoc'
-
-call plug#end()
+set packpath+=$XDG_DATA_HOME/vim
 
 "===============================================================================
 " Lines and whitespace

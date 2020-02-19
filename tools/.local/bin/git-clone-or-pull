@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+
+usage() {
+  cat <<EOF
+usage: $(basename "${0}") [-h] [-q] <repository>
+EOF
+}
+
+
+main() {
+  local quiet
+
+  while getopts 'hq' opt; do
+    case $opt in
+      h)
+        usage
+        return
+        ;;
+      q)
+        quiet=true
+        ;;
+      *)
+        usage
+        return 1
+        ;;
+    esac
+  done
+
+  shift $((OPTIND - 1))
+
+  if [[ $# -ne 1 ]]; then
+    usage
+    return 1
+  fi
+
+  local url=$1
+  local dest
+  dest="${url##*/}"
+  dest="${dest%*.git}"
+
+  if [[ -z "${quiet:-}" ]]; then
+    printf "==> Cloning or updating '%s'\n" "${url}"
+  fi
+
+  if [[ -d "${dest}" ]]; then
+    git -C "${dest}" pull ${quiet:+--quiet}
+  else
+    git clone --depth 1 ${quiet:+--quiet} "${url}"
+  fi
+}
+
+
+main "${@}"
