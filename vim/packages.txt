@@ -5,7 +5,6 @@ https://github.com/chase/vim-ansible-yaml
 https://github.com/ctrlpvim/ctrlp.vim
 https://github.com/dhruvasagar/vim-table-mode
 https://github.com/editorconfig/editorconfig-vim
-https://github.com/eiginn/netrw
 https://github.com/fatih/vim-go
 https://github.com/godlygeek/tabular
 https://github.com/leafgarland/typescript-vim
@@ -18,7 +17,6 @@ https://github.com/sevko/vim-nand2tetris-syntax
 https://github.com/sukima/vim-tiddlywiki
 https://github.com/tomasr/molokai
 https://github.com/tpope/vim-fugitive
-https://github.com/tpope/vim-markdown
 https://github.com/vim-airline/vim-airline
 https://github.com/vim-pandoc/vim-pandoc
 https://github.com/vim-pandoc/vim-pandoc-syntax
