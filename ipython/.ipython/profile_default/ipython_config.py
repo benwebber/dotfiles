@@ -4,10 +4,6 @@ c.InteractiveShellApp.extensions = [
     'autoreload',
 ]
 
-c.TerminalIPythonApp.exec_lines = [
-    'from __future__ import print_function',
-]
-
 c.TerminalIPythonApp.display_banner = False
 
 c.TerminalInteractiveShell.pdb = True
