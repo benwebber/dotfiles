@@ -6,6 +6,6 @@ c.InteractiveShellApp.extensions = [
 
 c.TerminalIPythonApp.display_banner = False
 
-c.TerminalInteractiveShell.pdb = True
-
 c.TerminalInteractiveShell.confirm_exit = False
+c.TerminalInteractiveShell.editing_mode = 'vi'
+c.TerminalInteractiveShell.pdb = True
