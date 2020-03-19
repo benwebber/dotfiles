@@ -50,7 +50,7 @@ is_me() {
 }
 
 has_vi_mode_string() {
-  [[ ${BASH_VERSINFO[0]} -ge 4 ]] && [[ ${BASH_VERSINFO[1]} -ge 4 ]]
+  [[ ${BASH_VERSINFO[0]} -ge 5 ]] || { [[ ${BASH_VERSINFO[0]} -ge 4 ]] && [[ ${BASH_VERSINFO[1]} -ge 4 ]]; }
 }
 
 _ansi_reset="\[$(tput sgr0)\]"
