@@ -1,66 +1,51 @@
-" XDG
+" vim: set foldmethod=marker:
+
+" XDG {{{
 " https://tlvince.com/vim-respect-xdg
 set directory=$XDG_CACHE_HOME/vim,~/,/tmp
 set backupdir=$XDG_CACHE_HOME/vim,~/,/tmp
 set viminfo='100,<50,s10,h,n$XDG_CACHE_HOME/vim/viminfo
 set runtimepath=$XDG_DATA_HOME/vim,$XDG_DATA_HOME/vim/after,$VIM,$VIMRUNTIME
-
-"===============================================================================
-" Plugins
-"===============================================================================
-
 set packpath+=$XDG_DATA_HOME/vim
+" }}}
 
-"===============================================================================
-" Lines and whitespace
-"===============================================================================
+" Editing {{{
+set expandtab
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
 
-" Tabs
-set expandtab     " tabs are spaces
-set tabstop=2     " 2-space tab width
-set softtabstop=2 " treat expanded tabs as real tabs
-set shiftwidth=2  " indent using << and >>
-
-" Line handling
+set formatoptions=cq
+set linebreak
 set textwidth=80
-set wrap             " wrap lines
-set linebreak        " wrap lines at word boundaries
-set wrapmargin=0     " don't force text wrapping
-set formatoptions=cq " don't automatically break lines at textwidth
-set nolist           " list disables linebreak
 
-"===============================================================================
-" Appearance
-"===============================================================================
+set backspace=indent,eol,start
+" }}}
 
-" Ignore error if colour scheme does not exist. Prevents Vim from blocking
-" `make install`.
-silent! colorscheme molokai
+" Appearance {{{
+syntax on
+colorscheme molokai
 
-if v:version > 703
-  " change background past column 80
-  let &colorcolumn = join(range(&textwidth + 1, 255), ',')
-endif
-set cursorline " highlight current line
-set number     " line numbers
-set t_Co=256   " double rainbow
+" Change background past column 80.
+let &colorcolumn = join(range(&textwidth + 1, 255), ',')
+set cursorline
+set laststatus=2
+set number
+" Show mode in Airline.
+set noshowmode
+"}}}
 
-"===============================================================================
-" Behaviour
-"===============================================================================
-
-set lazyredraw                 " only redraw when necessary
-set modelines=5                " number of modelines to check (OS X default is 0)
-set mouse=a                    " enable mouse
-set shortmess=I                " ignore intro
-set wildmenu                   " tab through filenames
-set wildmode=longest,list,full " tab completion
-set splitbelow                 " more natural splits
+" Behaviour {{{
+set lazyredraw
+set mouse=a
+set shortmess=I
+set splitbelow
 set splitright
-set backspace=indent,eol,start " make backspace work as in other applications
 set updatetime=250
+set wildmenu
+set wildmode=longest,list,full
 
-" Reset normal/insert mode cursors. DECSCUSR changes apply to the termainl, not
+" Reset normal/insert mode cursors. DECSCUSR changes apply to the terminal, not
 " individual applications. Reset Vim's default cursors to override the ones
 " inherited by Bash/readline (~/.inputrc).
 " &t_SI: Enter insert mode (blinking pipe).
@@ -69,33 +54,26 @@ let &t_SI = "\e[5 q"
 let &t_SR = "\e[3 q"
 " &t_EI: Exit insert or replace mode (blinking block).
 let &t_EI = "\e[1 q"
+" }}}
 
-"===============================================================================
-" Keymaps
-"===============================================================================
-
+" Commands {{{
 let mapleader=","
-" play nicely with soft-wrapping
 cnoreabbrev mk make
+" }}}
 
-"===============================================================================
-" Plugins
-"===============================================================================
-
+" Plugins {{{
 " Airline
-set laststatus=2
-set noshowmode
-let g:airline#extensions#whitspace#enabled    = 0
-let g:airline#extensions#virtualenv#enabled   = 1
-let g:airline#extensions#branch#enabled       = 1
+let g:airline#extensions#whitspace#enabled = 0
+let g:airline#extensions#virtualenv#enabled = 1
+let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#branch#empty_message = ''
-let g:airline#extensions#virtualenv#enabled   = 1
+let g:airline#extensions#virtualenv#enabled = 1
 
 " vim-go
-let g:go_fmt_command         = 'goimports'
+let g:go_fmt_command = 'goimports'
 let g:go_highlight_functions = 1
-let g:go_highlight_methods   = 1
-let g:go_highlight_structs   = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
 
 " vim-ledger
 let g:ledger_bin = 'hledger'
@@ -108,68 +86,37 @@ let g:signify_cursorhold_insert = 0
 
 " syntastic
 let g:syntastic_sh_shellcheck_args = '-s bash'
+" }}}
 
-"===============================================================================
-" Functions
-"===============================================================================
-
+" Functions {{{
 " Insert boilerplate for new files.
 function! Boilerplate()
   execute '0r ~/.local/share/vim/templates/boilerplate.'.expand('%:e')
 endfunction
+" }}}
 
-
-function! Header(comment, marker, ...)
-  let line = substitute(&commentstring, '%s', repeat(a:marker, &textwidth - 1) . "\n", "")
-  let message = substitute(&commentstring, '%s', " " . join(a:000, " ") . "\n", "")
-  execute "normal! a" . line
-  execute "normal! a" . message
-  execute "normal! a" . line
-endfunction
-
-command! -nargs=* Section call Header("#", "=", <f-args>)
-command! -nargs=* Subsection call Header("#", "-", <f-args>)
-
-"===============================================================================
-" Autocommands
-"===============================================================================
-
+" Autocommands {{{
 augroup code
-    autocmd!
-    " write crontabs in place
-    autocmd filetype crontab setlocal nobackup nowritebackup
-    " use 4 spaces in Python and PowerShell
-    autocmd FileType python setlocal ts=4 sts=4 sw=4
-    autocmd FileType ps1 setlocal ts=4 sts=4 sw=4
-    " use hard tabs for Go, Makefiles, and .gitconfig
-    autocmd FileType go,make,gitconfig setlocal noet ts=4 sw=4 sts=4
-    " use YAML syntax highlighting for RAML files
-    autocmd BufRead,BufNewFile *.raml set filetype=yaml
-    autocmd Filetype plaintex,tex setlocal makeprg=latexmk\ -pdf\ %
+  autocmd!
+  " use 4 spaces in Python
+  autocmd FileType python setlocal tabstop=4 softtabstop=4 shiftwidth=4
+  " use hard tabs for Go, Makefiles, and .gitconfig
+  autocmd FileType go,make,gitconfig setlocal noexpandtab tabstop=4 shiftwidth=4
+  autocmd Filetype plaintex,tex setlocal makeprg=latexmk\ -pdf\ %
 augroup END
 
 augroup writing
-    autocmd!
-    autocmd FileType markdown,rst,wiki,tex set spell spelllang=en_ca
-    autocmd FileType markdown,rst,wiki,tex setlocal tw=0
+  autocmd!
+  autocmd FileType markdown,rst,wiki,tex set spell spelllang=en_ca
+  autocmd FileType markdown,rst,wiki,tex setlocal textwidth=0
 augroup END
 
 augroup templates
   autocmd!
   autocmd BufNewFile *.* silent! call Boilerplate()
 augroup END
-
-augroup vimrc
-  autocmd!
-  autocmd BufWritePost $MYVIMRC source $MYVIMRC
-augroup END
-
-" https://github.com/vim-pandoc/vim-pandoc/issues/272
-let g:pandoc#modules#disabled = ['chdir', 'folding']
+"}}}
 
 if filereadable(glob('~/.vimrc_local'))
   source ~/.vimrc_local
 endif
-
-syntax on " at the bottom for bundle compatibility
-
