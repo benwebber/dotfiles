@@ -1,5 +1,6 @@
-#!/usr/bin/awk -f
+#!/usr/bin/env bash
 
+read -r -d '' MDTABLE <<'EOF'
 BEGIN {
   OFS = "|"
 }
@@ -19,3 +20,97 @@ NR == 1 {
   $1 = $1
   print "|" $0 "|"
 }
+EOF
+
+mdtable() {
+  local awk_args=()
+  while [[ $1 != '--' ]]; do
+    awk_args+=($1)
+    shift
+  done
+  shift
+  awk "${awk_args[@]}" "${MDTABLE}" "${@}"
+}
+
+
+handle_ascii() {
+  mdtable -v RS=$'\x1E' -v FS=$'\x1F' -- "${@}"
+}
+
+
+handle_csv() {
+  mdtable -v FS=',' -- "${@}"
+}
+
+
+handle_sqlite() {
+  if [[ $# -ne 2 ]]; then
+    usage
+    return 1
+  fi
+  sqlite3 -ascii -header "${1}" "${2}" | handle_ascii -
+}
+
+
+handle_tsv() {
+  mdtable -v FS='\t' -- "${@}"
+}
+
+
+usage() {
+  cat <<EOF
+usage: $(basename "${0}") [-h|--help] [COMMAND] [FILE] [ARGS...]
+
+Render tabular data as a Markdown table.
+
+If COMMAND is not specified, default to tab-delimited data.
+
+If FILE Is not specified, default to standard input.
+
+Options:
+
+  -h, --help  Show this message and exit.
+
+Commands:
+
+  help    Show this message and exit.
+  ascii   Render ASCII-delimited data.
+  csv     Render CSV data.
+  tsv     Render tab-delimited data.
+  sqlite  Render the results of an SQLite3 database query.
+
+Examples:
+
+  mdtable csv data.csv
+
+  mdtable sqlite data.db 'SELECT * from table;'
+
+EOF
+}
+
+
+main() {
+  local cmd
+  case $1 in
+    help|-h|--help)
+      usage
+      return
+      ;;
+    ascii|csv|tsv)
+      cmd="handle_${1}"
+      shift
+      ;;
+    sqlite|sqlite3)
+      cmd=handle_sqlite
+      shift
+      ;;
+    *)
+      cmd=handle_tsv
+      ;;
+  esac
+
+  "${cmd}" "${@}"
+}
+
+
+main "${@}"
