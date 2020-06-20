@@ -1,10 +1,9 @@
-#-------------------------------------------------------------------------------
-# Mac OS X
-#-------------------------------------------------------------------------------
+#require os
+#require path
+
+os::is_mac || return
 
 export BROWSER=open
-# Avoid invoking Ruby for `brew --prefix`.
-export USR_PATH=/usr/local
 
 # Use GNU tools without the g prefix
 __load_gnu_utils() {

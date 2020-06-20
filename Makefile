@@ -1,4 +1,5 @@
-.PHONY: all clean install uninstall update
+.PHONY: clean install uninstall update
+.DEFAULT_GOAL := install
 
 prefix   = $(HOME)
 
@@ -9,14 +10,10 @@ PACKAGES = $(shell find * -maxdepth 0 -type d ! -name 'stow')
 STOW_GLOBAL_IGNORE = ($(shell paste -s -d'|' stow/.stow-global-ignore))
 STOW               = stow --target $(prefix) --ignore "$(STOW_GLOBAL_IGNORE)"
 
-all:
-	$(MAKE) -C bash
-
 clean:
-	$(MAKE) -C bash clean
 	$(MAKE) -C vim clean
 
-install: all
+install:
 	$(STOW) -R stow
 	$(STOW) -R $(PACKAGES)
 	$(MAKE) -C vim install

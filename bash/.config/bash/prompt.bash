@@ -1,7 +1,4 @@
-#------------------------------------------------------------------------------
-# Completions and $PS1
-#------------------------------------------------------------------------------
-
+#require bash
 . "${USR_PATH}/share/bash-completion/bash_completion" >/dev/null 2>&1
 
 _monokai_error_tmux='#[bg=colour89,fg=colour219]'
@@ -41,18 +38,6 @@ if command -v duiker >/dev/null 2>&1; then
   eval "$(duiker magic)"
 fi
 
-is_ssh() {
-  [[ -n $SSH_CLIENT ]] || [[ -n $SSH_TTY ]]
-}
-
-is_me() {
-  [[ $USER == "${LOCAL_USER}" ]]
-}
-
-has_vi_mode_string() {
-  [[ ${BASH_VERSINFO[0]} -ge 5 ]] || { [[ ${BASH_VERSINFO[0]} -ge 4 ]] && [[ ${BASH_VERSINFO[1]} -ge 4 ]]; }
-}
-
 _ansi_reset="\[$(tput sgr0)\]"
 _tmux_fg_white='#[fg=colour15]'
 _tmux_bg_dark_grey='#[bg=colour238]'
@@ -85,7 +70,7 @@ __prompt() {
   if [[ -z $TMUX ]]; then
     ps1="${ps1}\w ${_monokai_magenta_ansi}→${_ansi_reset} "
   fi
-  if ! has_vi_mode_string; then
+  if ! bash::has_vi_mode_string; then
     # Bash does not support `vi-cmd-mode-string` and `vi-ins-mode-string`;
     # colour prompt directly.
     ps1="${_monokai_magenta_ansi}${ps1}"

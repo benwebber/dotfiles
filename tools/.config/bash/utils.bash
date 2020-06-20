@@ -106,20 +106,6 @@ cdtemp() {
   builtin cd -- "$(mktemp -d 2>/dev/null || mktemp -d -t tmp)"
 }
 
-isabsolute() {
-  [[ $1 == /* ]] || [[ $1 == \~/* ]]
-}
-
-pypackage() {
-  local path="${1}"
-  [[ -n "${path}" ]] || { die 'pypackage: specify a relative path'; return $?; }
-  isabsolute "${path}" && { die 'pypackage: path must be relative'; return $?; }
-  mkdir -p "${path}"
-  while IFS= read -r -d $'\0' dir; do
-    [[ -f "${dir}/__init__.py" ]] || touch "${dir}/__init__.py"
-  done < <(find "${path%%/*}" -type d -print0)
-}
-
 swap() {
   local usage='usage: swap FILE1 FILE2
 
@@ -201,15 +187,4 @@ trim() {
 
 upper() {
   tr '[:lower:]' '[:upper:]'
-}
-
-command_not_found_handle() {
-  local cmd
-  cmd="${1}"
-  if [[ $cmd == *\? ]] && [[ -t 1 ]]; then
-    halp "${cmd%?}"
-  else
-    printf -- '-bash: %s: command not found\n' "${cmd}" >&2
-  fi
-  return 127
 }
