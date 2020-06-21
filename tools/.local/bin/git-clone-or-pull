@@ -46,7 +46,7 @@ main() {
   fi
 
   if [[ -d "${dest}" ]]; then
-    git -C "${dest}" pull ${quiet:+--quiet}
+    git -C "${dest}" pull --ff --ff-only ${quiet:+--quiet}
   else
     git clone --depth 1 ${quiet:+--quiet} "${url}"
   fi
