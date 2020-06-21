@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+
+main() {
+  local stdin=
+  if [[ -t 0 ]]; then
+    stdin="MANPAGER=cat man ${*} |"
+  fi
+  eval "$stdin col -b | view -c 'set ft=man ts=8 cc= nomod nolist nonu noma' -"
+}
+
+
+main "${@}"

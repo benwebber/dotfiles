@@ -20,5 +20,3 @@ alias newsboat='newsboat -q -r'
 
 alias ,m='man' && complete -F _man ,m
 alias ,mv='manv' && complete -F _man ,mv
-alias ,mp='manp' && complete -F _man ,mp
-alias ,mh='manh' && complete -F _man ,mh
