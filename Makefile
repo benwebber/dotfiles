@@ -17,8 +17,6 @@ install:
 	$(STOW) -R stow
 	$(STOW) -R $(PACKAGES)
 	$(MAKE) -C vim install
-	mkdir -p $(prefix)/.logrotate
-	mkdir -p $(prefix)/.history/{bash,less,mysql,psql,rediscli}
 
 uninstall:
 	$(STOW) -D $(PACKAGES)
