@@ -18,12 +18,7 @@ _s() {
   cur="${COMP_WORDS[COMP_CWORD]}"    # pointer to current word
   prev="${COMP_WORDS[COMP_CWORD-1]}" # pointer to previous word
 
-  # Find s* scripts and functions.
-  while read -d '' script; do
-    script="${script##*/}"
-    script="${script#s}"
-    scripts+=($script)
-  done < <(find "${XDG_BIN_HOME}" -lname '*/s/.local/bin/s*' -print0)
+  scripts=(cal dig)
 
   case $COMP_CWORD in
     1)
