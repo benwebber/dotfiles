@@ -10,12 +10,6 @@ export PYTHONDONTWRITEBYTECODE=1
 
 [[ -f $VIRTUALENVWRAPPER_SCRIPT ]] && . "${VIRTUALENVWRAPPER_SCRIPT/%.sh/_lazy.sh}"
 
-revirtualenv() {
-  virtualenv --relocatable "${WORKON_HOME}/${1}"
-}
-
-complete -o default -o nospace -F _virtualenvs revirtualenv
-
 if command -v pyenv >/dev/null 2>&1; then
   eval "$(pyenv init - --no-rehash)"
 fi
