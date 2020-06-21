@@ -22,3 +22,5 @@ __load_gnu_utils() {
 }
 
 __load_gnu_utils
+
+unset -f update_terminal_cwd
