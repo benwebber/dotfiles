@@ -1,7 +1,7 @@
 #require os
 #require utils
 
-export WORKON_HOME=$HOME/.virtualenvs
+export WORKON_HOME="${XDG_DATA_HOME}/virtualenvs"
 export VIRTUALENVWRAPPER_SCRIPT="$(command -v virtualenvwrapper.sh)"
 export PYTHONDONTWRITEBYTECODE=1
 
