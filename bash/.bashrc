@@ -21,16 +21,11 @@ __dotfiles_boot() {
 }
 
 __dotfiles_iter_modules() {
-  local _globstar
-  _globstar="$(shopt -p globstar)"
-  shopt -s globstar
-  local modules=(${XDG_CONFIG_HOME}/bash/**/*.bash)
-  if [[ ! -e "${modules[0]}" ]]; then
-    $_globstar
-    return
-  fi
-  awk -v DIR="${XDG_CONFIG_HOME}/bash" "${__DOTFILES_GRAPH}" "${modules[@]}" | tsort | __dotfiles_tac | tail -n +2
-  $_globstar
+  find -L "${XDG_CONFIG_HOME}/bash" -iname '*.bash' -print0 -type f \
+    | xargs -0 awk -v DIR="${XDG_CONFIG_HOME}/bash" "${__DOTFILES_GRAPH}" \
+    | tsort \
+    | __dotfiles_tac \
+    | tail -n +2
 }
 
 __dotfiles_tac() {
