@@ -1,4 +1,6 @@
 #require bash
+[[ -t 1 ]] || return
+
 . "${USR_PATH}/share/bash-completion/bash_completion" >/dev/null 2>&1
 
 _monokai_error_tmux='#[bg=colour89,fg=colour219]'
