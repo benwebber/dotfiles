@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+BASE=2
+
+usage() {
+  cat <<EOF
+usage: $(basename "${0}") [-h] [-b BASE] -- ARGS...
+
+Output logarithmic milestones in a Git repository's history.
+
+For example, if the base is two (2), show the first (2^0), second (2^1),
+fourth (2^2), eighth (2^3), etc. commits in the project's history.
+
+The output contains three columns. The first is the exponent, the second
+is the value of the base to that exponent, and the third is the hash of
+the matching commit.
+
+If specified, ARGS are passed to \`git log\`.
+
+Options:
+
+  -h  Show this message and exit.
+  -b  Show commits that are powers of base (default: ${BASE}).
+EOF
+}
+
+
+main() {
+  local base=$BASE
+  while getopts 'b:h' opt; do
+    case $opt in
+      h)
+        usage
+        return
+        ;;
+      b)
+        base=$OPTARG
+        ;;
+      *)
+        usage
+        return 1
+        ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+  if ! [[ $base -gt 1 ]]; then
+    echo '-b: must be integer greater than 1' >&2
+    return 1
+  fi
+  git log --reverse --pretty=tformat:'%H' "${@}" | awk -v b="${base}" 'BEGIN { n = 0; } { m = int(log(NR)/log(b)); } NR == 1 || m > n { n = m; print n, b ** n, $0; }'
+}
+
+
+main "${@}"
