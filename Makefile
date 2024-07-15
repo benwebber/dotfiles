@@ -8,7 +8,7 @@ PACKAGES = $(shell find * -maxdepth 0 -type d ! -name 'stow')
 # .stow-local-ignore files override .stow-global-ignore.
 # This hack merges the two rulesets.
 STOW_GLOBAL_IGNORE = ($(shell paste -s -d'|' stow/.stow-global-ignore))
-STOW               = stow --target $(prefix) --ignore "$(STOW_GLOBAL_IGNORE)"
+STOW               = stow --target $(prefix) --ignore "$(STOW_GLOBAL_IGNORE)" --no-folding
 
 clean:
 	$(MAKE) -C vim clean
