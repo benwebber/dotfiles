@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+IFS=$'\n\t'
+set -euo pipefail
+
+main() {
+  write "${@}" >>~/.config/newsboat/urls
+}
+
+write() {
+  local tag
+  printf '%s' "${1}"
+  for tag in "${@:2}"; do
+    case $tag in
+      *\ *)
+        tag="$(echo '{}' | jq --arg tag "${tag}" '$tag')"
+        ;;
+      *)
+        ;;
+    esac
+    printf ' %s' "${tag}"
+  done
+  printf '\n'
+
+}
+
+main "${@}"
