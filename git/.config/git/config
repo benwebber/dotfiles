@@ -39,3 +39,4 @@
 
 [init]
 	templatedir = ~/.local/share/git/templates/default
+	defaultBranch = main
